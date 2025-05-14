@@ -6,6 +6,7 @@ import personImage3 from '../assets/images/contact-page-hero-section-person-imag
 import personImage4 from '../assets/images/contact-page-hero-section-person-images/person4.jpg';
 import personImage5 from '../assets/images/contact-page-hero-section-person-images/person5.jpg';
 import personImage6 from '../assets/images/contact-page-hero-section-person-images/person6.jpg';
+import { API_ENDPOINTS } from '../config/api';
 
 // Custom hook for scroll animations using Intersection Observer
 const useScrollAnimation = (options = {}) => {
@@ -154,14 +155,32 @@ const Contact = () => {
     setIsSubmitting(true);
     
     try {
-      // Mock API call with timeout
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Make API call to backend
+      const response = await fetch(API_ENDPOINTS.CONTACT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          phone: formData.phone || null, // Optional field
+        }),
+      });
+
+      const data = await response.json();
       
-      // Mock successful submission
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to submit contact form');
+      }
+      
+      // Successful submission
       setFormStatus({
         submitted: true,
         success: true,
-        message: 'Thank you for your message! We will get back to you soon.'
+        message: data.message || 'Thank you for your message! We will get back to you soon.'
       });
       
       // Reset form
@@ -180,10 +199,11 @@ const Contact = () => {
       });
       
     } catch (error) {
+      console.error('Contact form submission error:', error);
       setFormStatus({
         submitted: true,
         success: false,
-        message: 'Something went wrong. Please try again later.'
+        message: error.message || 'Something went wrong. Please try again later.'
       });
     } finally {
       setIsSubmitting(false);
