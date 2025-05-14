@@ -40,6 +40,7 @@ import ProductCreate from './pages/admin/ProductCreate';
 import ProductDetail from './pages/admin/ProductDetail';
 import ProductEdit from './pages/admin/ProductEdit';
 import TaxManagement from './pages/admin/TaxManagement';
+import ContactMessages from './pages/admin/ContactMessages';
 
 import './App.css';
 
@@ -97,6 +98,7 @@ const App = () => {
               <Route path="products/:productId" element={<ProductDetail />} />
               <Route path="products/:productId/edit" element={<ProductEdit />} />
               <Route path="tax-management" element={<TaxManagement />} />
+              <Route path="contact-messages" element={<ContactMessages />} />
             </Route>
             
             {/* Public Routes with Main Layout */}

@@ -101,7 +101,7 @@ const Dashboard = () => {
       </div>
 
       {/* Quick Access Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <QuickAccessCard 
           title="Tax Management" 
           description="Manage GST rates, HSN codes and view tax reports"
@@ -123,6 +123,17 @@ const Dashboard = () => {
           } 
           linkTo="/admin/products/create"
           color="bg-blue-100"
+        />
+        <QuickAccessCard 
+          title="Contact Messages" 
+          description="View and manage customer contact form submissions"
+          icon={
+            <svg className="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          } 
+          linkTo="/admin/contact-messages"
+          color="bg-yellow-100"
         />
         <QuickAccessCard 
           title="User Management" 

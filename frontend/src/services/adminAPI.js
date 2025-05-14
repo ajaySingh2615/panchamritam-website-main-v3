@@ -287,6 +287,34 @@ export const getAllRoles = async () => {
   }
 };
 
+// Contact Messages
+export const getContactMessages = async (params = {}) => {
+  try {
+    const response = await api.get('/contact', { params });
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+export const getContactMessageById = async (messageId) => {
+  try {
+    const response = await api.get(`/contact/${messageId}`);
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+export const deleteContactMessage = async (messageId) => {
+  try {
+    const response = await api.delete(`/contact/${messageId}`);
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
 // Helper function to handle errors
 const handleError = (error) => {
   if (error.response) {
