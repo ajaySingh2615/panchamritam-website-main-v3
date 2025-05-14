@@ -43,6 +43,31 @@ const useScrollAnimation = (options = {}) => {
   return [ref, isVisible];
 };
 
+// Parallax scroll effect hook
+const useParallaxScroll = (speed = 0.5) => {
+  const [offset, setOffset] = useState(0);
+  const ref = useRef(null);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!ref.current) return;
+      
+      const { top } = ref.current.getBoundingClientRect();
+      const scrollOffset = window.scrollY;
+      const elementPositionRelativeToViewport = top + scrollOffset;
+      const scrollPosition = scrollOffset;
+      const relativeScroll = scrollPosition - elementPositionRelativeToViewport;
+      
+      setOffset(relativeScroll * speed);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [speed]);
+  
+  return [ref, offset];
+};
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -78,6 +103,13 @@ const Contact = () => {
   
   const [confetti, setConfetti] = useState(false);
   const buttonRef = useRef(null);
+  
+  // Adding more refs and animation states for scroll animations
+  const [heroImageRef, heroImageVisible] = useScrollAnimation({ threshold: 0.1 });
+  const [socialProofRef, socialProofVisible] = useScrollAnimation({ threshold: 0.1 });
+  const [heroLeafRef, leafOffset] = useParallaxScroll(0.1);
+  const [formSectionLeafRef, formLeafOffset] = useParallaxScroll(0.15);
+  const [faqLeafRef, faqLeafOffset] = useParallaxScroll(0.12);
   
   // Toggle accordion state
   const toggleAccordion = (index) => {
@@ -244,12 +276,16 @@ const Contact = () => {
         {/* Organic gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#f8f6f3] via-[#f1efe9] to-[#e8e4d9] opacity-70"></div>
         
-        {/* Decorative monstera leaf in the right corner */}
-        <div className="absolute top-0 right-0 w-96 h-96 pointer-events-none z-0 overflow-hidden opacity-25">
+        {/* Decorative monstera leaf in the right corner with parallax */}
+        <div 
+          ref={heroLeafRef} 
+          className="absolute top-0 right-0 w-96 h-96 pointer-events-none z-0 overflow-hidden opacity-25 transition-transform duration-1000 ease-out"
+          style={{ transform: `translate(25%, -25%) translateY(${leafOffset * 0.5}px)` }}
+        >
           <img 
             src={leaf1Image} 
             alt="" 
-            className="w-full h-full object-contain transform translate-x-1/4 -translate-y-1/4"
+            className="w-full h-full object-contain"
           />
         </div>
         
@@ -295,23 +331,36 @@ const Contact = () => {
               </p>
               
               <div className="flex flex-wrap gap-4 mb-6">
-                <a href="#contact-form" className="inline-flex items-center justify-center bg-[#4D7C0F] hover:bg-green-800 text-white font-medium py-3 px-8 rounded-md transition-all duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform hover:-translate-y-1 hover:shadow-lg active:translate-y-0">
+                <motion.a 
+                  href="#contact-form" 
+                  className="inline-flex items-center justify-center bg-[#4D7C0F] hover:bg-green-800 text-white font-medium py-3 px-8 rounded-md transition-all duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform hover:-translate-y-1 hover:shadow-lg active:translate-y-0"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <span>Send Us a Message</span>
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
-                </a>
+                </motion.a>
                 
-                <a href="#why-organic" className="inline-flex items-center justify-center bg-white border border-[#E5E7EB] text-[#4D7C0F] hover:bg-[#ECFDF5] font-medium py-3 px-8 rounded-md transition-all duration-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform hover:-translate-y-1 hover:shadow-md active:translate-y-0">
+                <motion.a 
+                  href="#why-organic" 
+                  className="inline-flex items-center justify-center bg-white border border-[#E5E7EB] text-[#4D7C0F] hover:bg-[#ECFDF5] font-medium py-3 px-8 rounded-md transition-all duration-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform hover:-translate-y-1 hover:shadow-md active:translate-y-0"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <span>Learn More</span>
-                </a>
+                </motion.a>
               </div>
               
               {/* Social proof with client images */}
-              <div className="mt-8 pt-6 border-t border-[#E5E7EB] transition-all duration-700 delay-500 ease-out">
+              <div 
+                ref={socialProofRef}
+                className={`mt-8 pt-6 border-t border-[#E5E7EB] transition-all duration-700 delay-500 ease-out transform ${socialProofVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+              >
                 <p className="mb-3 text-sm font-medium text-[#4D7C0F]">Trusted by Organic Enthusiasts</p>
                 <div className="flex -space-x-3">
                   {[
@@ -321,41 +370,81 @@ const Contact = () => {
                     { img: personImage4, alt: "Client testimonial" },
                     { img: personImage5, alt: "Client testimonial" }
                   ].map((person, i) => (
-                    <div 
+                    <motion.div 
                       key={i} 
-                      className={`w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-white overflow-hidden shadow-sm transition-all duration-300 transform hover:scale-110 hover:translate-y-[-5px] hover:z-10 hover:shadow-md cursor-pointer`}
-                      style={{ animationDelay: `${i * 50}ms`, transitionDelay: `${i * 50}ms` }}
+                      className={`w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-white overflow-hidden shadow-sm transition-all duration-300 hover:scale-110 hover:translate-y-[-5px] hover:z-10 hover:shadow-md cursor-pointer`}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={socialProofVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                      transition={{ duration: 0.3, delay: i * 0.1 + 0.2 }}
                     >
                       <img 
                         src={person.img} 
                         alt={person.alt} 
                         className="w-full h-full object-cover"
                       />
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
-                <p className="mt-3 text-[#6B7280] text-sm italic animate-pulse">
+                <motion.p 
+                  className="mt-3 text-[#6B7280] text-sm italic"
+                  initial={{ opacity: 0 }}
+                  animate={socialProofVisible ? { opacity: 1 } : { opacity: 0 }}
+                  transition={{ duration: 0.5, delay: 0.8 }}
+                >
                   "Their commitment to sustainable farming practices and exceptional customer service sets them apart in the organic market."
-                </p>
+                </motion.p>
               </div>
             </div>
             
             {/* Right column - Hero image instead of contact details */}
-            <div className={`relative h-full flex items-center justify-center p-4 transition-all duration-700 delay-500 ${loaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-              <div className="relative w-full max-w-md h-80 lg:h-96 bg-white rounded-lg overflow-hidden shadow-lg transform transition-all duration-500 hover:shadow-2xl hover:scale-105">
+            <div 
+              ref={heroImageRef}
+              className={`relative h-full flex items-center justify-center p-4 transition-all duration-700 transform ${loaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'} ${heroImageVisible ? 'scale-100' : 'scale-95'}`}
+            >
+              <motion.div 
+                className="relative w-full max-w-md h-80 lg:h-96 bg-white rounded-lg overflow-hidden shadow-lg transform transition-all duration-500 hover:shadow-2xl hover:scale-105"
+                initial={{ y: 30, opacity: 0 }}
+                animate={heroImageVisible ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
+                transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+              >
                 <div className="absolute top-0 left-0 w-full h-full bg-[#f8f6f3] flex flex-col items-center justify-center p-8 text-center">
-                  <div className="w-20 h-20 mb-6 rounded-full bg-[#4D7C0F] flex items-center justify-center transition-transform duration-500 hover:rotate-12 animate-bounce">
+                  <motion.div 
+                    className="w-20 h-20 mb-6 rounded-full bg-[#4D7C0F] flex items-center justify-center transition-transform duration-500 hover:rotate-12"
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                  </div>
-                  <h2 className="text-2xl font-bold text-[#1F2937] mb-2">Reach Out To Us</h2>
-                  <p className="text-[#6B7280] mb-4">We're excited to hear from you about our organic products</p>
-                  <span className="inline-block px-4 py-2 bg-[#4D7C0F] text-white rounded-full text-sm font-semibold hover:bg-green-800 transition-colors duration-300 cursor-pointer transform hover:scale-105 active:scale-95">
+                  </motion.div>
+                  <motion.h2 
+                    className="text-2xl font-bold text-[#1F2937] mb-2"
+                    initial={{ opacity: 0 }}
+                    animate={heroImageVisible ? { opacity: 1 } : { opacity: 0 }}
+                    transition={{ delay: 0.5, duration: 0.5 }}
+                  >
+                    Reach Out To Us
+                  </motion.h2>
+                  <motion.p 
+                    className="text-[#6B7280] mb-4"
+                    initial={{ opacity: 0 }}
+                    animate={heroImageVisible ? { opacity: 1 } : { opacity: 0 }}
+                    transition={{ delay: 0.7, duration: 0.5 }}
+                  >
+                    We're excited to hear from you about our organic products
+                  </motion.p>
+                  <motion.span 
+                    className="inline-block px-4 py-2 bg-[#4D7C0F] text-white rounded-full text-sm font-semibold hover:bg-green-800 transition-colors duration-300 cursor-pointer transform hover:scale-105 active:scale-95"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={heroImageVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                    transition={{ delay: 0.9, duration: 0.5 }}
+                    whileHover={{ scale: 1.05, boxShadow: "0 4px 8px rgba(0,0,0,0.1)" }}
+                    whileTap={{ scale: 0.95 }}
+                  >
                     Response within 24 hours
-                  </span>
+                  </motion.span>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
@@ -363,21 +452,28 @@ const Contact = () => {
 
       {/* Contact Form Section - White background - MOVED BEFORE Contact Information Section */}
       <div id="contact-form" ref={formSectionRef} className="py-20 bg-white relative overflow-hidden">
-        {/* Decorative leaf in bottom right corner */}
-        <div className="absolute bottom-0 right-0 w-48 h-48 pointer-events-none z-0 opacity-20">
+        {/* Decorative leaf in bottom right corner with parallax */}
+        <div 
+          ref={formSectionLeafRef}
+          className="absolute bottom-0 right-0 w-48 h-48 pointer-events-none z-0 opacity-20"
+          style={{ transform: `rotate(-45deg) translateY(${formLeafOffset * 0.3}px)` }}
+        >
           <img 
             src={leafImage} 
             alt="" 
-            className="w-full h-full object-contain transform -rotate-45"
+            className="w-full h-full object-contain"
           />
         </div>
         
-        {/* Decorative leaf in bottom left corner */}
-        <div className="absolute bottom-0 left-0 w-40 h-40 pointer-events-none z-0 opacity-15">
+        {/* Decorative leaf in bottom left corner with parallax */}
+        <div 
+          className="absolute bottom-0 left-0 w-40 h-40 pointer-events-none z-0 opacity-15"
+          style={{ transform: `rotate(90deg) scale(-1, 1) translateY(${formLeafOffset * -0.2}px)` }}
+        >
           <img 
             src={leafImage} 
             alt="" 
-            className="w-full h-full object-contain transform rotate-90 scale-x-[-1]"
+            className="w-full h-full object-contain"
           />
         </div>
         
@@ -1010,24 +1106,40 @@ const Contact = () => {
       <div ref={faqSectionRef} className="py-20 bg-white relative">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           {/* Light decorative elements */}
-          <div className="absolute top-40 right-0 w-40 h-40 bg-[#ECFDF5] rounded-full opacity-20 translate-x-1/2 blur-2xl pointer-events-none"></div>
-          <div className="absolute bottom-20 left-0 w-32 h-32 bg-[#4D7C0F] rounded-full opacity-10 -translate-x-1/2 blur-2xl pointer-events-none"></div>
+          <motion.div 
+            className="absolute top-40 right-0 w-40 h-40 bg-[#ECFDF5] rounded-full opacity-20 translate-x-1/2 blur-2xl pointer-events-none"
+            animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.25, 0.2] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          ></motion.div>
           
-          {/* Decorative leaf in bottom right corner */}
-          <div className="absolute bottom-0 right-0 w-56 h-56 pointer-events-none z-0 opacity-20">
+          <motion.div 
+            className="absolute bottom-20 left-0 w-32 h-32 bg-[#4D7C0F] rounded-full opacity-10 -translate-x-1/2 blur-2xl pointer-events-none"
+            animate={{ scale: [1, 1.15, 1], opacity: [0.1, 0.15, 0.1] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          ></motion.div>
+          
+          {/* Decorative leaf in bottom right corner with parallax */}
+          <div 
+            ref={faqLeafRef}
+            className="absolute bottom-0 right-0 w-56 h-56 pointer-events-none z-0 opacity-20"
+            style={{ transform: `rotate(-15deg) translateY(${faqLeafOffset * 0.25}px)` }}
+          >
             <img 
               src={leafImage} 
               alt="" 
-              className="w-full h-full object-contain transform -rotate-15"
+              className="w-full h-full object-contain"
             />
           </div>
           
-          {/* Decorative leaf in bottom left corner */}
-          <div className="absolute bottom-0 left-0 w-48 h-48 pointer-events-none z-0 opacity-15">
+          {/* Decorative leaf in bottom left corner with parallax */}
+          <div 
+            className="absolute bottom-0 left-0 w-48 h-48 pointer-events-none z-0 opacity-15"
+            style={{ transform: `rotate(125deg) scale(-1, 1) translateY(${faqLeafOffset * -0.2}px)` }}
+          >
             <img 
               src={leafImage} 
               alt="" 
-              className="w-full h-full object-contain transform rotate-125 scale-x-[-1]"
+              className="w-full h-full object-contain"
             />
           </div>
           
