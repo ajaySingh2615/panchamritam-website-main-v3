@@ -229,10 +229,66 @@ const sendInvoiceEmail = async (email, invoiceData, pdfBuffer) => {
   return info;
 };
 
+/**
+ * Send a reply to a contact message
+ * @param {string} recipientEmail - The recipient email address
+ * @param {string} recipientName - The recipient name
+ * @param {string} subject - The email subject
+ * @param {string} messageContent - The email message content
+ * @returns {Promise} - A promise that resolves when the email is sent
+ */
+const sendContactReply = async (recipientEmail, recipientName, subject, messageContent) => {
+  // Make sure transporter is initialized
+  if (!transporter) {
+    await initializeTransporter();
+  }
+  
+  // Email content
+  const mailOptions = {
+    from: `"Panchamritam Ayurvedic Foods" <${process.env.EMAIL_USER || 'info@panchamritam.com'}>`,
+    to: `"${recipientName}" <${recipientEmail}>`,
+    subject: subject,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #9bc948; padding: 20px; text-align: center; color: white;">
+          <h1>Response to Your Inquiry</h1>
+        </div>
+        
+        <div style="padding: 20px;">
+          <p>Dear ${recipientName},</p>
+          
+          <div style="margin: 20px 0; white-space: pre-wrap;">${messageContent.replace(/\n/g, '<br/>')}</div>
+          
+          <p>If you have any further questions, please don't hesitate to contact us again.</p>
+          
+          <p>Best regards,<br>
+          Panchamritam Ayurvedic Foods Team</p>
+        </div>
+        
+        <div style="background-color: #f8f8f8; padding: 20px; text-align: center; font-size: 12px; color: #666;">
+          <p>© ${new Date().getFullYear()} Panchamritam Ayurvedic Foods. All rights reserved.</p>
+          <p>This email was sent in response to your contact message on our website.</p>
+        </div>
+      </div>
+    `
+  };
+
+  const info = await transporter.sendMail(mailOptions);
+  
+  // If using Ethereal, log the URL where the email can be viewed
+  if (info.messageId && info.testMessageUrl) {
+    console.log('Email sent: %s', info.messageId);
+    console.log('Preview URL: %s', info.testMessageUrl);
+  }
+  
+  return info;
+};
+
 // Initialize the transporter
 initializeTransporter().catch(console.error);
 
 module.exports = {
   sendOrderConfirmation,
-  sendInvoiceEmail
+  sendInvoiceEmail,
+  sendContactReply
 }; 

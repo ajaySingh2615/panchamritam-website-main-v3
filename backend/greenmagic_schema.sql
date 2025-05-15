@@ -105,6 +105,7 @@ CREATE TABLE Contact_Messages (
     email VARCHAR(100),
     subject VARCHAR(150),
     message TEXT,
+    status ENUM('unread', 'read', 'in_progress', 'replied', 'archived') DEFAULT 'unread',
     submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

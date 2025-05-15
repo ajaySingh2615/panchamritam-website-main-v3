@@ -306,9 +306,27 @@ export const getContactMessageById = async (messageId) => {
   }
 };
 
+export const updateContactMessageStatus = async (messageId, status) => {
+  try {
+    const response = await api.put(`/contact/${messageId}/status`, { status });
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
 export const deleteContactMessage = async (messageId) => {
   try {
     const response = await api.delete(`/contact/${messageId}`);
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+export const sendContactReply = async (messageId, replyData) => {
+  try {
+    const response = await api.post(`/contact/${messageId}/reply`, replyData);
     return response.data;
   } catch (error) {
     throw handleError(error);
