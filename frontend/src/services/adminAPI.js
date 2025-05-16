@@ -287,6 +287,10 @@ export const getAllRoles = async () => {
   }
 };
 
+// Contact Messages - These functions are retained as commented code for reference
+// They are no longer actively used since contact forms now go directly to email
+
+/*
 // Contact Messages
 export const getContactMessages = async (params = {}) => {
   try {
@@ -332,6 +336,100 @@ export const sendContactReply = async (messageId, replyData) => {
     throw handleError(error);
   }
 };
+
+// Email Templates
+export const getEmailTemplates = async () => {
+  try {
+    const response = await api.get('/contact/templates');
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+export const getEmailTemplateById = async (templateId) => {
+  try {
+    const response = await api.get(`/contact/templates/${templateId}`);
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+export const createEmailTemplate = async (templateData) => {
+  try {
+    const response = await api.post('/contact/templates', templateData);
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+export const updateEmailTemplate = async (templateId, templateData) => {
+  try {
+    const response = await api.put(`/contact/templates/${templateId}`, templateData);
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+export const deleteEmailTemplate = async (templateId) => {
+  try {
+    const response = await api.delete(`/contact/templates/${templateId}`);
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+// Email Listener Management
+export const getEmailListenerStatus = async () => {
+  try {
+    const response = await api.get('/admin/email-listener/status');
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+export const startEmailListener = async () => {
+  try {
+    const response = await api.post('/admin/email-listener/start');
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+export const stopEmailListener = async () => {
+  try {
+    const response = await api.post('/admin/email-listener/stop');
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+export const checkEmails = async () => {
+  try {
+    const response = await api.post('/admin/email-listener/check');
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+// Check for new email replies
+export const checkNewReplies = async (timestamp) => {
+  try {
+    const response = await api.get(`/contact/check-replies?t=${timestamp}`);
+    return response.data;
+  } catch (error) {
+    throw error?.response?.data || error;
+  }
+};
+*/
 
 // Helper function to handle errors
 const handleError = (error) => {

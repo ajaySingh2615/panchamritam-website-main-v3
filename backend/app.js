@@ -5,6 +5,8 @@ const passport = require('passport');
 const { errorHandler } = require('./middlewares/errorHandler');
 const { testConnection } = require('./config/db');
 const { checkReviewsTable, checkTaxTables } = require('./utils/dbCheck');
+// Email listener import commented out as we're no longer using it
+// const emailListener = require('./utils/emailListenerService');
 
 // Load environment variables
 dotenv.config();
@@ -70,6 +72,35 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/tax', taxRoutes);
 
+// Email listener endpoints commented out as we're no longer using them
+/*
+// Email listener status endpoint
+app.get('/api/admin/email-listener/status', (req, res) => {
+  res.json({
+    status: 'success',
+    data: emailListener.getStatus()
+  });
+});
+
+// Start email listener
+app.post('/api/admin/email-listener/start', (req, res) => {
+  const started = emailListener.startListening();
+  res.json({
+    status: started ? 'success' : 'error',
+    message: started ? 'Email listener started' : 'Failed to start email listener'
+  });
+});
+
+// Stop email listener
+app.post('/api/admin/email-listener/stop', (req, res) => {
+  const stopped = emailListener.stopListening();
+  res.json({
+    status: stopped ? 'success' : 'error',
+    message: stopped ? 'Email listener stopped' : 'Email listener was not running'
+  });
+});
+*/
+
 // 404 route not found handler
 app.all('*', (req, res, next) => {
   res.status(404).json({
@@ -98,6 +129,9 @@ app.listen(PORT, async () => {
     } catch (error) {
       console.error('Error checking database tables:', error);
     }
+    
+    // Email listener auto-start code removed as we're no longer using it
+    console.log('Contact form system now uses direct email instead of database storage.');
   }
 });
 

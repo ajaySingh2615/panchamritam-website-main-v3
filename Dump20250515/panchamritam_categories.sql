@@ -16,31 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `gst_rates`
+-- Table structure for table `categories`
 --
 
-DROP TABLE IF EXISTS `gst_rates`;
+DROP TABLE IF EXISTS `categories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `gst_rates` (
-  `rate_id` int NOT NULL AUTO_INCREMENT,
-  `rate_name` varchar(50) NOT NULL,
-  `percentage` decimal(5,2) NOT NULL,
-  `description` text,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`rate_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `categories` (
+  `category_id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`category_id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `gst_rates`
+-- Dumping data for table `categories`
 --
 
-LOCK TABLES `gst_rates` WRITE;
-/*!40000 ALTER TABLE `gst_rates` DISABLE KEYS */;
-INSERT INTO `gst_rates` VALUES (1,'Unbranded, Unpackaged Food Grains',5.00,NULL,'2025-05-07 12:37:22','2025-05-07 12:37:22');
-/*!40000 ALTER TABLE `gst_rates` ENABLE KEYS */;
+LOCK TABLES `categories` WRITE;
+/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES (4,'Bakery'),(6,'Beverages'),(2,'Dairy & Eggs'),(1,'Fresh Organic Produce'),(10,'Frozen Foods'),(9,'Household'),(3,'Meat & Seafood'),(5,'Pantry Items'),(8,'Personal Care'),(7,'Snacks');
+/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-07 18:31:25
+-- Dump completed on 2025-05-15 17:14:10

@@ -36,7 +36,7 @@ CREATE TABLE `order_items` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
   CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +45,7 @@ CREATE TABLE `order_items` (
 
 LOCK TABLES `order_items` WRITE;
 /*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
-INSERT INTO `order_items` VALUES (1,1,3,2,3.49,0.00,0.00,NULL);
+INSERT INTO `order_items` VALUES (1,1,3,2,3.49,0.00,0.00,NULL),(2,2,15,2,999.00,7.00,139.86,'36'),(3,3,15,2,999.00,7.00,139.86,'36'),(4,4,15,4,999.00,7.00,279.72,'36'),(5,5,14,4,249.00,0.00,0.00,NULL),(6,6,13,10,10.00,0.00,0.00,NULL),(7,7,15,2,999.00,7.00,139.86,'36'),(8,8,13,1,10.00,0.00,0.00,NULL),(9,9,13,1,10.00,0.00,0.00,NULL),(10,10,15,1,999.00,7.00,69.93,'36'),(11,11,14,1,249.00,0.00,0.00,NULL),(12,12,15,1,999.00,7.00,69.93,'36'),(13,13,14,2,249.00,0.00,0.00,NULL),(14,14,15,1,999.00,7.00,69.93,'36'),(15,15,15,1,999.00,7.00,69.93,'36');
 /*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-07 18:31:25
+-- Dump completed on 2025-05-15 17:14:11

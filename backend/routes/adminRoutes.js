@@ -26,4 +26,12 @@ router.get('/users/:userId/activity', protect, restrictTo('admin'), adminControl
 // Roles
 router.get('/roles', protect, restrictTo('admin'), adminController.getAllRoles);
 
+// Email Listener routes - removed as we're now using direct email for contact forms
+/* 
+router.get('/email-listener/status', adminController.getEmailListenerStatus);
+router.post('/email-listener/start', adminController.startEmailListener);
+router.post('/email-listener/stop', adminController.stopEmailListener);
+router.post('/email-listener/check', adminController.checkEmails);
+*/
+
 module.exports = router; 

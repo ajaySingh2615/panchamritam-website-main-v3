@@ -497,4 +497,68 @@ exports.getAllRoles = async (req, res) => {
       message: 'Failed to retrieve roles'
     });
   }
+};
+
+// Email Listener Configuration
+
+/**
+ * Get current email listener status
+ */
+exports.getEmailListenerStatus = (req, res) => {
+  const emailListener = require('../utils/emailListenerService');
+  
+  res.status(200).json({
+    status: 'success',
+    data: emailListener.getStatus()
+  });
+};
+
+/**
+ * Start the email listener
+ */
+exports.startEmailListener = (req, res) => {
+  const emailListener = require('../utils/emailListenerService');
+  
+  const started = emailListener.startListening();
+  
+  res.status(200).json({
+    status: started ? 'success' : 'error',
+    message: started ? 'Email listener started successfully' : 'Failed to start email listener'
+  });
+};
+
+/**
+ * Stop the email listener
+ */
+exports.stopEmailListener = (req, res) => {
+  const emailListener = require('../utils/emailListenerService');
+  
+  const stopped = emailListener.stopListening();
+  
+  res.status(200).json({
+    status: stopped ? 'success' : 'error',
+    message: stopped ? 'Email listener stopped successfully' : 'Email listener was not running'
+  });
+};
+
+/**
+ * Manually check for new emails
+ */
+exports.checkEmails = async (req, res) => {
+  const emailListener = require('../utils/emailListenerService');
+  
+  try {
+    await emailListener.checkEmails();
+    
+    res.status(200).json({
+      status: 'success',
+      message: 'Email check triggered successfully'
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: 'Failed to check emails',
+      error: error.message
+    });
+  }
 }; 

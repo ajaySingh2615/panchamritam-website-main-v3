@@ -16,32 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `blogs`
+-- Table structure for table `cart`
 --
 
-DROP TABLE IF EXISTS `blogs`;
+DROP TABLE IF EXISTS `cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `blogs` (
-  `blog_id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(200) DEFAULT NULL,
-  `content` text,
-  `author_id` int DEFAULT NULL,
+CREATE TABLE `cart` (
+  `cart_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`blog_id`),
-  KEY `author_id` (`author_id`),
-  CONSTRAINT `blogs_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`cart_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `blogs`
+-- Dumping data for table `cart`
 --
 
-LOCK TABLES `blogs` WRITE;
-/*!40000 ALTER TABLE `blogs` DISABLE KEYS */;
-INSERT INTO `blogs` VALUES (2,'New Blog Post','This is the content of the blog post. It can be a long text with formatting if needed.',2,'2025-04-23 06:36:33');
-/*!40000 ALTER TABLE `blogs` ENABLE KEYS */;
+LOCK TABLES `cart` WRITE;
+/*!40000 ALTER TABLE `cart` DISABLE KEYS */;
+INSERT INTO `cart` VALUES (1,3,'2025-04-22 10:17:32'),(2,12,'2025-05-07 07:02:49'),(3,11,'2025-05-07 11:53:24');
+/*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-07 18:31:25
+-- Dump completed on 2025-05-15 17:14:11

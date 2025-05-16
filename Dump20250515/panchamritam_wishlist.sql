@@ -16,34 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `hsn_codes`
+-- Table structure for table `wishlist`
 --
 
-DROP TABLE IF EXISTS `hsn_codes`;
+DROP TABLE IF EXISTS `wishlist`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `hsn_codes` (
-  `hsn_id` int NOT NULL AUTO_INCREMENT,
-  `code` varchar(20) NOT NULL,
-  `description` text,
-  `default_gst_rate_id` int DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`hsn_id`),
-  UNIQUE KEY `code` (`code`),
-  KEY `default_gst_rate_id` (`default_gst_rate_id`),
-  CONSTRAINT `hsn_codes_ibfk_1` FOREIGN KEY (`default_gst_rate_id`) REFERENCES `gst_rates` (`rate_id`)
+CREATE TABLE `wishlist` (
+  `wishlist_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
+  `product_id` int DEFAULT NULL,
+  `added_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`wishlist_id`),
+  KEY `user_id` (`user_id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `wishlist_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  CONSTRAINT `wishlist_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `hsn_codes`
+-- Dumping data for table `wishlist`
 --
 
-LOCK TABLES `hsn_codes` WRITE;
-/*!40000 ALTER TABLE `hsn_codes` DISABLE KEYS */;
-INSERT INTO `hsn_codes` VALUES (1,'12',NULL,1,'2025-05-07 12:46:59','2025-05-07 12:46:59'),(2,'1',NULL,1,'2025-05-07 12:51:20','2025-05-07 12:51:20');
-/*!40000 ALTER TABLE `hsn_codes` ENABLE KEYS */;
+LOCK TABLES `wishlist` WRITE;
+/*!40000 ALTER TABLE `wishlist` DISABLE KEYS */;
+INSERT INTO `wishlist` VALUES (2,3,3,'2025-04-23 05:35:28');
+/*!40000 ALTER TABLE `wishlist` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -55,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-07 18:31:25
+-- Dump completed on 2025-05-15 17:14:10

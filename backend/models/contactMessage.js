@@ -43,6 +43,9 @@ class ContactMessage {
         query += ` AND submitted_at <= '${new Date(endDate).toISOString()}'`;
       }
       
+      // Only show parent messages (not replies) by default
+      query += ` AND (is_reply = 0 OR is_reply IS NULL)`;
+      
       query += ` ORDER BY submitted_at DESC LIMIT ${numLimit} OFFSET ${offset}`;
       
       // Execute the simple query without parameters using pool.query instead of pool.execute
@@ -64,8 +67,38 @@ class ContactMessage {
     }
   }
 
+  static async findByThreadId(threadId, excludeId = null) {
+    try {
+      let query = `
+        SELECT * FROM contact_messages 
+        WHERE thread_id = ? AND is_reply = 1 
+      `;
+      
+      // Exclude the current message if ID provided
+      if (excludeId) {
+        query += ` AND message_id != ${excludeId}`;
+      }
+      
+      query += ` ORDER BY submitted_at ASC`;
+      
+      const [rows] = await pool.query(query, [threadId]);
+      return rows;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async create(messageData) {
-    const { name, email, subject, message } = messageData;
+    const { 
+      name, 
+      email, 
+      subject, 
+      message, 
+      thread_id = null, 
+      is_reply = false, 
+      parent_message_id = null,
+      message_reference = null
+    } = messageData;
     
     try {
       // Escape single quotes in the string values
@@ -73,9 +106,34 @@ class ContactMessage {
       const escapedEmail = email.replace(/'/g, "''");
       const escapedSubject = (subject || '').replace(/'/g, "''");
       const escapedMessage = message.replace(/'/g, "''");
+      const escapedThreadId = thread_id ? thread_id.replace(/'/g, "''") : null;
+      const escapedMessageRef = message_reference ? message_reference.replace(/'/g, "''") : null;
       
-      const query = `INSERT INTO contact_messages (name, email, subject, message) 
-                     VALUES ('${escapedName}', '${escapedEmail}', '${escapedSubject}', '${escapedMessage}')`;
+      // Build query conditionally based on which fields are provided
+      let fields = 'name, email, subject, message';
+      let values = `'${escapedName}', '${escapedEmail}', '${escapedSubject}', '${escapedMessage}'`;
+      
+      if (thread_id !== null) {
+        fields += ', thread_id';
+        values += `, '${escapedThreadId}'`;
+      }
+      
+      if (is_reply !== null) {
+        fields += ', is_reply';
+        values += `, ${is_reply ? 1 : 0}`;
+      }
+      
+      if (parent_message_id !== null) {
+        fields += ', parent_message_id';
+        values += `, ${parent_message_id}`;
+      }
+      
+      if (message_reference !== null) {
+        fields += ', message_reference';
+        values += `, '${escapedMessageRef}'`;
+      }
+      
+      const query = `INSERT INTO contact_messages (${fields}) VALUES (${values})`;
       
       const [result] = await pool.query(query);
       
@@ -85,6 +143,10 @@ class ContactMessage {
         email,
         subject,
         message,
+        thread_id,
+        is_reply,
+        parent_message_id,
+        message_reference,
         submittedAt: new Date()
       };
     } catch (error) {
@@ -114,6 +176,17 @@ class ContactMessage {
     }
   }
 
+  static async updateThreadId(messageId, threadId) {
+    try {
+      const query = `UPDATE contact_messages SET thread_id = ? WHERE message_id = ?`;
+      
+      const [result] = await pool.query(query, [threadId, messageId]);
+      return result.affectedRows > 0;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async countMessages(filters = {}) {
     try {
       const { search, status, startDate, endDate } = filters;
@@ -137,6 +210,9 @@ class ContactMessage {
       if (endDate) {
         query += ` AND submitted_at <= '${new Date(endDate).toISOString()}'`;
       }
+      
+      // Only count parent messages (not replies) by default
+      query += ` AND (is_reply = 0 OR is_reply IS NULL)`;
       
       // Execute the simple query without parameters using pool.query
       const [rows] = await pool.query(query);

@@ -1,4 +1,6 @@
 const nodemailer = require('nodemailer');
+const { renderTemplate, generateMessageId } = require('./emailTemplateService');
+const EmailTemplate = require('../models/emailTemplate');
 
 // Create a transporter for sending emails
 // For testing, we'll use Ethereal which provides disposable test accounts
@@ -235,20 +237,45 @@ const sendInvoiceEmail = async (email, invoiceData, pdfBuffer) => {
  * @param {string} recipientName - The recipient name
  * @param {string} subject - The email subject
  * @param {string} messageContent - The email message content
+ * @param {number} messageId - The ID of the original message (for tracking)
+ * @param {string} templateId - Optional template ID to use
  * @returns {Promise} - A promise that resolves when the email is sent
  */
-const sendContactReply = async (recipientEmail, recipientName, subject, messageContent) => {
+const sendContactReply = async (recipientEmail, recipientName, subject, messageContent, messageId, templateId = null) => {
   // Make sure transporter is initialized
   if (!transporter) {
     await initializeTransporter();
   }
   
-  // Email content
-  const mailOptions = {
-    from: `"Panchamritam Ayurvedic Foods" <${process.env.EMAIL_USER || 'info@panchamritam.com'}>`,
-    to: `"${recipientName}" <${recipientEmail}>`,
-    subject: subject,
-    html: `
+  let htmlContent = '';
+  
+  // If a template ID is provided, use the template
+  if (templateId) {
+    try {
+      // Get the template
+      const template = await EmailTemplate.findById(templateId);
+      
+      if (template) {
+        // Replace variables in the template
+        const templateData = {
+          recipientName,
+          messageContent: messageContent.replace(/\n/g, '<br/>'),
+          currentYear: new Date().getFullYear(),
+          subject
+        };
+        
+        // Use the template body
+        htmlContent = renderTemplate(template.body, templateData);
+      }
+    } catch (error) {
+      console.error('Error fetching or rendering template:', error);
+      // Fall back to default template
+    }
+  }
+  
+  // Use default template if no template was found or an error occurred
+  if (!htmlContent) {
+    htmlContent = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background-color: #9bc948; padding: 20px; text-align: center; color: white;">
           <h1>Response to Your Inquiry</h1>
@@ -270,7 +297,22 @@ const sendContactReply = async (recipientEmail, recipientName, subject, messageC
           <p>This email was sent in response to your contact message on our website.</p>
         </div>
       </div>
-    `
+    `;
+  }
+  
+  // Generate a message ID for tracking replies
+  const messageReferenceId = messageId ? generateMessageId(messageId) : null;
+  
+  // Email content
+  const mailOptions = {
+    from: `"Panchamritam Ayurvedic Foods" <${process.env.EMAIL_FROM || process.env.EMAIL_USER || 'info@panchamritam.com'}>`,
+    to: `"${recipientName}" <${recipientEmail}>`,
+    subject: subject,
+    html: htmlContent,
+    messageId: messageReferenceId,
+    headers: {
+      'X-Contact-Message-ID': messageId
+    }
   };
 
   const info = await transporter.sendMail(mailOptions);
@@ -284,11 +326,122 @@ const sendContactReply = async (recipientEmail, recipientName, subject, messageC
   return info;
 };
 
+/**
+ * Send a contact form submission directly to admin email
+ * @param {Object} contactData - The contact form data (name, email, subject, message)
+ * @param {boolean} sendAutoReply - Whether to send an auto-reply to the user
+ * @returns {Promise} - A promise that resolves when the emails are sent
+ */
+const sendContactFormToAdmin = async (contactData, sendAutoReply = true) => {
+  // Make sure transporter is initialized
+  if (!transporter) {
+    await initializeTransporter();
+  }
+  
+  const { name, email, subject, message, phone } = contactData;
+  
+  // Email content for admin notification
+  const adminMailOptions = {
+    from: `"Panchamritam Website" <${process.env.EMAIL_USER || 'noreply@panchamritam.com'}>`,
+    to: process.env.ADMIN_EMAIL || 'admin@panchamritam.com',
+    replyTo: email, // Set reply-to as the customer's email for easy replies
+    subject: `Contact: ${subject || 'Website Inquiry'}`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #9bc948; padding: 20px; text-align: center; color: white;">
+          <h1>Customer Message</h1>
+        </div>
+        
+        <div style="padding: 20px;">
+          <h3>Contact Details</h3>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ''}
+          <p><strong>Subject:</strong> ${subject || 'Website Inquiry'}</p>
+          
+          <h3>Message</h3>
+          <div style="background-color: #f8f8f8; padding: 15px; border-left: 4px solid #9bc948; margin: 20px 0;">
+            <p style="white-space: pre-wrap;">${message}</p>
+          </div>
+          
+          <p>To reply, simply respond directly to this email.</p>
+        </div>
+        
+        <div style="background-color: #f8f8f8; padding: 20px; text-align: center; font-size: 12px; color: #666;">
+          <p>© ${new Date().getFullYear()} Panchamritam Ayurvedic Foods. All rights reserved.</p>
+          <p>This email was sent from your website contact form.</p>
+        </div>
+      </div>
+    `
+  };
+
+  // Send email to admin
+  const adminInfo = await transporter.sendMail(adminMailOptions);
+  
+  // If auto-reply is enabled, send confirmation to the user
+  let userInfo = null;
+  if (sendAutoReply) {
+    const userMailOptions = {
+      from: `"Panchamritam Ayurvedic Foods" <${process.env.EMAIL_USER || 'info@panchamritam.com'}>`,
+      to: `"${name}" <${email}>`,
+      subject: `Thank you for contacting us`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <div style="background-color: #9bc948; padding: 20px; text-align: center; color: white;">
+            <h1>Thank You for Reaching Out</h1>
+          </div>
+          
+          <div style="padding: 20px;">
+            <p>Dear ${name},</p>
+            
+            <p>Thank you for contacting Panchamritam Ayurvedic Foods. This email confirms that we have received your message.</p>
+            
+            <p>We will review your inquiry and get back to you within 24 hours.</p>
+            
+            <p>For your reference, here's a copy of your message:</p>
+            
+            <div style="background-color: #f8f8f8; padding: 15px; border-left: 4px solid #9bc948; margin: 20px 0;">
+              <p><strong>Subject:</strong> ${subject || 'Website Inquiry'}</p>
+              <p style="white-space: pre-wrap;">${message}</p>
+            </div>
+            
+            <p>If you have any additional questions or information to add, please feel free to reply to this email.</p>
+            
+            <p>Best regards,<br>
+            Panchamritam Ayurvedic Foods Team</p>
+          </div>
+          
+          <div style="background-color: #f8f8f8; padding: 20px; text-align: center; font-size: 12px; color: #666;">
+            <p>© ${new Date().getFullYear()} Panchamritam Ayurvedic Foods. All rights reserved.</p>
+            <p>This is an automatic confirmation email. Please do not reply to this message.</p>
+          </div>
+        </div>
+      `
+    };
+    
+    userInfo = await transporter.sendMail(userMailOptions);
+  }
+  
+  // If using Ethereal, log the URLs where the emails can be viewed
+  if (adminInfo.messageId && adminInfo.testMessageUrl) {
+    console.log('Admin notification email sent: %s', adminInfo.messageId);
+    console.log('Preview URL: %s', adminInfo.testMessageUrl);
+  }
+  
+  if (userInfo && userInfo.messageId && userInfo.testMessageUrl) {
+    console.log('User auto-reply email sent: %s', userInfo.messageId);
+    console.log('Preview URL: %s', userInfo.testMessageUrl);
+  }
+  
+  return { adminInfo, userInfo };
+};
+
 // Initialize the transporter
 initializeTransporter().catch(console.error);
 
 module.exports = {
   sendOrderConfirmation,
   sendInvoiceEmail,
-  sendContactReply
+  sendContactReply,
+  sendContactFormToAdmin
 }; 

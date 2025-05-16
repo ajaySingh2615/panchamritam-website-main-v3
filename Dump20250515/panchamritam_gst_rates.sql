@@ -16,33 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `cart_items`
+-- Table structure for table `gst_rates`
 --
 
-DROP TABLE IF EXISTS `cart_items`;
+DROP TABLE IF EXISTS `gst_rates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `cart_items` (
-  `cart_item_id` int NOT NULL AUTO_INCREMENT,
-  `cart_id` int DEFAULT NULL,
-  `product_id` int DEFAULT NULL,
-  `quantity` int DEFAULT NULL,
-  PRIMARY KEY (`cart_item_id`),
-  KEY `cart_id` (`cart_id`),
-  KEY `product_id` (`product_id`),
-  CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`),
-  CONSTRAINT `cart_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `gst_rates` (
+  `rate_id` int NOT NULL AUTO_INCREMENT,
+  `rate_name` varchar(50) NOT NULL,
+  `percentage` decimal(5,2) NOT NULL,
+  `description` text,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`rate_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cart_items`
+-- Dumping data for table `gst_rates`
 --
 
-LOCK TABLES `cart_items` WRITE;
-/*!40000 ALTER TABLE `cart_items` DISABLE KEYS */;
-INSERT INTO `cart_items` VALUES (24,2,15,1);
-/*!40000 ALTER TABLE `cart_items` ENABLE KEYS */;
+LOCK TABLES `gst_rates` WRITE;
+/*!40000 ALTER TABLE `gst_rates` DISABLE KEYS */;
+INSERT INTO `gst_rates` VALUES (1,'Unbranded, Unpackaged Food Grains',5.00,NULL,'2025-05-07 12:37:22','2025-05-07 12:37:22'),(2,'Branded & Packaged Food Grains',7.00,NULL,'2025-05-08 05:59:01','2025-05-08 05:59:01');
+/*!40000 ALTER TABLE `gst_rates` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-07 18:31:26
+-- Dump completed on 2025-05-15 17:14:10
