@@ -8,7 +8,7 @@ const ContactMessages = () => {
         <h1 className="text-2xl font-semibold text-gray-800">Contact Messages</h1>
         <p className="text-gray-600 mt-2">Contact form management has been updated.</p>
       </div>
-
+      
       <div className="bg-white shadow-md rounded-lg p-6">
         <div className="flex items-center justify-center">
           <div className="text-center max-w-2xl">
@@ -48,8 +48,8 @@ const ContactMessages = () => {
               </Link>
             </div>
           </div>
+          </div>
         </div>
-      </div>
     </div>
   );
 };

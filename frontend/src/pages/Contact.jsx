@@ -271,32 +271,32 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-[#f8f6f3]">
-      {/* Modern Hero Section for Organic Farming E-commerce - keeping #f8f6f3 */}
+      {/* Modern Hero Section with premium styling */}
       <div className={`relative transition-all duration-700 ease-out ${loaded ? 'opacity-100' : 'opacity-0 translate-y-10'}`}>
-        {/* Organic gradient background */}
+        {/* Premium gradient background with texture */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#f8f6f3] via-[#f1efe9] to-[#e8e4d9] opacity-70"></div>
-        
-        {/* Decorative monstera leaf in the right corner with parallax */}
+      
+        {/* Decorative monstera leaf with enhanced parallax */}
         <div 
           ref={heroLeafRef} 
           className="absolute top-0 right-0 w-96 h-96 pointer-events-none z-0 overflow-hidden opacity-25 transition-transform duration-1000 ease-out"
-          style={{ transform: `translate(25%, -25%) translateY(${leafOffset * 0.5}px)` }}
+          style={{ transform: `translate(25%, -25%) translateY(${leafOffset * 0.5}px) rotate(${scrolled ? '5deg' : '0deg'})` }}
         >
           <img 
             src={leaf1Image} 
             alt="" 
-            className="w-full h-full object-contain"
+            className="w-full h-full object-contain filter drop-shadow-lg"
           />
         </div>
         
-        {/* Content container */}
-        <div className={`relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 transition-all duration-500 ${scrolled ? 'transform -translate-y-4' : ''}`}>
-          {/* Breadcrumb navigation */}
-          <div className="mb-6">
+        {/* Content container with premium styling */}
+        <div className={`relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20 transition-all duration-500 ${scrolled ? 'transform -translate-y-4' : ''}`}>
+          {/* Breadcrumb navigation with refined styling */}
+          <div className="mb-8">
             <nav className="flex" aria-label="Breadcrumb">
               <ol className="inline-flex items-center space-x-1 md:space-x-3">
                 <li className="inline-flex items-center">
-                  <a href="/" className="text-[#4D7C0F] hover:text-green-800 text-sm font-medium transition-colors">
+                  <a href="/" className="text-[#5B8C3E] hover:text-[#3B5323] text-sm font-medium transition-colors">
                     Home
                   </a>
                 </li>
@@ -312,28 +312,28 @@ const Contact = () => {
             </nav>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-            {/* Left column - Hero content */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left column - Hero content with premium typography */}
             <div className={`transition-all duration-700 delay-300 ${loaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-              <div className="inline-block px-3 py-1 rounded-full bg-[#4D7C0F] text-white text-xs font-semibold mb-4">
+              <div className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white text-xs font-semibold mb-4 shadow-sm">
                 Get in Touch
               </div>
               
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1F2937] leading-tight mb-6 transition-all duration-500">
-                Let's Start a <span className="text-[#4D7C0F] relative overflow-hidden group">
-                  <span className="inline-block transition-transform duration-300 group-hover:transform group-hover:-translate-y-1">Conversation</span>
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#4D7C0F] transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100 origin-left"></span>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1F2937] leading-tight mb-6 transition-all duration-500 serif-heading">
+                Let's Start a <span className="relative overflow-hidden group">
+                  <span className="inline-block transition-transform duration-300 group-hover:transform group-hover:-translate-y-1 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] bg-clip-text text-transparent">Conversation</span>
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100 origin-left"></span>
                 </span>
               </h1>
               
-              <p className="text-base md:text-lg text-[#6B7280] mb-8 max-w-xl leading-relaxed">
+              <p className="text-base md:text-lg text-[#6B7280] mb-8 max-w-xl leading-relaxed sans-text">
                 Have questions about our organic products or farming practices? We're here to help you connect with truly sustainable farming.
               </p>
               
               <div className="flex flex-wrap gap-4 mb-6">
                 <motion.a 
                   href="#contact-form" 
-                  className="inline-flex items-center justify-center bg-[#4D7C0F] hover:bg-green-800 text-white font-medium py-3 px-8 rounded-md transition-all duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform hover:-translate-y-1 hover:shadow-lg active:translate-y-0"
+                  className="inline-flex items-center justify-center bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white font-medium py-3 px-8 rounded-md transition-all duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform hover:-translate-y-1 hover:shadow-lg active:translate-y-0 backdrop-filter backdrop-blur-sm"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -345,7 +345,7 @@ const Contact = () => {
                 
                 <motion.a 
                   href="#why-organic" 
-                  className="inline-flex items-center justify-center bg-white border border-[#E5E7EB] text-[#4D7C0F] hover:bg-[#ECFDF5] font-medium py-3 px-8 rounded-md transition-all duration-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform hover:-translate-y-1 hover:shadow-md active:translate-y-0"
+                  className="inline-flex items-center justify-center bg-white border border-[#E5E7EB] text-[#5B8C3E] hover:bg-[#EDF5E5] font-medium py-3 px-8 rounded-md transition-all duration-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform hover:-translate-y-1 hover:shadow-md active:translate-y-0 backdrop-filter backdrop-blur-sm"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -356,12 +356,12 @@ const Contact = () => {
                 </motion.a>
               </div>
               
-              {/* Social proof with client images */}
+              {/* Social proof with enhanced styling */}
               <div 
                 ref={socialProofRef}
-                className={`mt-8 pt-6 border-t border-[#E5E7EB] transition-all duration-700 delay-500 ease-out transform ${socialProofVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                className={`mt-10 pt-6 border-t border-[#E5E7EB] transition-all duration-700 delay-500 ease-out transform ${socialProofVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
               >
-                <p className="mb-3 text-sm font-medium text-[#4D7C0F]">Trusted by Organic Enthusiasts</p>
+                <p className="mb-3 text-sm font-medium bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] bg-clip-text text-transparent">Trusted by Organic Enthusiasts</p>
                 <div className="flex -space-x-3">
                   {[
                     { img: personImage1, alt: "Client testimonial" },
@@ -386,7 +386,7 @@ const Contact = () => {
                   ))}
                 </div>
                 <motion.p 
-                  className="mt-3 text-[#6B7280] text-sm italic"
+                  className="mt-3 text-[#6B7280] text-sm italic accent-text"
                   initial={{ opacity: 0 }}
                   animate={socialProofVisible ? { opacity: 1 } : { opacity: 0 }}
                   transition={{ duration: 0.5, delay: 0.8 }}
@@ -396,20 +396,26 @@ const Contact = () => {
               </div>
             </div>
             
-            {/* Right column - Hero image instead of contact details */}
+            {/* Right column - Hero card with glass effect */}
             <div 
               ref={heroImageRef}
               className={`relative h-full flex items-center justify-center p-4 transition-all duration-700 transform ${loaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'} ${heroImageVisible ? 'scale-100' : 'scale-95'}`}
             >
               <motion.div 
-                className="relative w-full max-w-md h-80 lg:h-96 bg-white rounded-lg overflow-hidden shadow-lg transform transition-all duration-500 hover:shadow-2xl hover:scale-105"
+                className="relative w-full max-w-md h-80 lg:h-96 rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-500 hover:shadow-2xl hover:scale-105"
                 initial={{ y: 30, opacity: 0 }}
                 animate={heroImageVisible ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
                 transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
               >
-                <div className="absolute top-0 left-0 w-full h-full bg-[#f8f6f3] flex flex-col items-center justify-center p-8 text-center">
+                {/* Gradient background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#f8f6f3] to-[#e8e4d9] opacity-90"></div>
+                
+                {/* Glass effect overlay */}
+                <div className="absolute inset-0 backdrop-filter backdrop-blur-sm bg-white bg-opacity-20 border border-white border-opacity-20"></div>
+                
+                <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center p-8 text-center z-10">
                   <motion.div 
-                    className="w-20 h-20 mb-6 rounded-full bg-[#4D7C0F] flex items-center justify-center transition-transform duration-500 hover:rotate-12"
+                    className="w-20 h-20 mb-6 rounded-full bg-gradient-to-br from-[#5B8C3E] to-[#7BAD50] flex items-center justify-center transition-transform duration-500 hover:rotate-12 shadow-lg"
                     animate={{ y: [0, -10, 0] }}
                     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                   >
@@ -418,7 +424,7 @@ const Contact = () => {
                     </svg>
                   </motion.div>
                   <motion.h2 
-                    className="text-2xl font-bold text-[#1F2937] mb-2"
+                    className="text-2xl font-bold text-[#1F2937] mb-2 serif-heading"
                     initial={{ opacity: 0 }}
                     animate={heroImageVisible ? { opacity: 1 } : { opacity: 0 }}
                     transition={{ delay: 0.5, duration: 0.5 }}
@@ -426,7 +432,7 @@ const Contact = () => {
                     Reach Out To Us
                   </motion.h2>
                   <motion.p 
-                    className="text-[#6B7280] mb-4"
+                    className="text-[#6B7280] mb-4 sans-text"
                     initial={{ opacity: 0 }}
                     animate={heroImageVisible ? { opacity: 1 } : { opacity: 0 }}
                     transition={{ delay: 0.7, duration: 0.5 }}
@@ -434,7 +440,7 @@ const Contact = () => {
                     We're excited to hear from you about our organic products
                   </motion.p>
                   <motion.span 
-                    className="inline-block px-4 py-2 bg-[#4D7C0F] text-white rounded-full text-sm font-semibold hover:bg-green-800 transition-colors duration-300 cursor-pointer transform hover:scale-105 active:scale-95"
+                    className="inline-block px-4 py-2 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white rounded-full text-sm font-semibold hover:bg-green-800 transition-colors duration-300 cursor-pointer transform hover:scale-105 active:scale-95 shadow-md"
                     initial={{ opacity: 0, y: 20 }}
                     animate={heroImageVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                     transition={{ delay: 0.9, duration: 0.5 }}
@@ -450,8 +456,12 @@ const Contact = () => {
         </div>
       </div>
 
-      {/* Contact Form Section - White background - MOVED BEFORE Contact Information Section */}
+      {/* Contact Form Section - Glass morphism with premium styling */}
       <div id="contact-form" ref={formSectionRef} className="py-20 bg-white relative overflow-hidden">
+        {/* Decorative blob gradients in background */}
+        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-br from-[#5B8C3E]/5 to-[#7BAD50]/10 rounded-full filter blur-3xl opacity-50 animate-blob"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-gradient-to-br from-[#EDF5E5] to-[#AECB95]/20 rounded-full filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+        
         {/* Decorative leaf in bottom right corner with parallax */}
         <div 
           ref={formSectionLeafRef}
@@ -461,7 +471,7 @@ const Contact = () => {
           <img 
             src={leafImage} 
             alt="" 
-            className="w-full h-full object-contain"
+            className="w-full h-full object-contain filter drop-shadow-lg"
           />
         </div>
         
@@ -473,7 +483,7 @@ const Contact = () => {
           <img 
             src={leafImage} 
             alt="" 
-            className="w-full h-full object-contain"
+            className="w-full h-full object-contain filter drop-shadow-lg"
           />
         </div>
         
@@ -509,7 +519,7 @@ const Contact = () => {
                     className="h-4 w-4 rounded-sm"
                     style={{
                       backgroundColor: 
-                        [`#4D7C0F`, `#A7F3D0`, `#ECFDF5`, `#34D399`, `#065F46`][
+                        [`#5B8C3E`, `#AECB95`, `#EDF5E5`, `#8DB56A`, `#3B5323`][
                           Math.floor(Math.random() * 5)
                         ],
                     }}
@@ -530,10 +540,10 @@ const Contact = () => {
           >
             <div className="mb-4">
               <motion.span 
-                className="inline-block px-6 py-1.5 rounded-full bg-gradient-to-r from-[#4D7C0F] to-[#65a30d] text-white text-sm font-medium shadow-sm"
+                className="inline-block px-6 py-1.5 rounded-full bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white text-sm font-medium shadow-md"
                 whileHover={{ 
                   scale: 1.05,
-                  boxShadow: "0 4px 12px rgba(77, 124, 15, 0.25)"
+                  boxShadow: "0 4px 12px rgba(91, 140, 62, 0.25)"
                 }}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -542,8 +552,8 @@ const Contact = () => {
                 Get In Touch
               </motion.span>
             </div>
-            <h2 className="text-4xl font-bold text-[#1F2937] mb-4">Send Us a Message</h2>
-            <p className="mt-4 text-[#6B7280] text-lg max-w-2xl mx-auto">
+            <h2 className="text-4xl font-bold text-[#1F2937] mb-4 serif-heading">Send Us a Message</h2>
+            <p className="mt-4 text-[#6B7280] text-lg max-w-2xl mx-auto sans-text">
               Have a question or want to learn more about our organic products? We'd love to hear from you.
             </p>
           </motion.div>
@@ -552,7 +562,7 @@ const Contact = () => {
           <AnimatePresence mode="wait">
             {formStatus.submitted && formStatus.success && (
               <motion.div 
-                className="mb-10 bg-[#ECFDF5] border border-[#A7F3D0] rounded-lg p-6"
+                className="mb-10 bg-gradient-to-r from-[#EDF5E5] to-[#EDF5E5] backdrop-filter backdrop-blur-sm border border-[#AECB95] rounded-xl p-6 shadow-lg"
                 initial={{ opacity: 0, y: 50, scale: 0.9 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
@@ -569,13 +579,13 @@ const Contact = () => {
                     animate={{ scale: [0, 1.5, 1] }}
                     transition={{ duration: 0.6, times: [0, 0.6, 1] }}
                   >
-                    <svg className="h-5 w-5 text-[#4D7C0F]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <svg className="h-5 w-5 text-[#5B8C3E]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                   </motion.div>
                   <div className="ml-3">
                     <motion.h3 
-                      className="text-lg font-medium text-[#4D7C0F]"
+                      className="text-lg font-medium text-[#5B8C3E] serif-heading"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.3 }}
@@ -583,7 +593,7 @@ const Contact = () => {
                       Message Sent!
                     </motion.h3>
                     <motion.div 
-                      className="mt-2 text-[#6B7280]"
+                      className="mt-2 text-[#6B7280] sans-text"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.5 }}
@@ -599,7 +609,7 @@ const Contact = () => {
                       <button
                         type="button"
                         onClick={() => setFormStatus({ submitted: false, success: false, message: '' })}
-                        className="text-sm font-medium text-[#4D7C0F] hover:text-green-800 focus:outline-none focus:underline"
+                        className="text-sm font-medium text-[#5B8C3E] hover:text-[#3B5323] focus:outline-none focus:underline transition-colors duration-300"
                       >
                         Send another message
                       </button>
@@ -612,7 +622,7 @@ const Contact = () => {
             {/* Form Error Message with error animation */}
             {formStatus.submitted && !formStatus.success && (
               <motion.div 
-                className="mb-10 bg-red-50 border border-red-200 rounded-lg p-6"
+                className="mb-10 bg-gradient-to-r from-red-50 to-red-100 backdrop-filter backdrop-blur-sm border border-red-200 rounded-xl p-6 shadow-lg"
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 50 }}
@@ -626,18 +636,18 @@ const Contact = () => {
                   >
                     <svg className="h-5 w-5 text-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                    </svg>
+                  </svg>
                   </motion.div>
                   <div className="ml-3">
-                    <h3 className="text-lg font-medium text-red-800">Error</h3>
-                    <div className="mt-2 text-red-700">
+                    <h3 className="text-lg font-medium text-red-800 serif-heading">Error</h3>
+                    <div className="mt-2 text-red-700 sans-text">
                       <p>{formStatus.message}</p>
                     </div>
                     <div className="mt-4">
                       <button
                         type="button"
                         onClick={() => setFormStatus({ submitted: false, success: false, message: '' })}
-                        className="text-sm font-medium text-red-600 hover:text-red-800 focus:outline-none focus:underline"
+                        className="text-sm font-medium text-red-600 hover:text-red-800 focus:outline-none focus:underline transition-colors duration-300"
                       >
                         Try again
                       </button>
@@ -658,218 +668,223 @@ const Contact = () => {
                 exit={{ opacity: 0, y: -50 }}
                 transition={{ duration: 0.8 }}
               >
-                {/* Left Column - Contact Form - Now using 3 columns instead of half */}
+                {/* Left Column - Contact Form - Glass effect */}
                 <motion.div 
-                  className="col-span-1 lg:col-span-3 bg-white rounded-xl shadow-md p-8"
+                  className="col-span-1 lg:col-span-3 bg-white bg-opacity-70 backdrop-filter backdrop-blur-lg rounded-xl border border-white border-opacity-20 shadow-xl p-8 relative overflow-hidden"
                   initial={{ x: -50, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.2, duration: 0.8 }}
                 >
-                  <h3 className="text-xl font-semibold text-[#1F2937] mb-5">Send a Message</h3>
-                  <form onSubmit={handleSubmit} className="space-y-5">
-                    {/* 2-column layout for name and email */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                      {/* Name Field with subtle animation */}
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.3 }}
-                      >
-                        <label htmlFor="name" className="block text-sm font-medium text-[#4B5563] mb-1">
-                          Name <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          id="name"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          className={`w-full px-4 py-2.5 rounded-md border ${formErrors.name ? 'border-red-500 bg-red-50' : 'border-[#E5E7EB]'} focus:outline-none focus:ring-1 focus:ring-[#4D7C0F] focus:border-[#4D7C0F] transition-colors`}
-                          placeholder="Your full name"
-                        />
-                        {formErrors.name && (
-                          <motion.p 
-                            className="mt-1 text-xs text-red-600"
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                          >
-                            {formErrors.name}
-                          </motion.p>
-                        )}
-                      </motion.div>
-                      
-                      {/* Email Field */}
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.4 }}
-                      >
-                        <label htmlFor="email" className="block text-sm font-medium text-[#4B5563] mb-1">
-                          Email <span className="text-red-500">*</span>
-                        </label>
-                        <input
-                          type="email"
-                          id="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          className={`w-full px-4 py-2.5 rounded-md border ${formErrors.email ? 'border-red-500 bg-red-50' : 'border-[#E5E7EB]'} focus:outline-none focus:ring-1 focus:ring-[#4D7C0F] focus:border-[#4D7C0F] transition-colors`}
-                          placeholder="you@example.com"
-                        />
-                        {formErrors.email && (
-                          <motion.p 
-                            className="mt-1 text-xs text-red-600"
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                          >
-                            {formErrors.email}
-                          </motion.p>
-                        )}
-                      </motion.div>
-                    </div>
-                    
-                    {/* 2-column layout for phone and subject */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                      {/* Phone Field */}
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.5 }}
-                      >
-                        <label htmlFor="phone" className="block text-sm font-medium text-[#4B5563] mb-1">
-                          Phone <span className="text-[#9CA3AF] text-xs">(optional)</span>
-                        </label>
-                        <input
-                          type="tel"
-                          id="phone"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          className="w-full px-4 py-2.5 rounded-md border border-[#E5E7EB] focus:outline-none focus:ring-1 focus:ring-[#4D7C0F] focus:border-[#4D7C0F] transition-colors"
-                          placeholder="(123) 456-7890"
-                        />
-                      </motion.div>
-                      
-                      {/* Subject Dropdown */}
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.6 }}
-                      >
-                        <label htmlFor="subject" className="block text-sm font-medium text-[#4B5563] mb-1">
-                          Subject
-                        </label>
-                        <select
-                          id="subject"
-                          name="subject"
-                          value={formData.subject}
-                          onChange={handleChange}
-                          className="w-full px-4 py-2.5 rounded-md border border-[#E5E7EB] focus:outline-none focus:ring-1 focus:ring-[#4D7C0F] focus:border-[#4D7C0F] transition-colors"
+                  {/* Subtle gradient accent in top-left */}
+                  <div className="absolute -top-20 -left-20 w-40 h-40 bg-gradient-to-br from-[#5B8C3E]/20 to-[#7BAD50]/10 rounded-full filter blur-2xl"></div>
+                  
+                  <div className="relative z-10">
+                    <h3 className="text-xl font-semibold text-[#1F2937] mb-5 serif-heading">Send a Message</h3>
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                      {/* 2-column layout for name and email */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        {/* Name Field with subtle animation */}
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.3 }}
                         >
-                          <option value="Question">Question</option>
-                          <option value="Feedback">Feedback</option>
-                          <option value="Order Issue">Order Issue</option>
-                          <option value="Wholesale Inquiry">Wholesale Inquiry</option>
-                          <option value="Other">Other</option>
-                        </select>
-                      </motion.div>
-                    </div>
-                    
-                    {/* Message Field */}
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.7 }}
-                    >
-                      <label htmlFor="message" className="block text-sm font-medium text-[#4B5563] mb-1">
-                        Message <span className="text-red-500">*</span>
-                      </label>
-                      <textarea
-                        id="message"
-                        name="message"
-                        value={formData.message}
-                        onChange={handleChange}
-                        rows="4"
-                        className={`w-full px-4 py-2.5 rounded-md border ${formErrors.message ? 'border-red-500 bg-red-50' : 'border-[#E5E7EB]'} focus:outline-none focus:ring-1 focus:ring-[#4D7C0F] focus:border-[#4D7C0F] transition-colors`}
-                        placeholder="How can we help you?"
-                      ></textarea>
-                      {formErrors.message && (
-                        <motion.p 
-                          className="mt-1 text-xs text-red-600"
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                        >
-                          {formErrors.message}
-                        </motion.p>
-                      )}
-                    </motion.div>
-                    
-                    {/* Submit Button with special animation */}
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.8 }}
-                      className="flex items-center justify-between pt-2"
-                    >
-                      <p className="text-xs text-[#6B7280]">Fields marked with <span className="text-red-500">*</span> are required</p>
-                      
-                      <motion.button
-                        ref={buttonRef}
-                        type="submit"
-                        disabled={isSubmitting}
-                        className={`px-6 py-2.5 bg-[#4D7C0F] text-white rounded-md shadow-md transition-all duration-300 hover:bg-green-800 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
-                        whileTap={{ scale: 0.95 }}
-                        whileHover={{ 
-                          scale: 1.02,
-                          boxShadow: "0 10px 25px -5px rgba(77, 124, 15, 0.4)"
-                        }}
-                      >
-                        {isSubmitting ? (
-                          <motion.span 
-                            className="flex items-center justify-center"
-                            animate={{ opacity: [0.5, 1, 0.5] }}
-                            transition={{ repeat: Infinity, duration: 1.5 }}
-                          >
-                            <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                            Sending...
-                          </motion.span>
-                        ) : (
-                          <motion.span 
-                            className="flex items-center justify-center"
-                            initial={{ y: 0 }}
-                            whileHover={{ y: -2 }}
-                          >
-                            Send Message
-                            <motion.svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-4 w-4 ml-2"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              animate={{ x: [0, 5, 0] }}
-                              transition={{ 
-                                repeat: Infinity, 
-                                repeatType: "mirror", 
-                                duration: 1.5, 
-                                ease: "easeInOut" 
-                              }}
+                          <label htmlFor="name" className="block text-sm font-medium text-[#4B5563] mb-1 sans-text">
+                            Name <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            className={`w-full px-4 py-2.5 rounded-md border ${formErrors.name ? 'border-red-500 bg-red-50' : 'border-[#E5E7EB]'} focus:outline-none focus:ring-1 focus:ring-[#5B8C3E] focus:border-[#5B8C3E] transition-colors bg-white bg-opacity-80 backdrop-filter backdrop-blur-sm`}
+                            placeholder="Your full name"
+                          />
+                          {formErrors.name && (
+                            <motion.p 
+                              className="mt-1 text-xs text-red-600"
+                              initial={{ opacity: 0, y: -10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -10 }}
                             >
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                            </motion.svg>
-                          </motion.span>
+                              {formErrors.name}
+                            </motion.p>
+                          )}
+                        </motion.div>
+                        
+                        {/* Email Field */}
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.4 }}
+                        >
+                          <label htmlFor="email" className="block text-sm font-medium text-[#4B5563] mb-1 sans-text">
+                            Email <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            className={`w-full px-4 py-2.5 rounded-md border ${formErrors.email ? 'border-red-500 bg-red-50' : 'border-[#E5E7EB]'} focus:outline-none focus:ring-1 focus:ring-[#5B8C3E] focus:border-[#5B8C3E] transition-colors bg-white bg-opacity-80 backdrop-filter backdrop-blur-sm`}
+                            placeholder="you@example.com"
+                          />
+                          {formErrors.email && (
+                            <motion.p 
+                              className="mt-1 text-xs text-red-600"
+                              initial={{ opacity: 0, y: -10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -10 }}
+                            >
+                              {formErrors.email}
+                            </motion.p>
+                          )}
+                        </motion.div>
+                      </div>
+                      
+                      {/* 2-column layout for phone and subject */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        {/* Phone Field */}
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.5 }}
+                        >
+                          <label htmlFor="phone" className="block text-sm font-medium text-[#4B5563] mb-1 sans-text">
+                            Phone <span className="text-[#9CA3AF] text-xs">(optional)</span>
+                          </label>
+                          <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2.5 rounded-md border border-[#E5E7EB] focus:outline-none focus:ring-1 focus:ring-[#5B8C3E] focus:border-[#5B8C3E] transition-colors bg-white bg-opacity-80 backdrop-filter backdrop-blur-sm"
+                            placeholder="(123) 456-7890"
+                          />
+                        </motion.div>
+                        
+                        {/* Subject Dropdown */}
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.6 }}
+                        >
+                          <label htmlFor="subject" className="block text-sm font-medium text-[#4B5563] mb-1 sans-text">
+                            Subject
+                          </label>
+                          <select
+                            id="subject"
+                            name="subject"
+                            value={formData.subject}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2.5 rounded-md border border-[#E5E7EB] focus:outline-none focus:ring-1 focus:ring-[#5B8C3E] focus:border-[#5B8C3E] transition-colors bg-white bg-opacity-80 backdrop-filter backdrop-blur-sm"
+                          >
+                            <option value="Question">Question</option>
+                            <option value="Feedback">Feedback</option>
+                            <option value="Order Issue">Order Issue</option>
+                            <option value="Wholesale Inquiry">Wholesale Inquiry</option>
+                            <option value="Other">Other</option>
+                          </select>
+                        </motion.div>
+                      </div>
+                      
+                      {/* Message Field */}
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.7 }}
+                      >
+                        <label htmlFor="message" className="block text-sm font-medium text-[#4B5563] mb-1 sans-text">
+                          Message <span className="text-red-500">*</span>
+                        </label>
+                        <textarea
+                          id="message"
+                          name="message"
+                          value={formData.message}
+                          onChange={handleChange}
+                          rows="4"
+                          className={`w-full px-4 py-2.5 rounded-md border ${formErrors.message ? 'border-red-500 bg-red-50' : 'border-[#E5E7EB]'} focus:outline-none focus:ring-1 focus:ring-[#5B8C3E] focus:border-[#5B8C3E] transition-colors bg-white bg-opacity-80 backdrop-filter backdrop-blur-sm`}
+                          placeholder="How can we help you?"
+                        ></textarea>
+                        {formErrors.message && (
+                          <motion.p 
+                            className="mt-1 text-xs text-red-600"
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                          >
+                            {formErrors.message}
+                          </motion.p>
                         )}
-                      </motion.button>
-                    </motion.div>
-                  </form>
+                      </motion.div>
+                      
+                      {/* Submit Button with special animation */}
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.8 }}
+                        className="flex items-center justify-between pt-2"
+                      >
+                        <p className="text-xs text-[#6B7280] sans-text">Fields marked with <span className="text-red-500">*</span> are required</p>
+                        
+                        <motion.button
+                          ref={buttonRef}
+                          type="submit"
+                          disabled={isSubmitting}
+                          className={`px-6 py-2.5 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white rounded-md shadow-md transition-all duration-300 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
+                          whileTap={{ scale: 0.95 }}
+                          whileHover={{ 
+                            scale: 1.02,
+                            boxShadow: "0 10px 25px -5px rgba(91, 140, 62, 0.4)"
+                          }}
+                        >
+                          {isSubmitting ? (
+                            <motion.span 
+                              className="flex items-center justify-center"
+                              animate={{ opacity: [0.5, 1, 0.5] }}
+                              transition={{ repeat: Infinity, duration: 1.5 }}
+                            >
+                              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                              </svg>
+                              Sending...
+                            </motion.span>
+                          ) : (
+                            <motion.span 
+                              className="flex items-center justify-center"
+                              initial={{ y: 0 }}
+                              whileHover={{ y: -2 }}
+                            >
+                              Send Message
+                              <motion.svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-4 w-4 ml-2"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                animate={{ x: [0, 5, 0] }}
+                                transition={{ 
+                                  repeat: Infinity, 
+                                  repeatType: "mirror", 
+                                  duration: 1.5, 
+                                  ease: "easeInOut" 
+                                }}
+                              >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                              </motion.svg>
+                            </motion.span>
+                          )}
+                        </motion.button>
+                      </motion.div>
+                    </form>
+                  </div>
                 </motion.div>
                 
-                {/* Right Column - Additional Information - Now using 2 columns */}
+                {/* Right Column - With glass morphism effect */}
                 <motion.div 
                   className="col-span-1 lg:col-span-2 relative"
                   initial={{ x: 50, opacity: 0 }}
@@ -877,55 +892,58 @@ const Contact = () => {
                   transition={{ delay: 0.4, duration: 0.8 }}
                 >
                   {/* Decorative background element */}
-                  <div className="absolute -top-6 -right-6 w-48 h-48 bg-[#ECFDF5] rounded-full opacity-30 z-0"></div>
+                  <div className="absolute -top-6 -right-6 w-48 h-48 bg-gradient-to-br from-[#EDF5E5] to-[#EDF5E5] rounded-full opacity-50 filter blur-2xl z-0"></div>
                   
-                  {/* Content card */}
-                  <div className="relative z-10 bg-white rounded-xl shadow-md p-6 border-t-4 border-[#4D7C0F] h-full flex flex-col">
-                    <h3 className="text-xl font-semibold text-[#1F2937] mb-4">Why Choose Organic?</h3>
+                  {/* Content card with glass morphism */}
+                  <div className="relative z-10 bg-white bg-opacity-70 backdrop-filter backdrop-blur-lg rounded-xl border border-white border-opacity-20 shadow-xl p-6 h-full flex flex-col overflow-hidden">
+                    {/* Gradient top border */}
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50]"></div>
+                    
+                    <h3 className="text-xl font-semibold text-[#1F2937] mb-4 serif-heading">Why Choose Organic?</h3>
                     
                     <div className="mt-2 space-y-4 flex-grow">
                       {/* Feature 1 */}
-                      <div className="flex items-start">
+                      <div className="flex items-start group">
                         <div className="flex-shrink-0 mt-1">
-                          <div className="flex items-center justify-center h-8 w-8 rounded-md bg-[#ECFDF5] text-[#4D7C0F]">
+                          <div className="flex items-center justify-center h-8 w-8 rounded-md bg-gradient-to-br from-[#EDF5E5] to-[#EDF5E5] text-[#5B8C3E] shadow-sm transition-transform duration-300 group-hover:scale-110">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                             </svg>
                           </div>
                         </div>
                         <div className="ml-3">
-                          <h4 className="text-base font-medium text-[#1F2937]">Certified Organic</h4>
-                          <p className="mt-1 text-sm text-[#6B7280]">Free from harmful pesticides and chemicals.</p>
+                          <h4 className="text-base font-medium text-[#1F2937] serif-heading">Certified Organic</h4>
+                          <p className="mt-1 text-sm text-[#6B7280] sans-text">Free from harmful pesticides and chemicals.</p>
                         </div>
                       </div>
                       
                       {/* Feature 2 */}
-                      <div className="flex items-start">
+                      <div className="flex items-start group">
                         <div className="flex-shrink-0 mt-1">
-                          <div className="flex items-center justify-center h-8 w-8 rounded-md bg-[#ECFDF5] text-[#4D7C0F]">
+                          <div className="flex items-center justify-center h-8 w-8 rounded-md bg-gradient-to-br from-[#EDF5E5] to-[#EDF5E5] text-[#5B8C3E] shadow-sm transition-transform duration-300 group-hover:scale-110">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                             </svg>
                           </div>
                         </div>
                         <div className="ml-3">
-                          <h4 className="text-base font-medium text-[#1F2937]">Customizable Orders</h4>
-                          <p className="mt-1 text-sm text-[#6B7280]">Flexible sizing and customization options.</p>
+                          <h4 className="text-base font-medium text-[#1F2937] serif-heading">Customizable Orders</h4>
+                          <p className="mt-1 text-sm text-[#6B7280] sans-text">Flexible sizing and customization options.</p>
                         </div>
                       </div>
                       
                       {/* Feature 3 */}
-                      <div className="flex items-start">
+                      <div className="flex items-start group">
                         <div className="flex-shrink-0 mt-1">
-                          <div className="flex items-center justify-center h-8 w-8 rounded-md bg-[#ECFDF5] text-[#4D7C0F]">
+                          <div className="flex items-center justify-center h-8 w-8 rounded-md bg-gradient-to-br from-[#EDF5E5] to-[#EDF5E5] text-[#5B8C3E] shadow-sm transition-transform duration-300 group-hover:scale-110">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                           </div>
                         </div>
                         <div className="ml-3">
-                          <h4 className="text-base font-medium text-[#1F2937]">Fast Delivery</h4>
-                          <p className="mt-1 text-sm text-[#6B7280]">Quick and reliable delivery to maintain freshness.</p>
+                          <h4 className="text-base font-medium text-[#1F2937] serif-heading">Fast Delivery</h4>
+                          <p className="mt-1 text-sm text-[#6B7280] sans-text">Quick and reliable delivery to maintain freshness.</p>
                         </div>
                       </div>
                     </div>
@@ -936,12 +954,12 @@ const Contact = () => {
                           <img 
                             src={personImage6} 
                             alt="Organic farming specialist" 
-                            className="h-12 w-12 rounded-full object-cover border-2 border-[#4D7C0F]" 
+                            className="h-12 w-12 rounded-full object-cover border-2 border-[#5B8C3E] shadow-md" 
                           />
                         </div>
                         <div className="ml-3">
-                          <h4 className="text-base font-medium text-[#1F2937]">Emma Thompson</h4>
-                          <p className="text-sm text-[#6B7280]">Organic Specialist</p>
+                          <h4 className="text-base font-medium text-[#1F2937] serif-heading">Emma Thompson</h4>
+                          <p className="text-sm text-[#6B7280] sans-text">Organic Specialist</p>
                         </div>
                       </div>
                     </div>
@@ -959,10 +977,10 @@ const Contact = () => {
           <div className={`mb-12 text-center transition-all duration-700 transform ${contactSectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="mb-4">
               <motion.span 
-                className="inline-block px-6 py-1.5 rounded-full bg-gradient-to-r from-[#4D7C0F] to-[#65a30d] text-white text-sm font-medium shadow-sm"
+                className="inline-block px-6 py-1.5 rounded-full bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white text-sm font-medium shadow-md"
                 whileHover={{ 
                   scale: 1.05,
-                  boxShadow: "0 4px 12px rgba(77, 124, 15, 0.25)"
+                  boxShadow: "0 4px 12px rgba(91, 140, 62, 0.25)"
                 }}
               >
                 Get In Touch
@@ -981,7 +999,7 @@ const Contact = () => {
               className={`bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-700 hover:-translate-y-2 hover:shadow-xl ${card1Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
               style={{ transitionDelay: '0ms' }}
             >
-              <div className="bg-[#4D7C0F] text-white h-20 flex justify-center items-center">
+              <div className="bg-[#5B8C3E] text-white h-20 flex justify-center items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
@@ -989,7 +1007,7 @@ const Contact = () => {
               <div className="p-6">
                 <h3 className="text-xl font-bold text-[#1F2937] mb-2">Email</h3>
                 <p className="text-[#6B7280] mb-4">For any inquiries about our products or services</p>
-                <a href="mailto:support@organicfarm.com" className="text-[#4D7C0F] hover:text-green-800 font-medium transition-colors flex items-center">
+                <a href="mailto:support@organicfarm.com" className="text-[#5B8C3E] hover:text-[#3B5323] font-medium transition-colors flex items-center">
                   support@organicfarm.com
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -1004,7 +1022,7 @@ const Contact = () => {
               className={`bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-700 hover:-translate-y-2 hover:shadow-xl ${card2Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
               style={{ transitionDelay: '150ms' }}
             >
-              <div className="bg-[#4D7C0F] text-white h-20 flex justify-center items-center">
+              <div className="bg-[#5B8C3E] text-white h-20 flex justify-center items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 8V5z" />
                 </svg>
@@ -1012,7 +1030,7 @@ const Contact = () => {
               <div className="p-6">
                 <h3 className="text-xl font-bold text-[#1F2937] mb-2">Phone</h3>
                 <p className="text-[#6B7280] mb-4">Call us during business hours for immediate assistance</p>
-                <a href="tel:+15551234567" className="text-[#4D7C0F] hover:text-green-800 font-medium transition-colors flex items-center">
+                <a href="tel:+15551234567" className="text-[#5B8C3E] hover:text-[#3B5323] font-medium transition-colors flex items-center">
                   +1 (555) 123-4567
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -1028,7 +1046,7 @@ const Contact = () => {
               className={`bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-700 hover:-translate-y-2 hover:shadow-xl ${card3Visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
               style={{ transitionDelay: '300ms' }}
             >
-              <div className="bg-[#4D7C0F] text-white h-20 flex justify-center items-center">
+              <div className="bg-[#5B8C3E] text-white h-20 flex justify-center items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -1037,7 +1055,7 @@ const Contact = () => {
               <div className="p-6">
                 <h3 className="text-xl font-bold text-[#1F2937] mb-2">Location</h3>
                 <p className="text-[#6B7280] mb-4">Visit our farm and store for a direct experience</p>
-                <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" className="text-[#4D7C0F] hover:text-green-800 font-medium transition-colors flex items-center">
+                <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" className="text-[#5B8C3E] hover:text-[#3B5323] font-medium transition-colors flex items-center">
                   123 Farm Road, Green Valley
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -1062,7 +1080,7 @@ const Contact = () => {
             style={{ transitionDelay: '450ms' }}
           >
             <div className="flex flex-col md:flex-row">
-              <div className="w-full md:w-1/3 bg-[#4D7C0F] text-white p-8 flex flex-col justify-center">
+              <div className="w-full md:w-1/3 bg-[#5B8C3E] text-white p-8 flex flex-col justify-center">
                 <h3 className="text-2xl font-bold mb-4">Our Location</h3>
                 <p className="mb-6 opacity-90">Find our farm and organic store with the map</p>
                 <div className="mb-6">
@@ -1075,7 +1093,7 @@ const Contact = () => {
                   href="https://maps.google.com" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-white text-[#4D7C0F] rounded-lg font-medium transition-all duration-300 hover:bg-[#f1f5f1] transform hover:scale-105"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-white text-[#5B8C3E] rounded-lg font-medium transition-all duration-300 hover:bg-[#f1f5f1] transform hover:scale-105"
                 >
                   <span>Get Directions</span>
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1087,7 +1105,7 @@ const Contact = () => {
                 <div className="bg-[#f8f6f3] h-64 md:h-80 relative">
                   {/* Map placeholder */}
                   <div className="absolute inset-0 flex items-center justify-center flex-col">
-                    <div className="animate-ping-slow w-8 h-8 bg-[#4D7C0F] bg-opacity-50 rounded-full mb-6"></div>
+                    <div className="animate-ping-slow w-8 h-8 bg-[#5B8C3E] bg-opacity-50 rounded-full mb-6"></div>
                     <div className="bg-white rounded-lg px-6 py-3 shadow-md">
                       <p className="font-semibold text-[#1F2937]">Interactive Map Coming Soon</p>
                     </div>
@@ -1102,18 +1120,22 @@ const Contact = () => {
         </div>
       </div>
 
-      {/* FAQ section - Changed to white background */}
-      <div ref={faqSectionRef} className="py-20 bg-white relative">
+      {/* FAQ section - Enhanced with glass morphism and premium effects */}
+      <div ref={faqSectionRef} className="py-20 bg-white relative overflow-hidden">
+        {/* Decorative background elements */}
+        <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-gradient-to-br from-[#5B8C3E]/5 to-[#7BAD50]/10 rounded-full filter blur-3xl opacity-40 animate-blob animation-delay-4000"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-gradient-to-br from-[#EDF5E5] to-[#AECB95]/30 rounded-full filter blur-3xl opacity-30 animate-blob"></div>
+        
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           {/* Light decorative elements */}
           <motion.div 
-            className="absolute top-40 right-0 w-40 h-40 bg-[#ECFDF5] rounded-full opacity-20 translate-x-1/2 blur-2xl pointer-events-none"
+            className="absolute top-40 right-0 w-40 h-40 bg-gradient-to-br from-[#EDF5E5] to-[#EDF5E5] rounded-full opacity-20 translate-x-1/2 blur-2xl pointer-events-none"
             animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.25, 0.2] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           ></motion.div>
           
           <motion.div 
-            className="absolute bottom-20 left-0 w-32 h-32 bg-[#4D7C0F] rounded-full opacity-10 -translate-x-1/2 blur-2xl pointer-events-none"
+            className="absolute bottom-20 left-0 w-32 h-32 bg-gradient-to-br from-[#5B8C3E] to-[#7BAD50] rounded-full opacity-10 -translate-x-1/2 blur-2xl pointer-events-none"
             animate={{ scale: [1, 1.15, 1], opacity: [0.1, 0.15, 0.1] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           ></motion.div>
@@ -1127,7 +1149,7 @@ const Contact = () => {
             <img 
               src={leafImage} 
               alt="" 
-              className="w-full h-full object-contain"
+              className="w-full h-full object-contain filter drop-shadow-lg"
             />
           </div>
           
@@ -1139,7 +1161,7 @@ const Contact = () => {
             <img 
               src={leafImage} 
               alt="" 
-              className="w-full h-full object-contain"
+              className="w-full h-full object-contain filter drop-shadow-lg"
             />
           </div>
           
@@ -1147,21 +1169,21 @@ const Contact = () => {
           <div className={`text-center mb-16 transition-all duration-1000 transform ${faqSectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div className="mb-4">
               <motion.span 
-                className="inline-block px-6 py-1.5 rounded-full bg-gradient-to-r from-[#4D7C0F] to-[#65a30d] text-white text-sm font-medium shadow-sm"
+                className="inline-block px-6 py-1.5 rounded-full bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white text-sm font-medium shadow-md"
                 whileHover={{ 
                   scale: 1.05,
-                  boxShadow: "0 4px 12px rgba(77, 124, 15, 0.25)"
+                  boxShadow: "0 4px 12px rgba(91, 140, 62, 0.25)"
                 }}
               >
                 Support
               </motion.span>
             </div>
-            <h2 className="text-4xl font-bold text-[#1F2937] mb-4">Frequently Asked Questions</h2>
-            <p className="mt-4 text-[#6B7280] text-lg max-w-2xl mx-auto">Find quick answers to common questions about our organic products and services</p>
+            <h2 className="text-4xl font-bold text-[#1F2937] mb-4 serif-heading">Frequently Asked Questions</h2>
+            <p className="mt-4 text-[#6B7280] text-lg max-w-2xl mx-auto sans-text">Find quick answers to common questions about our organic products and services</p>
           </div>
           
-          {/* FAQ Accordion Items */}
-          <div className="space-y-4">
+          {/* FAQ Accordion Items with glass morphism */}
+          <div className="space-y-6">
             {[
               {
                 icon: (
@@ -1211,35 +1233,35 @@ const Contact = () => {
             ].map((faq, index) => (
               <div 
                 key={index} 
-                className={`bg-white rounded-lg overflow-hidden shadow-md transition-all duration-500 transform ${faqSectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                className={`bg-white bg-opacity-80 backdrop-filter backdrop-blur-sm border border-white border-opacity-20 rounded-xl overflow-hidden shadow-lg transition-all duration-500 transform ${faqSectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                {/* FAQ Question (always visible) */}
+                {/* FAQ Question with premium styling */}
                 <button 
                   onClick={() => toggleAccordion(index)}
-                  className={`w-full px-6 py-5 flex items-center justify-between text-left transition-all duration-300 ${activeAccordion === index ? 'bg-[#ECFDF5]' : 'hover:bg-gray-50'}`}
+                  className={`w-full px-6 py-5 flex items-center justify-between text-left transition-all duration-300 ${activeAccordion === index ? 'bg-gradient-to-r from-[#EDF5E5]/80 to-[#EDF5E5]/80' : 'hover:bg-gray-50/80'}`}
                 >
                   <div className="flex items-center">
-                    <div className={`mr-4 flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 ${activeAccordion === index ? 'bg-[#4D7C0F] text-white' : 'bg-[#ECFDF5] text-[#4D7C0F]'}`}>
+                    <div className={`mr-4 flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 ${activeAccordion === index ? 'bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white shadow-md' : 'bg-gradient-to-br from-[#EDF5E5] to-[#EDF5E5] text-[#5B8C3E]'}`}>
                       {faq.icon}
                     </div>
-                    <h3 className="text-lg font-semibold text-[#1F2937]">{faq.q}</h3>
+                    <h3 className="text-lg font-semibold text-[#1F2937] serif-heading">{faq.q}</h3>
                   </div>
-                  <div className={`text-[#4D7C0F] transform transition-transform duration-300 ${activeAccordion === index ? 'rotate-180' : ''}`}>
+                  <div className={`text-[#5B8C3E] transform transition-transform duration-300 ${activeAccordion === index ? 'rotate-180' : ''}`}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
                     </svg>
                   </div>
                 </button>
                 
-                {/* FAQ Answer (collapsible) */}
+                {/* FAQ Answer with elegant animation */}
                 <div 
                   className={`px-6 overflow-hidden transition-all duration-500 ease-in-out ${
                     activeAccordion === index ? 'max-h-96 pb-6 opacity-100' : 'max-h-0 pb-0 opacity-0'
                   }`}
                 >
-                  <div className="pl-14 border-l-2 border-[#ECFDF5] ml-5">
-                    <p className="text-[#6B7280] text-base">{faq.a}</p>
+                  <div className="pl-14 border-l-2 border-gradient-to-b from-[#5B8C3E] to-[#7BAD50] ml-5">
+                    <p className="text-[#6B7280] text-base sans-text">{faq.a}</p>
                   </div>
                 </div>
               </div>
@@ -1247,7 +1269,7 @@ const Contact = () => {
           </div>
           
           <div className={`mt-12 text-center transition-all duration-1000 delay-300 transform ${faqSectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <a href="#contact-form" className="inline-flex items-center justify-center px-8 py-3 bg-[#4D7C0F] text-white rounded-lg shadow-md transition-all duration-300 hover:bg-green-800 hover:shadow-lg transform hover:-translate-y-1 active:translate-y-0">
+            <a href="#contact-form" className="inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1 active:translate-y-0">
               <span>Have more questions? Contact us</span>
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -1260,9 +1282,10 @@ const Contact = () => {
   );
 };
 
-// Add these animation classes to your CSS file (index.css or App.css)
+// Add animation and styling
 const style = document.createElement('style');
 style.textContent = `
+  /* Animation classes */
   @keyframes blob {
     0% {
       transform: translate(0px, 0px) scale(1);
@@ -1324,65 +1347,17 @@ style.textContent = `
     animation: float 15s ease-in-out infinite;
   }
   
-  @keyframes expand {
-    0% {
-      transform: scaleX(0);
-    }
-    100% {
-      transform: scaleX(1);
-    }
-  }
-  
-  .animate-expand {
-    animation: expand 1.5s ease-out forwards;
-    animation-delay: 0.5s;
-  }
-  
-  @keyframes ping-slow {
-    0% {
-      transform: scale(0.2);
-      opacity: 0.8;
-    }
-    80%, 100% {
-      transform: scale(2);
-      opacity: 0;
-    }
-  }
-  
-  .animate-ping-slow {
-    animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-  
-  .perspective-1000 {
-    perspective: 1000px;
-  }
-  
-  .rotate-y-5 {
-    transform: rotateY(5deg);
-  }
-  
-  /* Background patterns */
-  .pattern-dots {
-    background-image: radial-gradient(#4D7C0F 2px, transparent 2px);
-    background-size: 30px 30px;
-  }
-  
-  .pattern-grid {
-    background-image: linear-gradient(to right, #4D7C0F 1px, transparent 1px),
-                      linear-gradient(to bottom, #4D7C0F 1px, transparent 1px);
-    background-size: 30px 30px;
-  }
-  
-  .pattern-leaf {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 40' width='80' height='40'%3E%3Cpath fill='%234D7C0F' fill-opacity='0.1' d='M0 40a19.96 19.96 0 0 1 5.9-14.11 20.17 20.17 0 0 1 19.44-5.2A20 20 0 0 1 40.94 40H0zM40.94 40A20 20 0 0 1 15.43 20.89 20.26 20.26 0 0 1 34.86 7.83 20.03 20.03 0 0 1 40.94 40zM75.79 40a20.23 20.23 0 0 1-12.32-12.8 19.67 19.67 0 0 1 4.44-20.14A20.02 20.02 0 0 1 80 7.86V40H75.79z'%3E%3C/path%3E%3C/svg%3E");
-  }
-  
   .animation-delay-2000 {
     animation-delay: 2s;
   }
   
   .animation-delay-4000 {
     animation-delay: 4s;
+  }
+  
+  /* Create a gradient border effect */
+  .border-gradient-to-b {
+    border-image: linear-gradient(to bottom, #5B8C3E, #7BAD50) 1;
   }
 `;
 document.head.appendChild(style);

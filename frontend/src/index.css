@@ -1,10 +1,14 @@
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Custom CSS variables and styles below */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* Default system font stack as fallback */
+  font-family: 'Poppins', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   
@@ -15,11 +19,11 @@
   --text-white: #ffffff;
   
   /* Brand Colors */
-  --primary: #4caf50;
-  --primary-dark: #3d8b40;
-  --primary-light: #e8f5e9;
+  --primary: #5B8C3E; /* Updated to match premium green */
+  --primary-dark: #3B5323;
+  --primary-light: #EDF5E5;
   --secondary: #8d6e63; /* Earth brown */
-  --accent: #81c784; /* Light green */
+  --accent: #7BAD50; /* Updated accent green */
   
   /* UI Colors */
   --background: #f8f6f3; /* Light beige background */
@@ -47,6 +51,19 @@
   background-color: var(--background);
 }
 
+/* Font Family Styling */
+h1, h2, h3, h4, .serif-heading {
+  font-family: 'Playfair Display', serif;
+}
+
+body, p, input, button, select, textarea, .sans-text {
+  font-family: 'Poppins', sans-serif;
+}
+
+.accent-text {
+  font-family: 'Cormorant Garamond', serif;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -64,7 +81,6 @@ body {
   padding: 0;
   min-height: 100vh;
   width: 100%;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.6;
   color: var(--text-dark);
   background-color: var(--background);
