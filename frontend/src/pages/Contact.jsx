@@ -1007,8 +1007,8 @@ const Contact = () => {
               <div className="p-6">
                 <h3 className="text-xl font-bold text-[#1F2937] mb-2">Email</h3>
                 <p className="text-[#6B7280] mb-4">For any inquiries about our products or services</p>
-                <a href="mailto:support@organicfarm.com" className="text-[#5B8C3E] hover:text-[#3B5323] font-medium transition-colors flex items-center">
-                  support@organicfarm.com
+                <a href="mailto:panchamritamnatural@gmail.com" className="text-[#5B8C3E] hover:text-[#3B5323] font-medium transition-colors flex items-center">
+                  panchamritamnatural@gmail.com
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
@@ -1030,8 +1030,8 @@ const Contact = () => {
               <div className="p-6">
                 <h3 className="text-xl font-bold text-[#1F2937] mb-2">Phone</h3>
                 <p className="text-[#6B7280] mb-4">Call us during business hours for immediate assistance</p>
-                <a href="tel:+15551234567" className="text-[#5B8C3E] hover:text-[#3B5323] font-medium transition-colors flex items-center">
-                  +1 (555) 123-4567
+                <a href="tel:+919773944439" className="text-[#5B8C3E] hover:text-[#3B5323] font-medium transition-colors flex items-center">
+                  +91 9773944439
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
@@ -1056,7 +1056,7 @@ const Contact = () => {
                 <h3 className="text-xl font-bold text-[#1F2937] mb-2">Location</h3>
                 <p className="text-[#6B7280] mb-4">Visit our farm and store for a direct experience</p>
                 <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" className="text-[#5B8C3E] hover:text-[#3B5323] font-medium transition-colors flex items-center">
-                  123 Farm Road, Green Valley
+                  Shop No 1, Near Radha Krishna Mandir, Nurpur Jharsa
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
@@ -1085,8 +1085,9 @@ const Contact = () => {
                 <p className="mb-6 opacity-90">Find our farm and organic store with the map</p>
                 <div className="mb-6">
                   <address className="not-italic text-lg font-medium">
-                    123 Farm Road, Green Valley<br />
-                    California, 90210
+                    Shop No 1, Near Radha Krishna Mandir<br />
+                    Nurpur Jharsa, Sector 69<br />
+                    Gurgaon, Haryana, 122003
                   </address>
                 </div>
                 <a 
