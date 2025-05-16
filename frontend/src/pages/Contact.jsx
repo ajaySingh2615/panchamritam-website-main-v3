@@ -1055,7 +1055,7 @@ const Contact = () => {
               <div className="p-6">
                 <h3 className="text-xl font-bold text-[#1F2937] mb-2">Location</h3>
                 <p className="text-[#6B7280] mb-4">Visit our farm and store for a direct experience</p>
-                <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" className="text-[#5B8C3E] hover:text-[#3B5323] font-medium transition-colors flex items-center">
+                <a href="https://maps.app.goo.gl/vi3CVLwbX2dGocDK6" target="_blank" rel="noopener noreferrer" className="text-[#5B8C3E] hover:text-[#3B5323] font-medium transition-colors flex items-center">
                   Shop No 1, Near Radha Krishna Mandir, Nurpur Jharsa
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -1091,7 +1091,7 @@ const Contact = () => {
                   </address>
                 </div>
                 <a 
-                  href="https://maps.google.com" 
+                  href="https://maps.app.goo.gl/vi3CVLwbX2dGocDK6" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center px-6 py-3 bg-white text-[#5B8C3E] rounded-lg font-medium transition-all duration-300 hover:bg-[#f1f5f1] transform hover:scale-105"
@@ -1103,17 +1103,18 @@ const Contact = () => {
                 </a>
               </div>
               <div className="w-full md:w-2/3 p-0">
-                <div className="bg-[#f8f6f3] h-64 md:h-80 relative">
-                  {/* Map placeholder */}
-                  <div className="absolute inset-0 flex items-center justify-center flex-col">
-                    <div className="animate-ping-slow w-8 h-8 bg-[#5B8C3E] bg-opacity-50 rounded-full mb-6"></div>
-                    <div className="bg-white rounded-lg px-6 py-3 shadow-md">
-                      <p className="font-semibold text-[#1F2937]">Interactive Map Coming Soon</p>
-                    </div>
-                  </div>
-                  
-                  {/* Simple grid pattern overlay */}
-                  <div className="absolute inset-0 opacity-10 pattern-grid"></div>
+                <div className="h-64 md:h-80 relative overflow-hidden">
+                  {/* Embedded Google Map */}
+                  <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3510.050237468132!2d77.03594777460656!3d28.387550575799395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d22e605448239%3A0x54f49cb1328abc57!2sRadha%20krishan%20Mandir%20noorpur!5e0!3m2!1sen!2sin!4v1747395054065!5m2!1sen!2sin" 
+                    width="100%" 
+                    height="100%" 
+                    style={{ border: 0 }} 
+                    allowFullScreen="" 
+                    loading="lazy" 
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="absolute inset-0"
+                  ></iframe>
                 </div>
               </div>
             </div>
