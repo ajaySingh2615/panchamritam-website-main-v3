@@ -414,7 +414,7 @@ const About = () => {
       <div className="relative w-full min-h-screen overflow-hidden flex flex-col justify-between">
         {/* Background with animated elements */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#f8f9fb] to-[#f1f3f6]"></div>
+          <div className="absolute inset-0 bg-[#f8f6f3]"></div>
           
           {/* Animated gradient circles */}
           <motion.div 
@@ -874,122 +874,19 @@ const About = () => {
               
               <motion.a 
                 href="#categories" 
-                className="inline-flex items-center justify-center bg-white border border-[#5B8C3E] text-[#5B8C3E] font-medium py-4 px-10 rounded-md transition-all duration-300 hover:bg-[#f9fbf7] focus:outline-none transform hover:-translate-y-1 active:translate-y-0 text-base md:text-lg relative overflow-hidden group"
+                className="inline-flex items-center justify-center bg-white border border-[#5B8C3E] text-[#5B8C3E] font-medium py-4 px-10 rounded-md transition-all duration-300 focus:outline-none transform hover:-translate-y-1 active:translate-y-0 text-base md:text-lg hover:bg-[#5B8C3E] hover:text-white"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
               >
-                <span className="relative z-10 group-hover:text-white transition-colors duration-300">Our Products</span>
-                <motion.div 
-                  className="absolute inset-0 bg-[#5B8C3E] z-0"
-                  initial={{ y: '100%' }}
-                  whileHover={{ y: 0 }}
-                  transition={{ duration: 0.3 }}
-                />
+                Our Products
               </motion.a>
             </motion.div>
             
-            {/* Stats section with enhanced counter animations and floating effects */}
-            <motion.div 
-              className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-3xl mx-auto"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.3 }}
-            >
-              {[
-                { count: productCount, ref: productCountRef, label: "Organic Products", delay: 0 },
-                { count: brandCount, ref: brandCountRef, label: "Quality Brands", delay: 0.2 },
-                { count: categoryCount, ref: categoryCountRef, label: "Product Categories", delay: 0.4 }
-              ].map((stat, index) => (
-                <motion.div 
-                  key={index}
-                  className="text-center p-6 bg-white/50 backdrop-filter backdrop-blur-sm rounded-xl shadow-sm relative overflow-hidden hover-3d"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 1.5 + stat.delay }}
-                  whileHover={{ y: -10 }}
-                >
-                  {/* Decorative elements */}
-                  <motion.div 
-                    className="absolute -top-6 -right-6 w-12 h-12 rounded-full bg-[#5B8C3E]/10"
-                    animate={{ 
-                      scale: [1, 1.2, 1],
-                      opacity: [0.3, 0.5, 0.3]
-                    }}
-                    transition={{ 
-                      duration: 4, 
-                      repeat: Infinity,
-                      repeatType: "reverse",
-                      delay: index * 1.5
-                    }}
-                  />
-                  
-                  <motion.div 
-                    className="absolute -bottom-4 -left-4 w-8 h-8 rounded-full bg-[#AECB95]/20"
-                    animate={{ 
-                      scale: [1, 1.3, 1],
-                      opacity: [0.2, 0.4, 0.2]
-                    }}
-                    transition={{ 
-                      duration: 4, 
-                      repeat: Infinity,
-                      repeatType: "reverse",
-                      delay: 1 + index * 1.5
-                    }}
-                  />
-                  
-                  <div ref={stat.ref} className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] gradient-text mb-2">
-                    {stat.count}+
-                  </div>
-                  <p className="text-[#6B7280]">{stat.label}</p>
-                  
-                  {/* Accent line */}
-                  <motion.div
-                    className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-1 bg-[#5B8C3E]/20 rounded-full"
-                    initial={{ width: 0 }}
-                    animate={{ width: '50%' }}
-                    transition={{ duration: 0.8, delay: 2 + index * 0.2 }}
-                  />
-                </motion.div>
-              ))}
-            </motion.div>
+
           </div>
         </div>
         
-        {/* Enhanced scroll indicator */}
-        <motion.div 
-          className="relative z-10 flex justify-center pb-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1.8 }}
-        >
-          <div className="flex flex-col items-center group">
-            <motion.p 
-              className="text-xs text-[#6B7280] mb-2 group-hover:text-[#5B8C3E] transition-colors duration-300"
-              animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 2, repeat: Infinity, repeatType: "loop" }}
-            >
-              Scroll to Discover
-            </motion.p>
-            <div className="w-6 h-14 border-2 border-[#5B8C3E] rounded-full flex flex-col justify-start items-center p-1 relative overflow-hidden">
-              <motion.div 
-                className="w-1.5 h-1.5 bg-[#5B8C3E] rounded-full scroll-indicator absolute"
-                style={{ top: '6px' }}
-              />
-              
-              <motion.div
-                className="absolute inset-0 bg-[#5B8C3E]/10"
-                initial={{ y: '100%' }}
-                animate={{ y: '-100%' }}
-                transition={{ 
-                  duration: 2, 
-                  repeat: Infinity, 
-                  repeatType: "loop",
-                  ease: "easeInOut"
-                }}
-              />
-            </div>
-          </div>
-        </motion.div>
+
       </div>
 
       {/* About Section */}
