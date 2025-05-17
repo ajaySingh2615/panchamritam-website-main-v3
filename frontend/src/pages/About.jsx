@@ -201,6 +201,205 @@ const About = () => {
       .animation-delay-4000 {
         animation-delay: 4s;
       }
+      
+      /* Enhanced 3D hover */
+      .hover-3d {
+        transition: all 0.3s ease;
+        transform-style: preserve-3d;
+        perspective: 1000px;
+      }
+      
+      .hover-3d:hover {
+        transform: translateY(-5px) rotateX(2deg) rotateY(2deg);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+      }
+      
+      /* Shine effect */
+      .shine-effect {
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .shine-effect::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -60%;
+        width: 20%;
+        height: 200%;
+        opacity: 0;
+        transform: rotate(30deg);
+        background: rgba(255, 255, 255, 0.13);
+        background: linear-gradient(
+          to right, 
+          rgba(255, 255, 255, 0.03) 0%,
+          rgba(255, 255, 255, 0.13) 77%,
+          rgba(255, 255, 255, 0.5) 92%,
+          rgba(255, 255, 255, 0.0) 100%
+        );
+      }
+      
+      .shine-effect:hover::after {
+        opacity: 1;
+        left: 130%;
+        transition: all 0.8s ease;
+      }
+      
+      /* Hover Underline Animation */
+      .hover-underline {
+        position: relative;
+        display: inline-block;
+      }
+      
+      .hover-underline::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        transform: scaleX(0);
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background: linear-gradient(to right, #5B8C3E, #7BAD50);
+        transform-origin: bottom right;
+        transition: transform 0.3s ease-out;
+      }
+      
+      .hover-underline:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+      }
+      
+      /* Magnetic button effect */
+      .magnetic-effect {
+        transition: transform 0.2s ease;
+      }
+      
+      /* Text shadow effect */
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      
+      /* Gradient text */
+      .gradient-text {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+      
+      /* Text reveal animation */
+      .char {
+        transform-origin: center bottom;
+        display: inline-block;
+      }
+      
+      /* Clip path animations */
+      .clip-path-reveal {
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        animation: revealDown 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+      }
+      
+      @keyframes revealDown {
+        0% {
+          clip-path: polygon(0 0, 100% 0, 100% 0);
+        }
+        100% {
+          clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+      }
+      
+      /* Scroll indicator animation */
+      @keyframes scrollIndicator {
+        0% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        75% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(16px);
+          opacity: 0;
+        }
+      }
+      
+      .scroll-indicator {
+        animation: scrollIndicator 2s ease-in-out infinite;
+      }
+      
+      /* Smooth mask animation */
+      .mask-b-t {
+        mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+      }
+      
+      /* Floating animation */
+      @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0px); }
+      }
+      
+      .float {
+        animation: float 6s ease-in-out infinite;
+      }
+      
+      .float-delay-1 {
+        animation-delay: 1s;
+      }
+      
+      .float-delay-2 {
+        animation-delay: 2s;
+      }
+      
+      /* SVG path animation */
+      @keyframes drawPath {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+      
+      .animate-draw {
+        animation: drawPath 2s ease-in-out forwards;
+      }
+      
+      /* Text gradient animation */
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      
+      .animated-gradient-text {
+        background: linear-gradient(90deg, #5B8C3E, #7BAD50, #AECB95, #7BAD50, #5B8C3E);
+        background-size: 300% 100%;
+        animation: gradientShift 8s ease infinite;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      
+      /* Particle animation */
+      @keyframes particleFloat {
+        0% {
+          transform: translateY(0) translateX(0) rotate(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100px) translateX(var(--translate-x, 20px)) rotate(var(--rotate, 180deg));
+          opacity: 0;
+        }
+      }
+      
+      .particle {
+        position: absolute;
+        animation: particleFloat var(--duration, 15s) ease-in infinite;
+        opacity: var(--opacity, 0.6);
+      }
     `;
     document.head.appendChild(style);
     
@@ -211,32 +410,150 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-[#f8f6f3]">
-      {/* Hero Section */}
-      <div className={`relative transition-all duration-700 ease-out ${loaded ? 'opacity-100' : 'opacity-0 translate-y-10'}`}>
-        {/* Premium gradient background with texture */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#f8f6f3] via-[#f1efe9] to-[#e8e4d9] opacity-70"></div>
-      
-        {/* Decorative monstera leaf with enhanced parallax */}
-        <div 
-          ref={heroLeafRef} 
-          className="absolute top-0 right-0 w-96 h-96 pointer-events-none z-0 overflow-hidden opacity-25 transition-transform duration-1000 ease-out"
-          style={{ transform: `translate(25%, -25%) translateY(${leafOffset * 0.5}px) rotate(${scrolled ? '5deg' : '0deg'})` }}
-        >
-          <img 
-            src={leaf1Image} 
-            alt="" 
-            className="w-full h-full object-contain filter drop-shadow-lg"
+      {/* Motion Design Hero Section */}
+      <div className="relative w-full min-h-screen overflow-hidden flex flex-col justify-between">
+        {/* Background with animated elements */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#f8f9fb] to-[#f1f3f6]"></div>
+          
+          {/* Animated gradient circles */}
+          <motion.div 
+            className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] rounded-full bg-gradient-to-br from-[#5B8C3E]/10 to-[#7BAD50]/5"
+            animate={{ 
+              scale: [1, 1.1, 1],
+              rotate: [0, 90, 0],
+              opacity: [0.3, 0.4, 0.3]
+            }}
+            transition={{ 
+              duration: 20, 
+              repeat: Infinity,
+              ease: "easeInOut" 
+            }}
+            style={{ filter: 'blur(60px)' }}
           />
+          
+          <motion.div 
+            className="absolute bottom-1/3 right-1/4 w-[30vw] h-[30vw] rounded-full bg-gradient-to-r from-[#f8f6f3]/80 to-[#EDF5E5]/50"
+            animate={{ 
+              scale: [1, 1.2, 1],
+              rotate: [0, -60, 0],
+              opacity: [0.2, 0.3, 0.2]
+            }}
+            transition={{ 
+              duration: 15, 
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2
+            }}
+            style={{ filter: 'blur(50px)' }}
+          />
+
+          {/* Decorative image elements */}
+          <motion.div
+            className="absolute -top-[10%] right-[5%] w-[25vw] max-w-lg opacity-10 z-0" 
+            initial={{ rotate: 0 }}
+            animate={{ rotate: [0, 10, -5, 0] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <img 
+              src={leaf1Image} 
+              alt="" 
+              className="w-full h-auto"
+            />
+          </motion.div>
+          
+          <motion.div
+            className="absolute bottom-[10%] left-[5%] w-[18vw] max-w-xs opacity-10 z-0" 
+            initial={{ rotate: 0 }}
+            animate={{ rotate: [0, -5, 10, 0] }}
+            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 5 }}
+          >
+            <img 
+              src={leafImage} 
+              alt="" 
+              className="w-full h-auto"
+            />
+          </motion.div>
+          
+          {/* Animated particles */}
+          <div className="absolute inset-0 z-0 opacity-60">
+            {[...Array(12)].map((_, index) => (
+              <motion.div
+                key={`particle-${index}`}
+                className="particle absolute rounded-full"
+                style={{
+                  '--duration': `${Math.random() * 10 + 10}s`,
+                  '--translate-x': `${Math.random() * 100 - 50}px`,
+                  '--rotate': `${Math.random() * 360}deg`,
+                  '--opacity': Math.random() * 0.5 + 0.1,
+                  width: `${Math.random() * 10 + 5}px`,
+                  height: `${Math.random() * 10 + 5}px`,
+                  bottom: `${Math.random() * 20}%`,
+                  left: `${Math.random() * 100}%`,
+                  backgroundColor: index % 3 === 0 ? '#5B8C3E' : index % 3 === 1 ? '#7BAD50' : '#AECB95',
+                  opacity: Math.random() * 0.3 + 0.1,
+                }}
+                initial={{ y: 0, opacity: 0 }}
+                animate={{ 
+                  y: [-20, -100, -180],
+                  opacity: [0, 0.8, 0]
+                }}
+                transition={{
+                  duration: Math.random() * 10 + 10,
+                  repeat: Infinity,
+                  delay: Math.random() * 5
+                }}
+              />
+            ))}
+          </div>
+          
+          {/* Animated svg design elements */}
+          <svg className="absolute inset-0 w-full h-full z-0" viewBox="0 0 100 100" preserveAspectRatio="none">
+            {/* Decorative accent lines */}
+            <motion.path
+              d="M0,50 Q25,30 50,50 T100,50"
+              fill="none"
+              stroke="#5B8C3E"
+              strokeWidth="0.1"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 0.3 }}
+              transition={{ duration: 2, delay: 0.5 }}
+            />
+            
+            <motion.path
+              d="M0,60 Q30,80 60,60 T100,60"
+              fill="none"
+              stroke="#7BAD50"
+              strokeWidth="0.1"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 0.2 }}
+              transition={{ duration: 2, delay: 0.8 }}
+            />
+            
+            <motion.path
+              d="M0,40 Q40,20 70,40 T100,40"
+              fill="none"
+              stroke="#AECB95"
+              strokeWidth="0.1"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 0.1 }}
+              transition={{ duration: 2, delay: 1.1 }}
+            />
+          </svg>
         </div>
         
-        {/* Content container with premium styling */}
-        <div ref={heroSectionRef} className={`relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20 transition-all duration-500 ${scrolled ? 'transform -translate-y-4' : ''}`}>
-          {/* Breadcrumb navigation with refined styling */}
-          <div className="mb-8">
-            <nav className="flex" aria-label="Breadcrumb">
+        {/* Navigation */}
+        <motion.div 
+          className="relative z-10 pt-16 px-6 md:pt-20 lg:pt-24"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="max-w-7xl mx-auto">
+            <nav className="flex justify-between items-center">
               <ol className="inline-flex items-center space-x-1 md:space-x-3">
                 <li className="inline-flex items-center">
-                  <a href="/" className="text-[#5B8C3E] hover:text-[#3B5323] text-sm font-medium transition-colors">
+                  <a href="/" className="text-[#5B8C3E] hover:text-[#3B5323] text-sm font-medium transition-colors hover-underline">
                     Home
                   </a>
                 </li>
@@ -251,97 +568,432 @@ const About = () => {
               </ol>
             </nav>
           </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left column - Hero content with premium typography */}
-            <div className={`transition-all duration-700 delay-300 ${loaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-              <div className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white text-xs font-semibold mb-4 shadow-sm">
-                Our Story
+        </motion.div>
+        
+        {/* Hero content with enhanced motion animations */}
+        <div className="relative z-10 flex-grow flex flex-col justify-center items-center px-4 py-16 md:px-8 md:py-20 lg:py-24 text-center transition-all duration-1000">
+          <div className="max-w-4xl mx-auto">
+            {/* Animated accent circle pattern */}
+            <motion.div
+              className="absolute top-1/4 left-1/4 transform -translate-x-1/2 -translate-y-1/2 z-0 opacity-20"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 1, delay: 0.2 }}
+            >
+              <svg width="200" height="200" viewBox="0 0 200 200">
+                <motion.circle
+                  cx="100"
+                  cy="100"
+                  r="50"
+                  fill="none"
+                  stroke="#5B8C3E"
+                  strokeWidth="0.5"
+                  initial={{ opacity: 0, pathLength: 0 }}
+                  animate={{ opacity: 1, pathLength: 1 }}
+                  transition={{ duration: 2, delay: 0.5 }}
+                />
+                <motion.circle
+                  cx="100"
+                  cy="100"
+                  r="70"
+                  fill="none"
+                  stroke="#7BAD50"
+                  strokeWidth="0.3"
+                  initial={{ opacity: 0, pathLength: 0 }}
+                  animate={{ opacity: 0.7, pathLength: 1 }}
+                  transition={{ duration: 2, delay: 0.7 }}
+                />
+                <motion.circle
+                  cx="100"
+                  cy="100"
+                  r="90"
+                  fill="none"
+                  stroke="#AECB95"
+                  strokeWidth="0.2"
+                  initial={{ opacity: 0, pathLength: 0 }}
+                  animate={{ opacity: 0.4, pathLength: 1 }}
+                  transition={{ duration: 2, delay: 0.9 }}
+                />
+              </svg>
+            </motion.div>
+            
+            <motion.div
+              className="absolute top-3/4 right-1/4 transform translate-x-1/2 -translate-y-1/2 z-0 opacity-20"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 1, delay: 0.8 }}
+            >
+              <svg width="160" height="160" viewBox="0 0 160 160">
+                <motion.circle
+                  cx="80"
+                  cy="80"
+                  r="40"
+                  fill="none"
+                  stroke="#AECB95"
+                  strokeWidth="0.3"
+                  initial={{ opacity: 0, pathLength: 0 }}
+                  animate={{ opacity: 1, pathLength: 1 }}
+                  transition={{ duration: 2, delay: 1.1 }}
+                />
+                <motion.circle
+                  cx="80"
+                  cy="80"
+                  r="60"
+                  fill="none"
+                  stroke="#5B8C3E"
+                  strokeWidth="0.2"
+                  initial={{ opacity: 0, pathLength: 0 }}
+                  animate={{ opacity: 0.7, pathLength: 1 }}
+                  transition={{ duration: 2, delay: 1.3 }}
+                />
+              </svg>
+            </motion.div>
+            
+            {/* Animated subtitle */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ 
+                duration: 0.5, 
+                delay: 0.3,
+                type: "spring",
+                stiffness: 200
+              }}
+              className="inline-block mb-6 md:mb-8 relative z-10"
+            >
+              <div className="px-5 py-2 rounded-full bg-gradient-to-r from-[#5B8C3E]/10 to-[#7BAD50]/10 text-[#5B8C3E] text-sm md:text-base font-medium border border-[#5B8C3E]/20 relative overflow-hidden group">
+                <span className="relative z-10">Our Story</span>
+                <motion.div 
+                  className="absolute inset-0 bg-[#5B8C3E]/5"
+                  initial={{ x: "-100%" }}
+                  animate={{ x: "100%" }}
+                  transition={{ 
+                    duration: 2, 
+                    repeat: Infinity, 
+                    repeatType: "loop",
+                    ease: "easeInOut",
+                    repeatDelay: 1
+                  }}
+                />
               </div>
+            </motion.div>
+            
+            {/* Animated main heading with staggered character animations */}
+            <div className="overflow-hidden mb-10 md:mb-14 relative">
+              <motion.div
+                className="absolute -left-4 md:-left-8 top-1/2 transform -translate-y-1/2 w-1 h-16 bg-gradient-to-b from-[#5B8C3E] to-transparent z-0 opacity-60"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 64, opacity: 0.6 }}
+                transition={{ duration: 1, delay: 0.8 }}
+              />
               
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1F2937] leading-tight mb-6 transition-all duration-500 serif-heading">
-                We Are Your <span className="relative overflow-hidden group">
-                  <span className="inline-block transition-transform duration-300 group-hover:transform group-hover:-translate-y-1 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] bg-clip-text text-transparent">Favourite Store</span>
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100 origin-left"></span>
-                </span>
-              </h1>
+              <motion.div
+                className="absolute -right-4 md:-right-8 top-1/2 transform -translate-y-1/2 w-1 h-16 bg-gradient-to-b from-[#5B8C3E] to-transparent z-0 opacity-60"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 64, opacity: 0.6 }}
+                transition={{ duration: 1, delay: 0.8 }}
+              />
               
-              <p className="text-base md:text-lg text-[#6B7280] mb-8 max-w-xl leading-relaxed sans-text">
-                Tuas quisquam quo gravida proident harum, aptent ligula anim consequuntur, ultrices mauris, nunc voluptates lobortis, varius, potenti placeat! Fuga omnis. Cubilia congue. Recusandae. Vero penatibus quasi! Nostra tenetur dignissimos ultrices natus distinctio ultrices consequuntur numqu.
-              </p>
-              
-              <p className="text-base md:text-lg text-[#6B7280] mb-8 max-w-xl leading-relaxed sans-text">
-                Officiis fuga harum porro et? Similique rhoncus atque! Netus blanditiis provident nunc posuere. Rem sequi, commodo, lorem tellus elit, hic sem tenetur anim amet quas, malesuada proident platea corrupti expedita.
-              </p>
-              
-              <div className="flex flex-wrap gap-4 mb-6">
-                <motion.a 
-                  href="#categories" 
-                  className="inline-flex items-center justify-center bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white font-medium py-3 px-8 rounded-md transition-all duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform hover:-translate-y-1 hover:shadow-lg active:translate-y-0 backdrop-filter backdrop-blur-sm"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+              <motion.h1 
+                className="text-4xl md:text-6xl lg:text-7xl font-bold text-[#1F2937] leading-tight relative z-10"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <motion.div
+                  initial={{ y: 0 }}
+                  className="overflow-hidden"
                 >
-                  <span>Our Products</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </motion.a>
+                  <motion.span
+                    className="block mb-3"
+                    initial={{ y: 100 }}
+                    animate={{ y: 0 }}
+                    transition={{ 
+                      duration: 0.8, 
+                      delay: 0.4,
+                      type: "spring",
+                      stiffness: 100,
+                      damping: 15
+                    }}
+                  >
+                    {"We Are Your".split("").map((char, index) => (
+                      <motion.span
+                        key={`title-1-${index}`}
+                        className="inline-block"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          duration: 0.3,
+                          delay: 0.4 + index * 0.04,
+                          ease: "easeOut"
+                        }}
+                      >
+                        {char === " " ? "\u00A0" : char}
+                      </motion.span>
+                    ))}
+                  </motion.span>
+                </motion.div>
                 
-                <motion.a 
-                  href="#certified" 
-                  className="inline-flex items-center justify-center bg-white border border-[#E5E7EB] text-[#5B8C3E] hover:bg-[#EDF5E5] font-medium py-3 px-8 rounded-md transition-all duration-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform hover:-translate-y-1 hover:shadow-md active:translate-y-0 backdrop-filter backdrop-blur-sm"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                <motion.div
+                  initial={{ y: 0 }}
+                  className="overflow-hidden"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                  <span>Certified Organic</span>
-                </motion.a>
-              </div>
+                  <motion.span
+                    className="block animated-gradient-text"
+                    initial={{ y: 100 }}
+                    animate={{ y: 0 }}
+                    transition={{ 
+                      duration: 0.8, 
+                      delay: 0.6,
+                      type: "spring",
+                      stiffness: 100,
+                      damping: 15
+                    }}
+                  >
+                    {"Favourite Store".split("").map((char, index) => (
+                      <motion.span
+                        key={`title-2-${index}`}
+                        className="inline-block"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          duration: 0.3,
+                          delay: 0.9 + index * 0.04,
+                          ease: "easeOut"
+                        }}
+                      >
+                        {char === " " ? "\u00A0" : char}
+                      </motion.span>
+                    ))}
+                  </motion.span>
+                </motion.div>
+              </motion.h1>
+              
+              {/* Animated underline */}
+              <motion.div
+                className="w-24 h-1 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] mx-auto mt-5 rounded-full overflow-hidden"
+                initial={{ width: 0 }}
+                animate={{ width: 96 }}
+                transition={{ duration: 1, delay: 1.8 }}
+              >
+                <motion.div
+                  className="w-full h-full bg-white"
+                  initial={{ x: '-100%' }}
+                  animate={{ x: '100%' }}
+                  transition={{
+                    duration: 2,
+                    delay: 2.2,
+                    repeat: Infinity,
+                    repeatDelay: 3
+                  }}
+                />
+              </motion.div>
             </div>
             
-            {/* Right column - Hero card with glass effect */}
-            <motion.div 
-              className="relative h-full flex items-center justify-center p-4 transition-all duration-700 transform"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={heroSectionVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+            {/* Animated paragraph with floating highlight effect */}
+            <div className="max-w-2xl mx-auto mb-14 md:mb-16 relative">
+              <motion.div
+                className="absolute -left-6 top-1/2 transform -translate-y-1/2 w-3 h-3 rounded-full bg-[#5B8C3E]/30"
+                animate={{ 
+                  scale: [1, 1.5, 1],
+                  opacity: [0.3, 0.7, 0.3]
+                }}
+                transition={{ 
+                  duration: 4, 
+                  repeat: Infinity,
+                  repeatType: "reverse"
+                }}
+              />
+              
+              <motion.div
+                className="absolute -right-6 top-1/2 transform -translate-y-1/2 w-3 h-3 rounded-full bg-[#5B8C3E]/30"
+                animate={{ 
+                  scale: [1, 1.5, 1],
+                  opacity: [0.3, 0.7, 0.3]
+                }}
+                transition={{ 
+                  duration: 4, 
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  delay: 2
+                }}
+              />
+              
+              <motion.p
+                className="text-lg md:text-xl lg:text-2xl text-[#4B5563] leading-relaxed relative z-10"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.9 }}
+              >
+                At <span className="text-[#5B8C3E] font-medium">Panchamritam</span>, we bring nature's best organic products directly to your doorstep, ensuring quality, sustainability, and health in every delivery.
+              </motion.p>
+              
+              {/* Animated highlight */}
+              <motion.div
+                className="absolute inset-0 bg-[#5B8C3E]/5 rounded-xl z-0"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 0.5, 0] }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  delay: 2
+                }}
+              />
+            </div>
+            
+            {/* Animated CTA buttons with enhanced effects */}
+            <motion.div
+              className="flex flex-wrap justify-center gap-6 mb-16 md:mb-20"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.1 }}
             >
-              <div className="relative w-full max-w-md overflow-hidden rounded-2xl shadow-2xl transform transition-all duration-500 hover:shadow-2xl hover:scale-105">
-                <img 
-                  src={aboutImage} 
-                  alt="Organic farm" 
-                  className="w-full h-auto object-cover aspect-[4/3]"
+              <motion.a 
+                href="#our-mission" 
+                className="inline-flex items-center justify-center bg-[#5B8C3E] text-white font-medium py-4 px-10 rounded-md transition-all duration-300 shadow-md hover:shadow-xl focus:outline-none transform hover:-translate-y-1 active:translate-y-0 text-base md:text-lg relative overflow-hidden group"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <span className="relative z-10">Our Mission</span>
+                <motion.span
+                  className="absolute bottom-0 left-0 right-0 h-1 bg-white opacity-30 z-0"
+                  initial={{ width: 0 }}
+                  whileHover={{ 
+                    width: '100%',
+                    transition: { duration: 0.3 }
+                  }}
                 />
-                
-                {/* Glass effect overlay at bottom */}
-                <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-80 backdrop-filter backdrop-blur-sm p-6 border-t border-white border-opacity-30">
-                  <motion.h2 
-                    className="text-xl font-bold text-[#1F2937] mb-2 serif-heading"
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={heroSectionVisible ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
-                    transition={{ delay: 0.5, duration: 0.5 }}
-                  >
-                    From Farm to Table
-                  </motion.h2>
-                  <motion.p 
-                    className="text-[#6B7280] sans-text text-sm"
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={heroSectionVisible ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
-                    transition={{ delay: 0.7, duration: 0.5 }}
-                  >
-                    We grow with love and deliver fresh organic products to your doorstep
-                  </motion.p>
-                </div>
-              </div>
+                <motion.div 
+                  className="absolute inset-0 bg-white/20 z-0"
+                  initial={{ x: '-100%' }}
+                  whileHover={{ x: '100%' }}
+                  transition={{ duration: 0.7 }}
+                />
+              </motion.a>
+              
+              <motion.a 
+                href="#categories" 
+                className="inline-flex items-center justify-center bg-white border border-[#5B8C3E] text-[#5B8C3E] font-medium py-4 px-10 rounded-md transition-all duration-300 hover:bg-[#f9fbf7] focus:outline-none transform hover:-translate-y-1 active:translate-y-0 text-base md:text-lg relative overflow-hidden group"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <span className="relative z-10 group-hover:text-white transition-colors duration-300">Our Products</span>
+                <motion.div 
+                  className="absolute inset-0 bg-[#5B8C3E] z-0"
+                  initial={{ y: '100%' }}
+                  whileHover={{ y: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.a>
+            </motion.div>
+            
+            {/* Stats section with enhanced counter animations and floating effects */}
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-3xl mx-auto"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.3 }}
+            >
+              {[
+                { count: productCount, ref: productCountRef, label: "Organic Products", delay: 0 },
+                { count: brandCount, ref: brandCountRef, label: "Quality Brands", delay: 0.2 },
+                { count: categoryCount, ref: categoryCountRef, label: "Product Categories", delay: 0.4 }
+              ].map((stat, index) => (
+                <motion.div 
+                  key={index}
+                  className="text-center p-6 bg-white/50 backdrop-filter backdrop-blur-sm rounded-xl shadow-sm relative overflow-hidden hover-3d"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 1.5 + stat.delay }}
+                  whileHover={{ y: -10 }}
+                >
+                  {/* Decorative elements */}
+                  <motion.div 
+                    className="absolute -top-6 -right-6 w-12 h-12 rounded-full bg-[#5B8C3E]/10"
+                    animate={{ 
+                      scale: [1, 1.2, 1],
+                      opacity: [0.3, 0.5, 0.3]
+                    }}
+                    transition={{ 
+                      duration: 4, 
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                      delay: index * 1.5
+                    }}
+                  />
+                  
+                  <motion.div 
+                    className="absolute -bottom-4 -left-4 w-8 h-8 rounded-full bg-[#AECB95]/20"
+                    animate={{ 
+                      scale: [1, 1.3, 1],
+                      opacity: [0.2, 0.4, 0.2]
+                    }}
+                    transition={{ 
+                      duration: 4, 
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                      delay: 1 + index * 1.5
+                    }}
+                  />
+                  
+                  <div ref={stat.ref} className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] gradient-text mb-2">
+                    {stat.count}+
+                  </div>
+                  <p className="text-[#6B7280]">{stat.label}</p>
+                  
+                  {/* Accent line */}
+                  <motion.div
+                    className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-1 bg-[#5B8C3E]/20 rounded-full"
+                    initial={{ width: 0 }}
+                    animate={{ width: '50%' }}
+                    transition={{ duration: 0.8, delay: 2 + index * 0.2 }}
+                  />
+                </motion.div>
+              ))}
             </motion.div>
           </div>
         </div>
+        
+        {/* Enhanced scroll indicator */}
+        <motion.div 
+          className="relative z-10 flex justify-center pb-12"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 1.8 }}
+        >
+          <div className="flex flex-col items-center group">
+            <motion.p 
+              className="text-xs text-[#6B7280] mb-2 group-hover:text-[#5B8C3E] transition-colors duration-300"
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 2, repeat: Infinity, repeatType: "loop" }}
+            >
+              Scroll to Discover
+            </motion.p>
+            <div className="w-6 h-14 border-2 border-[#5B8C3E] rounded-full flex flex-col justify-start items-center p-1 relative overflow-hidden">
+              <motion.div 
+                className="w-1.5 h-1.5 bg-[#5B8C3E] rounded-full scroll-indicator absolute"
+                style={{ top: '6px' }}
+              />
+              
+              <motion.div
+                className="absolute inset-0 bg-[#5B8C3E]/10"
+                initial={{ y: '100%' }}
+                animate={{ y: '-100%' }}
+                transition={{ 
+                  duration: 2, 
+                  repeat: Infinity, 
+                  repeatType: "loop",
+                  ease: "easeInOut"
+                }}
+              />
+            </div>
+          </div>
+        </motion.div>
       </div>
 
       {/* About Section */}
-      <div ref={aboutSectionRef} className="py-20 bg-white relative overflow-hidden">
+      <div id="our-mission" ref={aboutSectionRef} className="py-20 bg-white relative overflow-hidden">
         {/* Decorative blob gradients in background */}
         <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-br from-[#5B8C3E]/5 to-[#7BAD50]/10 rounded-full filter blur-3xl opacity-50 animate-blob"></div>
         <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-gradient-to-br from-[#EDF5E5] to-[#AECB95]/20 rounded-full filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
@@ -368,11 +1020,11 @@ const About = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="relative"
             >
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl hover-3d">
                 <img 
                   src={aboutImage2} 
                   alt="Our organic farm" 
-                  className="w-full h-auto object-cover aspect-square"
+                  className="w-full h-auto object-cover aspect-square transition-transform duration-1000 hover:scale-105"
                 />
                 
                 {/* Stats overlay at bottom */}
@@ -387,6 +1039,10 @@ const About = () => {
                 className="absolute -right-8 -top-8 w-32 h-32 bg-white shadow-xl rounded-full flex items-center justify-center p-4"
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                whileHover={{ 
+                  scale: 1.1, 
+                  boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" 
+                }}
               >
                 <div className="text-center">
                   <span className="block text-[#5B8C3E] text-lg font-bold serif-heading">100%</span>
@@ -401,7 +1057,7 @@ const About = () => {
               animate={aboutSectionVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <div className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white text-xs font-semibold mb-4 shadow-sm">
+              <div className="block px-3 py-1 rounded-full bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white text-xs font-semibold mb-4 shadow-sm w-fit shine-effect">
                 Our Mission
               </div>
               
@@ -430,15 +1086,20 @@ const About = () => {
                     className="flex items-start group"
                     initial={{ opacity: 0, y: 20 }}
                     animate={aboutSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                    transition={{ duration: 0.5, delay: 0.6 + (i * 0.1) }}
+                    transition={{ duration: 0.5, delay: 0.6 + (i * 0.2) }}
+                    whileHover={{ x: 5 }}
                   >
                     <div className="flex-shrink-0 mt-1">
-                      <div className="flex items-center justify-center h-10 w-10 rounded-md bg-gradient-to-br from-[#EDF5E5] to-[#EDF5E5] text-xl shadow-sm transition-transform duration-300 group-hover:scale-110">
+                      <motion.div 
+                        className="flex items-center justify-center h-10 w-10 rounded-md bg-gradient-to-br from-[#EDF5E5] to-[#EDF5E5] text-xl shadow-sm transition-transform duration-300 group-hover:scale-110"
+                        whileHover={{ rotate: [0, 10, -10, 0] }}
+                        transition={{ duration: 0.5 }}
+                      >
                         {feature.icon}
-                      </div>
+                      </motion.div>
                     </div>
                     <div className="ml-4">
-                      <h4 className="text-base font-medium text-[#1F2937] serif-heading">{feature.title}</h4>
+                      <h4 className="text-base font-medium text-[#1F2937] serif-heading hover-underline">{feature.title}</h4>
                       <p className="mt-1 text-sm text-[#6B7280] sans-text">{feature.desc}</p>
                     </div>
                   </motion.div>
@@ -463,7 +1124,7 @@ const About = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <motion.span 
-              className="inline-block px-6 py-1.5 rounded-full bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white text-sm font-medium shadow-md mb-4"
+              className="block px-6 py-1.5 rounded-full bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white text-sm font-medium shadow-md mb-4 mx-auto w-fit"
               initial={{ opacity: 0, y: -10 }}
               animate={statsSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
               transition={{ duration: 0.5 }}
@@ -679,7 +1340,7 @@ const About = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <motion.span 
-              className="inline-block px-6 py-1.5 rounded-full bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white text-sm font-medium shadow-md mb-4"
+              className="block px-6 py-1.5 rounded-full bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white text-sm font-medium shadow-md mb-4 mx-auto w-fit"
               initial={{ opacity: 0, y: -10 }}
               animate={categoriesSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
               transition={{ duration: 0.5 }}
@@ -739,6 +1400,28 @@ const About = () => {
       <div ref={ctaSectionRef} className="py-20 bg-[#f8f6f3] relative overflow-hidden">
         <div className="absolute inset-0 bg-[#1F2937]/5 mix-blend-multiply"></div>
         
+        {/* Animated background patterns */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-full h-full">
+            {[...Array(3)].map((_, i) => (
+              <div 
+                key={i}
+                className="absolute rounded-full bg-[#5B8C3E]"
+                style={{
+                  top: `${Math.random() * 100}%`,
+                  left: `${Math.random() * 100}%`,
+                  width: `${Math.random() * 300 + 100}px`,
+                  height: `${Math.random() * 300 + 100}px`,
+                  opacity: Math.random() * 0.15,
+                  filter: 'blur(50px)',
+                  animation: `blob ${Math.random() * 20 + 10}s infinite linear`,
+                  animationDelay: `${Math.random() * 5}s`
+                }}
+              />
+            ))}
+          </div>
+        </div>
+        
         {/* Decorative leaf */}
         <div className="absolute bottom-0 right-0 w-64 h-64 pointer-events-none z-0 opacity-15 transform translate-x-1/4 translate-y-1/4">
           <img 
@@ -750,13 +1433,13 @@ const About = () => {
         
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div 
-            className="bg-white bg-opacity-80 backdrop-filter backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden relative p-12 border border-white border-opacity-20 text-center"
+            className="bg-white bg-opacity-80 backdrop-filter backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden relative p-12 border border-white border-opacity-20 text-center hover-3d"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={ctaSectionVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-[#1F2937] mb-6 serif-heading">
-              Ready to Experience Organic Goodness?
+              Ready to Experience <span className="bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] bg-clip-text text-transparent">Organic Goodness</span>?
             </h2>
             
             <p className="text-[#6B7280] text-lg max-w-2xl mx-auto mb-8 sans-text">
@@ -765,15 +1448,30 @@ const About = () => {
             
             <motion.a 
               href="/shop" 
-              className="inline-flex items-center justify-center bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white font-medium py-4 px-10 rounded-md transition-all duration-300 shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform hover:-translate-y-1 hover:shadow-xl active:translate-y-0"
-              whileHover={{ scale: 1.05 }}
+              className="inline-flex items-center justify-center bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white font-medium py-4 px-10 rounded-md transition-all duration-300 shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform hover:-translate-y-1 hover:shadow-xl active:translate-y-0 shine-effect"
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: "0 20px 25px -5px rgba(91, 140, 62, 0.4), 0 10px 10px -5px rgba(91, 140, 62, 0.2)"
+              }}
               whileTap={{ scale: 0.95 }}
             >
               <span className="text-lg">Start Shopping</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <motion.svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-5 w-5 ml-2" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+                animate={{ x: [0, 8, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
+              </motion.svg>
             </motion.a>
+            
+            {/* Subtle decorative elements */}
+            <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-[#5B8C3E]/10 to-transparent rounded-full filter blur-2xl"></div>
+            <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tr from-[#7BAD50]/10 to-transparent rounded-full filter blur-2xl"></div>
           </motion.div>
         </div>
       </div>
