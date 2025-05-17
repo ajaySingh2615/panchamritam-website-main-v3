@@ -16,6 +16,126 @@ import aboutImage from '../assets/images/about-image.png';
 import aboutImage2 from '../assets/images/about-image-2.png';
 import certifiedBadge from '../assets/images/certified-badge.png';
 
+// Testimonial Card Component
+const TestimonialCard = ({ visible, delay, image, name, title, content, highlight }) => {
+  return (
+    <motion.div
+      className="relative rounded-2xl overflow-hidden group"
+      initial={{ opacity: 0, y: 60 }}
+      animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+      transition={{ 
+        duration: 0.7, 
+        delay: delay,
+        type: "spring",
+        stiffness: 50
+      }}
+      whileHover={{ 
+        y: -8,
+        transition: { duration: 0.3, ease: "easeOut" } 
+      }}
+    >
+      {/* Card with glass morphism effect */}
+      <div className="bg-white/70 backdrop-blur-md shadow-xl border border-white/40 relative rounded-2xl overflow-hidden p-6 md:p-8">
+        {/* Dynamic gradient accent */}
+        <motion.div 
+          className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#5B8C3E] via-[#7BAD50] to-[#AECB95]"
+          initial={{ scaleX: 0 }}
+          animate={visible ? { scaleX: 1 } : { scaleX: 0 }}
+          transition={{ duration: 0.8, delay: delay + 0.4 }}
+        />
+        
+        {/* Glowing highlight on hover */}
+        <motion.div
+          className="absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 bg-gradient-to-r from-[#5B8C3E]/10 via-[#7BAD50]/5 to-[#AECB95]/10 z-0"
+          transition={{ duration: 0.3 }}
+        />
+        
+        <div className="flex flex-col md:flex-row gap-6 relative z-10">
+          {/* User image with parallax effect and floating badge */}
+          <motion.div 
+            className="flex-shrink-0 relative"
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="relative">
+              {/* Image container with subtle interaction */}
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden border-2 border-white shadow-md">
+                <motion.div
+                  className="w-full h-full"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <img 
+                    src={image} 
+                    alt={name}
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
+              </div>
+              
+              {/* Success badge */}
+              <motion.div
+                className="absolute -right-4 -bottom-2 bg-[#5B8C3E] text-white text-xs font-bold py-1 px-2 rounded-md shadow-md"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={visible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+                transition={{ 
+                  duration: 0.4, 
+                  delay: delay + 0.7,
+                  type: "spring" 
+                }}
+              >
+                {highlight}
+              </motion.div>
+            </div>
+          </motion.div>
+          
+          {/* Content with animated reveal */}
+          <div className="flex-1">
+            {/* Testimonial text with animated line reveal */}
+            <div className="mb-4 overflow-hidden relative">
+              <motion.p
+                className="text-[#1F2937] italic relative"
+                initial={{ opacity: 0 }}
+                animate={visible ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ duration: 0.5, delay: delay + 0.2 }}
+              >
+                "{content}"
+              </motion.p>
+              
+              {/* Animated underline that follows reading */}
+              <motion.div
+                className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-[#5B8C3E]/40 to-transparent"
+                initial={{ scaleX: 0, transformOrigin: "left" }}
+                whileInView={{ scaleX: 1 }}
+                transition={{ duration: 1.5, delay: 0.5 }}
+              />
+            </div>
+            
+            {/* Author info with staggered animation */}
+            <motion.div
+              className="flex items-center"
+              initial={{ opacity: 0, y: 10 }}
+              animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+              transition={{ duration: 0.5, delay: delay + 0.3 }}
+            >
+              <h4 className="font-semibold text-[#1F2937]">{name}</h4>
+              <span className="mx-2 text-gray-300">•</span>
+              <p className="text-[#5B8C3E] text-sm">{title}</p>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Simple hover effect - just a subtle glow */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-r from-[#5B8C3E]/10 to-[#7BAD50]/10 opacity-0 pointer-events-none"
+        whileHover={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      />
+    </motion.div>
+  );
+};
+
 // Custom hooks for scroll animations
 const useScrollAnimation = (options = {}) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -1438,339 +1558,218 @@ const About = () => {
         </div>
       </div>
 
-      {/* Testimonial Section - Enhanced with Innovative Motion Design */}
-      <div ref={testimonialSectionRef} className="py-24 bg-white relative overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 pointer-events-none">
-          {/* Dynamic wave patterns */}
-          <svg className="w-full h-full absolute inset-0 opacity-20" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <motion.path
-              d="M0,35 C10,40 30,15 50,35 C70,55 90,30 100,35 L100,100 L0,100 Z"
-              fill="url(#gradientFill1)"
-              initial={{ y: 100, opacity: 0 }}
-              animate={testimonialSectionVisible ? { y: 0, opacity: 0.07 } : { y: 100, opacity: 0 }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
+            {/* Testimonial Section - Innovative Magnetic Split Design */}
+      <div ref={testimonialSectionRef} className="py-24 relative overflow-hidden">
+        {/* Dynamic background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-[#f9fbf7] to-white"></div>
+        
+        {/* Floating organic elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {/* Organic shapes with parallax effect */}
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={`organic-shape-${i}`}
+              className="absolute rounded-full mix-blend-multiply"
+              style={{
+                width: `${Math.random() * 300 + 100}px`,
+                height: `${Math.random() * 300 + 100}px`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                backgroundColor: i % 2 === 0 ? '#5B8C3E10' : '#AECB9510',
+                filter: 'blur(60px)',
+                opacity: Math.random() * 0.5 + 0.1,
+              }}
+              animate={{
+                x: [0, Math.random() * 40 - 20],
+                y: [0, Math.random() * 40 - 20],
+                scale: [1, Math.random() * 0.2 + 0.9, 1],
+              }}
+              transition={{
+                duration: Math.random() * 10 + 15,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut"
+              }}
             />
-            <motion.path
-              d="M0,45 C15,30 35,50 50,40 C65,30 85,45 100,40 L100,100 L0,100 Z"
-              fill="url(#gradientFill2)"
-              initial={{ y: 100, opacity: 0 }}
-              animate={testimonialSectionVisible ? { y: 0, opacity: 0.05 } : { y: 100, opacity: 0 }}
-              transition={{ duration: 1.5, delay: 0.2, ease: "easeOut" }}
-            />
-            <defs>
-              <linearGradient id="gradientFill1" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#5B8C3E" stopOpacity="0.2" />
-                <stop offset="100%" stopColor="#7BAD50" stopOpacity="0.1" />
-              </linearGradient>
-              <linearGradient id="gradientFill2" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#AECB95" stopOpacity="0.2" />
-                <stop offset="100%" stopColor="#EDF5E5" stopOpacity="0.1" />
-              </linearGradient>
-            </defs>
-          </svg>
-          
-          {/* Floating elements */}
-          <motion.div
-            className="absolute top-[20%] left-[15%] w-8 h-8 rounded-lg bg-[#5B8C3E]/10 transform rotate-45"
-            animate={{
-              y: [0, -20, 0],
-              rotate: [45, 90, 45],
-              opacity: [0.4, 0.6, 0.4]
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          />
-          
-          <motion.div
-            className="absolute bottom-[25%] right-[10%] w-12 h-12 rounded-full bg-[#7BAD50]/10"
-            animate={{
-              y: [0, -30, 0],
-              x: [0, 15, 0],
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3]
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          />
-          
-          <motion.div
-            className="absolute top-[60%] right-[25%] w-6 h-6 rounded-md bg-[#AECB95]/15 transform -rotate-12"
-            animate={{
-              y: [0, 25, 0],
-              x: [0, -10, 0],
-              rotate: [-12, 0, -12],
-              opacity: [0.2, 0.4, 0.2]
-            }}
-            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          />
+          ))}
         </div>
         
-        {/* Main content with 3D perspective container */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          {/* Section header with animated reveal */}
-          <div className="text-center mb-12">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={testimonialSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.6 }}
-              className="inline-block"
-            >
-              <span className="px-4 py-1 rounded-full bg-gradient-to-r from-[#5B8C3E]/10 to-[#7BAD50]/10 text-[#5B8C3E] text-sm font-medium border border-[#5B8C3E]/20">
-                Success Stories
-              </span>
-            </motion.div>
-            
-            <motion.h2
-              className="text-3xl md:text-4xl font-bold text-[#1F2937] mt-4 mb-2 serif-heading"
-              initial={{ opacity: 0, y: 30 }}
-              animate={testimonialSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              How Organic Products Changed Their Lives
-            </motion.h2>
-            
-            <motion.div
-              className="h-1 w-24 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] rounded-full mx-auto mb-6"
-              initial={{ width: 0, opacity: 0 }}
-              animate={testimonialSectionVisible ? { width: 96, opacity: 1 } : { width: 0, opacity: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            />
-            
-            <motion.p
-              className="text-[#6B7280] max-w-2xl mx-auto"
+        {/* Main content container */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Split design layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+            {/* Left side - Staggered title reveal with magnetic hover */}
+            <motion.div 
+              className="relative pb-16 lg:pb-0 z-20"
               initial={{ opacity: 0 }}
               animate={testimonialSectionVisible ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
+              transition={{ duration: 0.8 }}
             >
-              Hear from our customers who experienced positive health transformations with our organic products
-            </motion.p>
-          </div>
-          
-          {/* 3D Testimonial card with perspective effect */}
-          <motion.div
-            className="perspective-1000 w-full mx-auto relative"
-            initial={{ opacity: 0 }}
-            animate={testimonialSectionVisible ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            whileHover={{ scale: 1.02 }}
-          >
-            {/* Card front */}
-            <motion.div
-              className="bg-gradient-to-br from-white to-[#f8f9fa] rounded-3xl shadow-2xl overflow-hidden relative p-8 md:p-12 border border-white border-opacity-40"
-              initial={{ rotateY: 0 }}
-              whileHover={{ 
-                boxShadow: "0 30px 60px -15px rgba(0, 0, 0, 0.15)",
-              }}
-              transition={{ duration: 0.5 }}
-              style={{
-                transformStyle: "preserve-3d",
-              }}
-            >
-              {/* Decorative accent */}
-              <motion.div 
-                className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#5B8C3E] via-[#7BAD50] to-[#AECB95]"
-                initial={{ scaleX: 0 }}
-                animate={testimonialSectionVisible ? { scaleX: 1 } : { scaleX: 0 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
-              />
-              
-              {/* Subtle glow effect */}
-              <div className="absolute -top-24 -left-24 w-48 h-48 bg-[#5B8C3E]/10 rounded-full filter blur-3xl opacity-30"></div>
-              <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-[#7BAD50]/10 rounded-full filter blur-3xl opacity-30"></div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                {/* Left - Customer Image with 3D effects */}
-                <div className="md:col-span-4 flex justify-center">
-                  <motion.div 
-                    className="relative"
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={testimonialSectionVisible ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
-                    transition={{ 
-                      duration: 0.8, 
-                      delay: 0.4,
-                      type: "spring",
-                      stiffness: 100
-                    }}
+              <div className="lg:sticky lg:top-1/3 px-4 lg:pr-16">
+                {/* Accent pill */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={testimonialSectionVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                  transition={{ duration: 0.7 }}
+                  className="inline-block mb-4"
+                >
+                  <div className="bg-[#5B8C3E]/10 text-[#5B8C3E] text-sm font-medium py-1 px-4 rounded-full border border-[#5B8C3E]/20 backdrop-blur-sm">
+                    Transformational Stories
+                  </div>
+                </motion.div>
+                
+                {/* Magnetic heading with each word animated separately */}
+                <div className="mb-8">
+                  {/* Staggered word animation */}
+                  <motion.h2 
+                    className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#1F2937] tracking-tight leading-tight"
+                    initial={{ opacity: 0 }}
+                    animate={testimonialSectionVisible ? { opacity: 1 } : { opacity: 0 }}
+                    transition={{ duration: 0.5 }}
                   >
-                    {/* 3D layered image container */}
-                    <div className="relative transform perspective-1000 mb-4">
-                      {/* Background shape */}
-                      <motion.div
-                        className="absolute inset-0 -left-3 -top-3 w-full h-full bg-[#5B8C3E]/10 rounded-full"
-                        animate={{ 
-                          rotate: [0, 10, 0, -10, 0],
-                          scale: [1, 1.05, 1, 1.05, 1]
+                    {["Health", "Stories", "From", "Real", "People"].map((word, index) => (
+                      <motion.span
+                        key={index}
+                        className="inline-block mr-4 relative"
+                        initial={{ y: 80, opacity: 0 }}
+                        animate={testimonialSectionVisible ? { y: 0, opacity: 1 } : { y: 80, opacity: 0 }}
+                        transition={{ 
+                          duration: 0.7,
+                          delay: 0.1 + (index * 0.1),
+                          type: "spring",
+                          stiffness: 50
                         }}
-                        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-                      />
-                      
-                      {/* Main image with 3D hover effect */}
-                      <motion.div
-                        className="w-48 h-48 rounded-full overflow-hidden border-4 border-white shadow-2xl relative z-10"
                         whileHover={{ 
-                          scale: 1.05,
-                          rotateY: 10,
-                          rotateX: -10,
-                          transition: { duration: 0.4 }
+                          scale: 1.05, 
+                          color: "#5B8C3E",
+                          transition: { duration: 0.2 }
                         }}
-                        style={{ transformStyle: "preserve-3d" }}
                       >
-                        <motion.div
-                          className="absolute inset-0 bg-gradient-to-tr from-[#5B8C3E]/20 to-transparent z-10 opacity-0"
-                          whileHover={{ opacity: 0.4 }}
-                          transition={{ duration: 0.3 }}
-                        />
-                        
-                        <img 
-                          src={testimonialImg} 
-                          alt="Mila Kunit" 
-                          className="w-full h-full object-cover" 
-                        />
-                      </motion.div>
-              </div>
-                    
-                    {/* Health transformation badge */}
-                    <motion.div 
-                      className="absolute -right-4 -bottom-4 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white rounded-xl w-auto h-auto px-3 py-2 flex items-center shadow-lg"
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={testimonialSectionVisible ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
-                      transition={{ 
-                        delay: 0.8, 
-                        duration: 0.5,
-                        type: "spring",
-                        stiffness: 200
-                      }}
-                    >
-                      <div className="text-center whitespace-nowrap">
-                        <div className="flex items-center">
-                          <svg className="w-4 h-4 text-white mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd"></path>
-                          </svg>
-                          <span className="text-sm font-bold">Health Transformation</span>
-                        </div>
-                      </div>
-                    </motion.div>
-                    
-                    {/* Animated accent line */}
-                    <motion.div
-                      className="absolute -right-16 top-1/2 w-16 h-px bg-gradient-to-r from-[#5B8C3E] to-transparent hidden md:block"
-                      initial={{ scaleX: 0, opacity: 0 }}
-                      animate={testimonialSectionVisible ? { scaleX: 1, opacity: 0.5 } : { scaleX: 0, opacity: 0 }}
-                      transition={{ duration: 0.5, delay: 1 }}
-                    />
-                  </motion.div>
+                        {word}
+                      </motion.span>
+                    ))}
+                  </motion.h2>
                 </div>
                 
-                {/* Right - Testimonial with animated text reveal */}
-                <div className="md:col-span-8">
-                  <div className="relative">
-                    {/* Animated quote marks */}
-                    <motion.div
-                      initial={{ opacity: 0, y: -20 }}
-                      animate={testimonialSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-                      transition={{ duration: 0.7, delay: 0.6 }}
-                    >
-                      <motion.svg 
-                        className="h-12 w-12 absolute -top-6 -left-2 text-[#5B8C3E]/20" 
-                        viewBox="0 0 32 32"
-                        fill="currentColor"
-                        initial={{ pathLength: 0, opacity: 0 }}
-                        animate={testimonialSectionVisible ? { pathLength: 1, opacity: 0.2 } : { pathLength: 0, opacity: 0 }}
-                        transition={{ duration: 1, delay: 0.7 }}
-                      >
-                        <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
-                      </motion.svg>
-                    </motion.div>
-                    
-                    {/* Main testimonial text with animated reveal */}
-                    <motion.div
-                      className="relative z-10 ml-4 md:ml-6"
-                      initial={{ opacity: 0 }}
-                      animate={testimonialSectionVisible ? { opacity: 1 } : { opacity: 0 }}
-                      transition={{ duration: 0.7, delay: 0.8 }}
-                    >
-                      <div className="overflow-hidden relative mb-6">
-                        <motion.p 
-                          className="text-xl md:text-2xl text-[#1F2937] italic leading-relaxed"
-                          initial={{ y: 40, opacity: 0 }}
-                          animate={testimonialSectionVisible ? { y: 0, opacity: 1 } : { y: 40, opacity: 0 }}
-                          transition={{ duration: 0.7, delay: 0.9 }}
-                        >
-                          "After struggling with digestive issues for years, switching to Panchamritam's organic products completely transformed my health. Their chemical-free products helped restore my gut health, and now I have more energy than ever before!"
-                        </motion.p>
-                      </div>
-                      
-                      {/* Testimonial author info with staggered reveal */}
-                      <motion.div 
-                        className="flex items-center"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={testimonialSectionVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                        transition={{ duration: 0.5, delay: 1 }}
-                      >
-                        <motion.h4 
-                          className="text-lg font-medium text-[#1F2937] serif-heading"
-                          initial={{ opacity: 0 }}
-                          animate={testimonialSectionVisible ? { opacity: 1 } : { opacity: 0 }}
-                          transition={{ duration: 0.3, delay: 1.1 }}
-                        >
-                          Mila Kunit
-                        </motion.h4>
-                        <motion.span 
-                          className="mx-2 text-gray-300"
-                          initial={{ opacity: 0 }}
-                          animate={testimonialSectionVisible ? { opacity: 1 } : { opacity: 0 }}
-                          transition={{ duration: 0.3, delay: 1.2 }}
-                        >
-                          •
-                        </motion.span>
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={testimonialSectionVisible ? { opacity: 1 } : { opacity: 0 }}
-                          transition={{ duration: 0.3, delay: 1.3 }}
-                        >
-                          <p className="text-[#5B8C3E] font-medium">Health Journey Success</p>
-                        </motion.div>
-                      </motion.div>
-                    </motion.div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Interactive navigation dots */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 mt-8">
-                {[0, 1, 2].map((_, i) => (
-                  <motion.button
-                    key={i}
-                    className={`w-2 h-2 rounded-full ${i === 0 ? 'bg-[#5B8C3E]' : 'bg-[#5B8C3E]/30'}`}
-                    whileHover={{ scale: 1.5 }}
-                    whileTap={{ scale: 0.9 }}
+                {/* Description with sliding reveal */}
+                <motion.div
+                  className="relative overflow-hidden"
+                  initial={{ opacity: 0 }}
+                  animate={testimonialSectionVisible ? { opacity: 1 } : { opacity: 0 }}
+                  transition={{ duration: 0.5, delay: 0.7 }}
+                >
+                  <motion.p 
+                    className="text-lg text-[#4B5563] pr-4 max-w-md"
+                    initial={{ y: 40 }}
+                    animate={testimonialSectionVisible ? { y: 0 } : { y: 40 }}
+                    transition={{ duration: 0.6, delay: 0.8 }}
+                  >
+                    Our organic products have helped countless people transform their health and wellness. Hear their inspiring journeys of recovery and vitality.
+                  </motion.p>
+                </motion.div>
+                
+                {/* Scroll indicator */}
+                <motion.div
+                  className="hidden lg:flex items-center mt-8 text-[#5B8C3E]"
+                  initial={{ opacity: 0 }}
+                  animate={testimonialSectionVisible ? { opacity: 1 } : { opacity: 0 }}
+                  transition={{ duration: 0.5, delay: 1 }}
+                >
+                  <motion.div 
+                    className="w-10 h-px bg-[#5B8C3E]"
+                    animate={{ scaleX: [1, 1.5, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
                   />
-                ))}
+                  <span className="ml-2 text-sm font-medium">Explore stories</span>
+                </motion.div>
               </div>
             </motion.div>
-          </motion.div>
-          
-          {/* Animated accent shape */}
-          <motion.div
-            className="absolute bottom-10 left-0 md:-left-20 w-40 h-40 rounded-full bg-gradient-to-r from-[#5B8C3E]/5 to-[#7BAD50]/5 filter blur-xl -z-10"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={testimonialSectionVisible ? { 
-              opacity: 0.7, 
-              scale: 1,
-              y: [0, -20, 0],
-              x: [0, 10, 0]
-            } : { 
-              opacity: 0, 
-              scale: 0.5 
-            }}
-            transition={{ 
-              opacity: { duration: 1 },
-              scale: { duration: 1.5 },
-              y: { repeat: Infinity, duration: 10 },
-              x: { repeat: Infinity, duration: 15 }
-            }}
-          />
+            
+                          {/* Right side - Auto-scrolling testimonial carousel */}
+            <div className="relative z-10">
+              {/* Auto-scrolling container with overflow */}
+              <div className="relative h-[75vh] overflow-hidden">
+                {/* Auto-scrolling carousel */}
+                <motion.div 
+                  className="space-y-6 md:space-y-8 py-6 pr-4"
+                  initial={{ y: 0 }}
+                  animate={{ 
+                    y: [0, -1000, 0],
+                  }}
+                  transition={{
+                    duration: 40,
+                    repeat: Infinity,
+                    repeatType: "loop",
+                    ease: "linear",
+                    times: [0, 0.9, 1]
+                  }}
+                >
+                  {/* First testimonial */}
+                  <TestimonialCard 
+                    visible={testimonialSectionVisible}
+                    delay={0.3}
+                    image={testimonialImg}
+                    name="Mila Kunit"
+                    title="Recovered from digestive issues"
+                    content="After struggling with digestive issues for years, switching to Panchamritam's organic products completely transformed my health. Their chemical-free products helped restore my gut health, and now I have more energy than ever before!"
+                    highlight="100% Improvement"
+                  />
+                  
+                  {/* Second testimonial */}
+                  <TestimonialCard 
+                    visible={testimonialSectionVisible}
+                    delay={0.4}
+                    image={testimonialImg}
+                    name="Rajesh Kumar"
+                    title="Managed blood pressure naturally"
+                    content="I was looking for natural alternatives to manage my blood pressure. After incorporating Panchamritam's organic foods into my diet, my readings have stabilized, and my doctor is amazed at my progress without additional medication."
+                    highlight="Natural Solution"
+                  />
+                  
+                  {/* Third testimonial */}
+                  <TestimonialCard 
+                    visible={testimonialSectionVisible}
+                    delay={0.5}
+                    image={testimonialImg}
+                    name="Sarah Williams"
+                    title="Stronger immune system"
+                    content="My family and I used to catch every cold and flu that came around. Since making the switch to Panchamritam's organic products, we've noticed a significant improvement in our immune health. We rarely get sick now!"
+                    highlight="Family Health"
+                  />
+                  
+                  {/* Fourth testimonial */}
+                  <TestimonialCard 
+                    visible={testimonialSectionVisible}
+                    delay={0.6}
+                    image={testimonialImg}
+                    name="Priya Sharma"
+                    title="Weight management journey"
+                    content="I've struggled with weight management for years. Panchamritam's organic products have been a game changer. The natural ingredients have helped me maintain a healthy weight without crash diets. It's been a sustainable lifestyle change."
+                    highlight="Sustainable Health"
+                  />
+                  
+                  {/* Fifth testimonial */}
+                  <TestimonialCard 
+                    visible={testimonialSectionVisible}
+                    delay={0.7}
+                    image={testimonialImg}
+                    name="David Chen"
+                    title="Enhanced mental clarity"
+                    content="As a busy professional, I need to stay focused. Since incorporating Panchamritam's organic foods into my daily routine, I've experienced noticeably better mental clarity and sustained energy throughout the day."
+                    highlight="Mental Focus"
+                  />
+                </motion.div>
+                
+                {/* Gradient fade effect at top and bottom */}
+                <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-[#f9fbf7] to-transparent pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#f9fbf7] to-transparent pointer-events-none"></div>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+
+      {/* Certified Products Section */}
 
       {/* Certified Products Section */}
       <div ref={certifiedSectionRef} id="certified" className="py-20 bg-[#f8f6f3] relative overflow-hidden">
