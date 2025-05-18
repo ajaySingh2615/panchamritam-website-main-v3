@@ -1556,9 +1556,269 @@ const About = () => {
             </motion.div>
           </div>
         </div>
+            </div>
+
+      {/* Founder's Message Section - Enhanced Premium Design */}
+      <div className="py-24 relative overflow-hidden">
+        {/* Textured background with subtle pattern */}
+        <div className="absolute inset-0 bg-[#f8f6f3] opacity-80 z-0">
+          <div className="absolute inset-0" style={{ 
+            backgroundImage: "radial-gradient(#5B8C3E 0.5px, transparent 0.5px), radial-gradient(#5B8C3E 0.5px, #f8f6f3 0.5px)",
+            backgroundSize: "20px 20px",
+            backgroundPosition: "0 0, 10px 10px",
+            opacity: 0.05
+          }}></div>
+        </div>
+        
+        {/* Subtle decorative accent */}
+        <div className="absolute top-24 right-10 w-64 h-64 rounded-full bg-gradient-to-br from-[#5B8C3E]/5 to-[#7BAD50]/10 blur-3xl"></div>
+        <div className="absolute bottom-24 left-10 w-64 h-64 rounded-full bg-gradient-to-br from-[#EDF5E5]/50 to-[#AECB95]/10 blur-3xl"></div>
+        
+        {/* Enhanced layout container */}
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          {/* Premium header with animated accent */}
+          <div className="text-center mb-20">
+                          <motion.div
+                className="inline-block relative mb-5"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7 }}
+              >
+                <motion.div
+                  className="absolute inset-0 bg-[#5B8C3E]/5 rounded-full -z-10"
+                  style={{ padding: "10px" }}
+                  animate={{ 
+                    boxShadow: ["0 0 0 rgba(91, 140, 62, 0)", "0 0 20px rgba(91, 140, 62, 0.2)", "0 0 0 rgba(91, 140, 62, 0)"] 
+                  }}
+                  transition={{ duration: 3, repeat: Infinity, repeatType: "reverse" }}
+                ></motion.div>
+                <span className="relative z-10 bg-[#5B8C3E] text-white px-8 py-2.5 rounded-full font-medium tracking-wider text-sm">
+                  A MESSAGE FROM OUR FOUNDER
+                </span>
+              </motion.div>
+            
+            <div className="max-w-4xl mx-auto">
+              <motion.h2
+                className="text-3xl md:text-4xl font-bold text-[#1F2937] mb-6 leading-tight"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                <span className="block mb-2">Dr. Dharampal on the</span> 
+                <span className="text-[#5B8C3E] relative">
+                  Health Revolution
+                  <motion.span 
+                    className="absolute -bottom-2 left-0 right-0 h-1 bg-[#5B8C3E]/20"
+                    initial={{ scaleX: 0, transformOrigin: "left" }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, delay: 1 }}
+                  />
+                </span>
+              </motion.h2>
+              
+              <motion.p
+                className="text-[#4B5563] text-lg md:text-xl max-w-3xl mx-auto"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.4 }}
+              >
+                Discover the vision and commitment that guides our mission to bring nature's healing power to your doorstep.
+              </motion.p>
+            </div>
+          </div>
+          
+          {/* Enhanced paper-like container with depth and shadows */}
+                        <motion.div
+                className="bg-white rounded-xl shadow-2xl max-w-5xl mx-auto overflow-hidden border border-[#5B8C3E]/5"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8 }}
+                whileHover={{ boxShadow: "0 25px 50px -12px rgba(91, 140, 62, 0.25)" }}
+              >
+            {/* Rich green top accent bar with subtle pattern */}
+            <div className="h-2 bg-[#5B8C3E] relative overflow-hidden">
+              <motion.div 
+                className="absolute inset-0 opacity-30"
+                animate={{ x: [-20, 20, -20] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                style={{
+                  backgroundImage: "linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.2) 25%, rgba(255,255,255,0.2) 50%, transparent 50%, transparent 75%, rgba(255,255,255,0.2) 75%, rgba(255,255,255,0.2))",
+                  backgroundSize: "10px 10px"
+                }}
+              />
+            </div>
+            
+            {/* Main content with elegant layout and enhanced spacing */}
+            <div className="p-8 sm:p-12 md:p-16 lg:p-20">
+              {/* Premium quote highlight with icon and animations */}
+                              <motion.div
+                  className="bg-gradient-to-br from-[#5B8C3E]/5 to-[#5B8C3E]/10 border-l-4 border-[#5B8C3E] p-6 md:p-8 mb-14 rounded-lg relative"
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                  whileHover={{ x: 5 }}
+                >
+                {/* Quote icon with animation */}
+                                  <div className="absolute -top-5 -left-3 bg-white rounded-full p-2.5 shadow-lg">
+                  <motion.svg 
+                    className="w-7 h-7 text-[#5B8C3E]" 
+                    fill="currentColor" 
+                    viewBox="0 0 24 24"
+                    animate={{ 
+                      rotate: [0, 5, 0, -5, 0],
+                      scale: [1, 1.05, 1, 1.05, 1]
+                    }}
+                    transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <path d="M11.192 15.757c0-.88-.23-1.618-.69-2.217-.326-.412-.768-.683-1.327-.812-.55-.128-1.07-.137-1.54-.028-.16.032-.52.112-1.065.242l-.522.15V14.2c.36-.05.717-.182 1.068-.394.35-.21.64-.467.867-.766.216-.3.324-.63.324-.98 0-.23-.07-.413-.21-.552-.147-.14-.353-.21-.61-.21-.253 0-.476.06-.665.173-.19.116-.368.332-.537.648l-1.92-.432c.253-.601.649-1.088 1.187-1.465.538-.377 1.169-.565 1.895-.565.71 0 1.327.16 1.85.483.522.323.774.74.774 1.251 0 .602-.207 1.155-.621 1.659-.414.504-.924.777-1.529.822v.073c.327.067.64.216.937.446.297.23.533.517.708.858.174.34.262.706.262 1.097 0 .396-.067.748-.2 1.058-.132.31-.329.574-.591.793-.261.219-.566.377-.914.475-.347.099-.714.148-1.099.148-.484 0-.934-.057-1.349-.172a2.38 2.38 0 01-.997-.54 2.482 2.482 0 01-.666-.964c-.147-.386-.222-.842-.222-1.367l2.093-.34c0 .054-.01.118-.026.191a1.09 1.09 0 00-.026.159c0 .245.035.479.104.7.07.221.164.406.28.552.116.146.253.254.41.325.157.071.327.107.51.107.626 0 .939-.349.939-1.047 0-.25-.049-.48-.149-.697a1.625 1.625 0 00-.453-.574 1.119 1.119 0 00-.673-.224h-.147v-1.45zm8.45 0c0-.88-.23-1.618-.69-2.217-.326-.412-.768-.683-1.327-.812-.55-.128-1.07-.137-1.54-.028-.16.032-.52.112-1.065.242l-.522.15V14.2c.36-.05.717-.182 1.068-.394.35-.21.64-.467.867-.766.216-.3.324-.63.324-.98 0-.23-.07-.413-.21-.552-.147-.14-.353-.21-.61-.21-.253 0-.476.06-.665.173-.19.116-.368.332-.537.648l-1.92-.432c.253-.601.649-1.088 1.187-1.465.538-.377 1.169-.565 1.895-.565.71 0 1.327.16 1.85.483.522.323.774.74.774 1.251 0 .602-.207 1.155-.621 1.659-.414.504-.924.777-1.529.822v.073c.327.067.64.216.937.446.297.23.533.517.708.858.174.34.262.706.262 1.097 0 .396-.067.748-.2 1.058-.132.31-.329.574-.591.793-.261.219-.566.377-.914.475-.347.099-.714.148-1.099.148-.484 0-.934-.057-1.349-.172a2.38 2.38 0 01-.997-.54 2.482 2.482 0 01-.666-.964c-.147-.386-.222-.842-.222-1.367l2.093-.34c0 .054-.01.118-.026.191a1.09 1.09 0 00-.026.159c0 .245.035.479.104.7.07.221.164.406.28.552.116.146.253.254.41.325.157.071.327.107.51.107.626 0 .939-.349.939-1.047 0-.25-.049-.48-.149-.697a1.625 1.625 0 00-.453-.574 1.119 1.119 0 00-.673-.224h-.147v-1.45z" />
+                  </motion.svg>
+                </div>
+                
+                <p className="text-xl md:text-2xl lg:text-3xl italic text-[#1F2937] leading-relaxed font-light">
+                  "My journey to create Panchamritam began with a simple belief: nature provides everything we need for optimal health. Our mission is to bring these pure gifts to you, untainted by chemicals and preservatives."
+                </p>
+                
+                {/* Enhanced visual accent */}
+                <motion.div 
+                  className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#5B8C3E]/0 via-[#5B8C3E]/30 to-[#5B8C3E]/0"
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.5, delay: 0.6 }}
+                />
+              </motion.div>
+              
+              {/* Enhanced message paragraphs with careful typography */}
+              <div className="space-y-8 mb-14">
+                {[
+                  "Dear Health Enthusiasts,",
+                  "When I founded Panchamritam over a decade ago, I was driven by a deep concern for the declining quality of our food supply and its impact on public health. As a medical professional, I witnessed firsthand how chemical-laden foods were contributing to chronic diseases and weakened immunity.",
+                  "Our philosophy is simple yet profound: return to nature's original design. Every product we offer is carefully selected to support your body's natural healing mechanisms and promote long-term wellbeing.",
+                  "We work directly with organic farmers who share our vision, ensuring that what reaches your table is pure, potent, and full of life-giving properties. This commitment to quality is not just a business strategy—it's our sacred mission."
+                ].map((paragraph, index) => (
+                  <motion.div
+                    key={index}
+                    className="relative"
+                    initial={{ opacity: 0, y: 25 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7, delay: 0.4 + (index * 0.1) }}
+                  >
+                    {index === 0 && (
+                      <div className="absolute -left-3 top-1.5 h-6 w-1 bg-[#5B8C3E]/30 rounded-full"></div>
+                    )}
+                    <p className={`${index === 0 ? "text-xl md:text-2xl font-semibold text-[#1F2937]" : "text-[#4B5563] leading-relaxed"} ${index === 2 ? "font-medium text-[#1F2937]" : ""}`}>
+                      {paragraph}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+              
+              {/* Premium signature block with enhanced styling */}
+              <motion.div
+                className="flex flex-col items-end"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.9 }}
+              >
+                <div className="flex items-center mb-3">
+                  <motion.div 
+                    className="w-8 h-8 rounded-full flex items-center justify-center bg-[#5B8C3E]/10 mr-3 shadow-sm"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    <svg className="w-4 h-4 text-[#5B8C3E]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M5.5 17a4.5 4.5 0 01-1.44-8.765 4.5 4.5 0 018.302-3.046 3.5 3.5 0 014.504 4.272A4 4 0 0115 17H5.5zm3.75-2.75a.75.75 0 001.5 0V9.66l1.95 2.1a.75.75 0 101.1-1.02l-3.25-3.5a.75.75 0 00-1.1 0l-3.25 3.5a.75.75 0 101.1 1.02l1.95-2.1v4.59z" clipRule="evenodd" />
+                    </svg>
+                  </motion.div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-[#1F2937]">Dr. Dharampal</div>
+                    <div className="text-[#5B8C3E] text-sm font-medium tracking-wide">Founder & Chief Health Advocate</div>
+                  </div>
+                </div>
+                <motion.div 
+                  className="h-px w-64 bg-gradient-to-l from-[#5B8C3E] via-[#5B8C3E]/60 to-transparent"
+                  initial={{ width: 0 }}
+                  whileInView={{ width: 256 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 1.1 }}
+                />
+              </motion.div>
+            </div>
+            
+            {/* Enhanced bottom accent pattern */}
+            <div className="h-1.5 bg-gradient-to-r from-[#5B8C3E]/30 via-[#7BAD50]/70 to-[#AECB95]/30"></div>
+          </motion.div>
+          
+          {/* Enhanced mission highlights with icons */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 max-w-5xl mx-auto">
+            {[
+              { 
+                title: "Pure Ingredients", 
+                description: "We source only the purest organic ingredients from certified farms",
+                icon: (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                  </svg>
+                )
+              },
+              { 
+                title: "Chemical-Free", 
+                description: "No harmful chemicals, preservatives or artificial additives in any products",
+                icon: (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                )
+              },
+              { 
+                title: "Health-Focused", 
+                description: "Every product is designed to support your body's natural healing processes",
+                icon: (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                )
+              }
+            ].map((item, index) => (
+                              <motion.div 
+                  key={index}
+                  className="bg-white rounded-xl shadow-lg overflow-hidden group"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.3 + (index * 0.1) }}
+                  whileHover={{ y: -5, boxShadow: "0 15px 30px -10px rgba(91, 140, 62, 0.3)" }}
+                >
+                <div className="h-2 bg-[#5B8C3E]" />
+                <div className="p-7">
+                  <div className="flex items-center mb-4">
+                    <motion.div 
+                      className="w-10 h-10 rounded-full bg-[#5B8C3E]/10 flex items-center justify-center mr-3 text-[#5B8C3E] shadow-sm"
+                      whileHover={{ rotate: 10, scale: 1.1 }}
+                    >
+                      {item.icon}
+                    </motion.div>
+                    <h3 className="text-lg font-semibold text-[#1F2937] group-hover:text-[#5B8C3E] transition-colors duration-300">
+                      {item.title}
+                    </h3>
+                  </div>
+                  <p className="text-[#4B5563]">{item.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
 
-            {/* Testimonial Section - Innovative Magnetic Split Design */}
+      {/* Testimonial Section - Innovative Magnetic Split Design */}
       <div ref={testimonialSectionRef} className="py-24 relative overflow-hidden">
         {/* Dynamic background gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-white via-[#f9fbf7] to-white"></div>
@@ -2042,7 +2302,7 @@ const About = () => {
               </div>
           </div>
         </div>
-      </div>
+        </div>
 
       {/* Product Categories Section - Organic Polaroid Gallery */}
       <div ref={categoriesSectionRef} id="categories" className="py-24 bg-white relative overflow-hidden">
@@ -2128,13 +2388,13 @@ const About = () => {
                       
                       {/* Natural texture overlay */}
                       <div className="absolute inset-0 shadow-inner pointer-events-none border border-black/5"></div>
-                    </div>
+          </div>
                     
                     {/* Handwritten-style caption */}
                     <div className="absolute bottom-0 left-0 right-0 p-3 text-center">
                       <h3 className="text-[#1F2937] text-lg font-medium" style={{ fontFamily: 'cursive, serif' }}>{category.title}</h3>
-                    </div>
-                    
+        </div>
+
                     {/* Tape accent */}
                     <div 
                       className="absolute top-0 w-8 h-4 bg-[#5B8C3E]/20 transform -translate-y-1/2" 
@@ -2199,9 +2459,9 @@ const About = () => {
                   <h3 className="text-3xl md:text-4xl font-bold mb-2" style={{ textShadow: "0 0 10px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.9)" }}>Pure Organic</h3>
                   <div className="w-20 h-1 bg-white mx-auto mb-4"></div>
                   <p className="text-xl" style={{ textShadow: "0 0 8px rgba(0,0,0,0.8), 0 2px 4px rgba(0,0,0,0.9)" }}>Nature's Best Selection</p>
-                </div>
+              </div>
               </motion.div>
-            </div>
+          </div>
           </motion.div>
           
           {/* Right side - CTA content */}
@@ -2228,7 +2488,7 @@ const About = () => {
               >
                 <div className="inline-block bg-[#5B8C3E]/10 px-4 py-1.5 rounded-full">
                   <span className="text-[#5B8C3E] text-sm font-medium tracking-wider">EXPERIENCE NATURE'S GOODNESS</span>
-                </div>
+        </div>
               </motion.div>
               
               <motion.h2 
@@ -2320,10 +2580,10 @@ const About = () => {
                       <svg className="w-6 h-6 text-[#5B8C3E]" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
-                    </div>
+              </div>
                     <span className="font-medium text-[#1F2937]">Certified Organic</span>
                     <span className="text-xs text-[#6B7280] mt-1">100% Verified</span>
-                  </div>
+          </div>
                   
                   <div className="flex flex-col items-center text-center">
                     <div className="w-12 h-12 rounded-full bg-[#5B8C3E]/10 flex items-center justify-center mb-3">
@@ -2331,7 +2591,7 @@ const About = () => {
                         <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clipRule="evenodd" />
                       </svg>
-                    </div>
+        </div>
                     <span className="font-medium text-[#1F2937]">Money-Back Guarantee</span>
                     <span className="text-xs text-[#6B7280] mt-1">30-Day Returns</span>
                   </div>
