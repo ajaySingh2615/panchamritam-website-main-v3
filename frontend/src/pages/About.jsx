@@ -2045,9 +2045,7 @@ const About = () => {
       </div>
 
       {/* Product Categories Section - Organic Polaroid Gallery */}
-      <div ref={categoriesSectionRef} id="categories" className="py-24 bg-[#f8f8f5] relative overflow-hidden">
-        {/* Natural texture background */}
-        <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NiIgaGVpZ2h0PSIxMDAiPgo8cmVjdCB3aWR0aD0iNTYiIGhlaWdodD0iMTAwIiBmaWxsPSIjZjhmOGY1Ij48L3JlY3Q+CjxwYXRoIGQ9Ik0yOCA2NkwwIDUwTDAgMTZMMjggMEw1NiAxNkw1NiA1MEwyOCA2NkwyOCAxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzVCOEMzRSIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+CjxwYXRoIGQ9Ik0yOCAwTDI4IDM0TDAgNTBMMCA4NEwyOCAxMDBMNTYgODRMNTYgNTBMMjggMzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzVCOEMzRSIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+Cjwvc3ZnPg==')]"></div>
+      <div ref={categoriesSectionRef} id="categories" className="py-24 bg-white relative overflow-hidden">
         
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
@@ -2155,87 +2153,199 @@ const About = () => {
         </div>
       </div>
 
-      {/* CTA Section */}
-      <div ref={ctaSectionRef} className="py-20 bg-[#f8f6f3] relative overflow-hidden">
-        <div className="absolute inset-0 bg-[#1F2937]/5 mix-blend-multiply"></div>
-        
-        {/* Animated background patterns */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-full h-full">
-            {[...Array(3)].map((_, i) => (
-              <div 
-                key={i}
-                className="absolute rounded-full bg-[#5B8C3E]"
-                style={{
-                  top: `${Math.random() * 100}%`,
-                  left: `${Math.random() * 100}%`,
-                  width: `${Math.random() * 300 + 100}px`,
-                  height: `${Math.random() * 300 + 100}px`,
-                  opacity: Math.random() * 0.15,
-                  filter: 'blur(50px)',
-                  animation: `blob ${Math.random() * 20 + 10}s infinite linear`,
-                  animationDelay: `${Math.random() * 5}s`
-                }}
-              />
-            ))}
-          </div>
-        </div>
-        
-        {/* Decorative leaf */}
-        <div className="absolute bottom-0 right-0 w-64 h-64 pointer-events-none z-0 opacity-15 transform translate-x-1/4 translate-y-1/4">
-          <img 
-            src={leafImage} 
-            alt="" 
-            className="w-full h-full object-contain filter drop-shadow-lg transform rotate-15"
-          />
-        </div>
-        
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* CTA Section - Split Design with Organic Imagery */}
+      <div ref={ctaSectionRef} className="relative overflow-hidden">
+        {/* Full-width container without padding for the split design */}
+        <div className="flex flex-col lg:flex-row">
+          {/* Left side - Organic imagery with parallax effect */}
           <motion.div 
-            className="bg-white bg-opacity-80 backdrop-filter backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden relative p-12 border border-white border-opacity-20 text-center hover-3d"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={ctaSectionVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+            className="relative w-full lg:w-1/2 h-80 lg:h-auto overflow-hidden"
+            initial={{ opacity: 0, x: -50 }}
+            animate={ctaSectionVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-[#1F2937] mb-6 serif-heading">
-              Ready to Experience <span className="bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] bg-clip-text text-transparent">Organic Goodness</span>?
-            </h2>
-            
-            <p className="text-[#6B7280] text-lg max-w-2xl mx-auto mb-8 sans-text">
-              Browse our selection of premium organic products and start your journey towards healthier living.
-            </p>
-            
-            <motion.a 
-              href="/shop" 
-              className="inline-flex items-center justify-center bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white font-medium py-4 px-10 rounded-md transition-all duration-300 shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transform hover:-translate-y-1 hover:shadow-xl active:translate-y-0 shine-effect"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: "0 20px 25px -5px rgba(91, 140, 62, 0.4), 0 10px 10px -5px rgba(91, 140, 62, 0.2)"
+            {/* Main image with parallax effect */}
+            <motion.div
+              className="absolute inset-0 z-0"
+              initial={{ scale: 1.1 }}
+              animate={ctaSectionVisible ? 
+                { y: [0, -15, 0], scale: [1.1, 1, 1.1] } : 
+                { scale: 1.1 }
+              }
+              transition={{ 
+                duration: 20, 
+                repeat: Infinity, 
+                repeatType: "reverse" 
               }}
-              whileTap={{ scale: 0.95 }}
             >
-              <span className="text-lg">Start Shopping</span>
-              <motion.svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="h-5 w-5 ml-2" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-                animate={{ x: [0, 8, 0] }}
-                transition={{ 
-                  duration: 2, 
-                  repeat: Infinity, 
-                  ease: "easeInOut" 
-                }}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </motion.svg>
-            </motion.a>
+              <img 
+                src={aboutImage} 
+                alt="Organic products" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#5B8C3E]/20 to-transparent mix-blend-multiply" />
+            </motion.div>
             
-            {/* Subtle decorative elements */}
-            <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-[#5B8C3E]/10 to-transparent rounded-full filter blur-2xl"></div>
-            <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tr from-[#7BAD50]/10 to-transparent rounded-full filter blur-2xl"></div>
+            {/* Overlay message */}
+            <div className="absolute inset-0 flex items-center justify-center z-10">
+              <motion.div 
+                className="text-white text-center px-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={ctaSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                <h3 className="text-3xl md:text-4xl font-bold mb-2 text-shadow-lg">Pure Organic</h3>
+                <div className="w-20 h-1 bg-white mx-auto mb-4"></div>
+                <p className="text-xl text-shadow-md">Nature's Best Selection</p>
+              </motion.div>
+            </div>
           </motion.div>
+          
+          {/* Right side - CTA content */}
+          <div className="w-full lg:w-1/2 bg-gradient-to-br from-[#f8f6f3] via-[#f8f6f3] to-[#f1efe8] py-20 lg:py-24 px-6 md:px-12 relative overflow-hidden">
+            {/* Background decorative elements */}
+            <div className="absolute top-0 right-0 w-32 h-32 border-t border-r border-[#5B8C3E]/10 rounded-bl-full"></div>
+            <div className="absolute bottom-0 left-0 w-40 h-40 border-b border-l border-[#5B8C3E]/10 rounded-tr-full"></div>
+            
+            {/* Subtle leaf pattern */}
+            <motion.div 
+              className="absolute -right-8 top-1/4 w-24 h-24 opacity-5"
+              animate={{ rotate: [0, 10, 0], y: [0, -5, 0] }}
+              transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <img src={leafImage} alt="" className="w-full h-full" />
+            </motion.div>
+            
+            <div className="max-w-md mx-auto relative z-10">
+              <motion.div 
+                className="mb-10"
+                initial={{ opacity: 0, x: 20 }}
+                animate={ctaSectionVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+                transition={{ duration: 0.6 }}
+              >
+                <div className="inline-block bg-[#5B8C3E]/10 px-4 py-1.5 rounded-full">
+                  <span className="text-[#5B8C3E] text-sm font-medium tracking-wider">EXPERIENCE NATURE'S GOODNESS</span>
+                </div>
+              </motion.div>
+              
+              <motion.h2 
+                className="text-4xl md:text-5xl font-bold mb-6 leading-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={ctaSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <span className="text-[#1F2937]">Ready to Taste </span>
+                <span className="text-[#5B8C3E] relative inline-block">
+                  Organic Goodness
+                  <motion.div 
+                    className="absolute -bottom-2 left-0 h-1 bg-[#5B8C3E]/30 w-full"
+                    initial={{ width: 0 }}
+                    animate={ctaSectionVisible ? { width: "100%" } : { width: 0 }}
+                    transition={{ duration: 0.8, delay: 0.6 }}
+                  />
+                </span>
+                <span className="text-[#1F2937]">?</span>
+              </motion.h2>
+              
+              <motion.p 
+                className="text-[#4B5563] text-lg mb-10 leading-relaxed"
+                initial={{ opacity: 0, y: 20 }}
+                animate={ctaSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                Discover our premium selection of organic products and transform your daily routine with nature's finest ingredients. Your journey to healthier living starts here.
+              </motion.p>
+              
+              {/* Button group with enhanced styling */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={ctaSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-12"
+              >
+                <motion.a 
+                  href="/shop" 
+                  className="group relative inline-flex items-center justify-center bg-[#5B8C3E] text-white font-medium py-4 px-10 rounded-md shadow-md overflow-hidden"
+                  whileHover={{ 
+                    scale: 1.03,
+                    boxShadow: "0 10px 25px -5px rgba(91, 140, 62, 0.3)"
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  {/* Shine effect */}
+                  <motion.div 
+                    className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-20"
+                    initial={{ left: "-100%" }}
+                    animate={{ left: "200%" }}
+                    transition={{ repeat: Infinity, duration: 3, repeatDelay: 5 }}
+                  />
+                  
+                  <span className="relative z-10 text-lg">Shop Now</span>
+                  <svg className="ml-2 w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </motion.a>
+                
+                <motion.a 
+                  href="/about" 
+                  className="group relative inline-flex items-center justify-center bg-white text-[#5B8C3E] border border-[#5B8C3E] font-medium py-4 px-8 rounded-md overflow-hidden"
+                  whileHover={{ 
+                    scale: 1.03,
+                    backgroundColor: "rgba(91, 140, 62, 0.05)"
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <span>Learn More</span>
+                  <svg className="ml-2 w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                  </svg>
+                </motion.a>
+              </motion.div>
+              
+              {/* Trust indicators with improved design */}
+              <motion.div 
+                className="relative"
+                initial={{ opacity: 0 }}
+                animate={ctaSectionVisible ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+              >
+                <div className="absolute -left-6 -right-6 top-0 h-px bg-gradient-to-r from-transparent via-[#5B8C3E]/20 to-transparent" />
+                
+                <div className="pt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-12 h-12 rounded-full bg-[#5B8C3E]/10 flex items-center justify-center mb-3">
+                      <svg className="w-6 h-6 text-[#5B8C3E]" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <span className="font-medium text-[#1F2937]">Certified Organic</span>
+                    <span className="text-xs text-[#6B7280] mt-1">100% Verified</span>
+                  </div>
+                  
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-12 h-12 rounded-full bg-[#5B8C3E]/10 flex items-center justify-center mb-3">
+                      <svg className="w-6 h-6 text-[#5B8C3E]" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <span className="font-medium text-[#1F2937]">Money-Back Guarantee</span>
+                    <span className="text-xs text-[#6B7280] mt-1">30-Day Returns</span>
+                  </div>
+                  
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-12 h-12 rounded-full bg-[#5B8C3E]/10 flex items-center justify-center mb-3">
+                      <svg className="w-6 h-6 text-[#5B8C3E]" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z" />
+                      </svg>
+                    </div>
+                    <span className="font-medium text-[#1F2937]">Free Shipping</span>
+                    <span className="text-xs text-[#6B7280] mt-1">On Orders Over $50</span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
