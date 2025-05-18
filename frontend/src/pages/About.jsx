@@ -1770,7 +1770,7 @@ const About = () => {
       </div>
 
       {/* Certified Products Section - 3D Interactive Showcase */}
-      <div ref={certifiedSectionRef} id="certified" className="py-24 bg-gradient-to-b from-[#f8f6f3] to-white relative overflow-hidden">
+      <div ref={certifiedSectionRef} id="certified" className="py-24 bg-[#f8f6f3] relative overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 pointer-events-none">
           {/* Organic pattern lines */}
@@ -1871,7 +1871,7 @@ const About = () => {
                             <div className="text-center">
                               <div className="text-white text-lg font-bold">USDA</div>
                               <div className="text-white text-xs">Organic</div>
-                            </div>
+              </div>
                           )}
                           
                           {i === 1 && (
@@ -2016,10 +2016,10 @@ const About = () => {
                           <p className="text-[#6B7280]">{step.desc}</p>
                         </div>
                       </motion.div>
-                    ))}
-                  </div>
-                </div>
-                
+            ))}
+          </div>
+        </div>
+
                 {/* Learn more button */}
                 <motion.div
                   className="mt-10"
@@ -2039,7 +2039,7 @@ const About = () => {
                   </motion.button>
                 </motion.div>
               </motion.div>
-            </div>
+              </div>
           </div>
         </div>
       </div>
@@ -2151,32 +2151,7 @@ const About = () => {
             </motion.div>
           </div>
           
-          {/* Natural elements */}
-          <div className="mt-16 relative">
-            <motion.div 
-              className="w-32 h-32 absolute -bottom-10 -left-10 opacity-20 z-0 pointer-events-none"
-              initial={{ opacity: 0, rotate: 0 }}
-              animate={categoriesSectionVisible ? { 
-                opacity: 0.2, 
-                rotate: 15,
-                transition: { duration: 1, delay: 0.8 }
-              } : { opacity: 0 }}
-            >
-              <img src={leaf1Image} alt="" className="w-full h-full object-contain" />
-            </motion.div>
-            
-            <motion.div 
-              className="w-24 h-24 absolute -top-10 -right-10 opacity-20 z-0 pointer-events-none"
-              initial={{ opacity: 0, rotate: 0 }}
-              animate={categoriesSectionVisible ? { 
-                opacity: 0.2, 
-                rotate: -20,
-                transition: { duration: 1, delay: 1 }
-              } : { opacity: 0 }}
-            >
-              <img src={leafImage} alt="" className="w-full h-full object-contain" />
-            </motion.div>
-          </div>
+          {/* Remove natural elements */}
         </div>
       </div>
 
