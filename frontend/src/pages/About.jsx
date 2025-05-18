@@ -1592,7 +1592,7 @@ const About = () => {
               }}
             />
           ))}
-        </div>
+              </div>
         
         {/* Main content container */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -1649,7 +1649,7 @@ const About = () => {
                       </motion.span>
                     ))}
                   </motion.h2>
-                </div>
+          </div>
                 
                 {/* Description with sliding reveal */}
                 <motion.div
@@ -1682,7 +1682,7 @@ const About = () => {
                   />
                   <span className="ml-2 text-sm font-medium">Explore stories</span>
                 </motion.div>
-              </div>
+        </div>
             </motion.div>
             
                           {/* Right side - Auto-scrolling testimonial carousel */}
@@ -1769,61 +1769,287 @@ const About = () => {
         </div>
       </div>
 
-      {/* Certified Products Section */}
-
-      {/* Certified Products Section */}
-      <div ref={certifiedSectionRef} id="certified" className="py-20 bg-[#f8f6f3] relative overflow-hidden">
-        {/* Decorative blob */}
-        <div className="absolute top-1/3 left-1/2 w-96 h-96 bg-gradient-to-br from-[#5B8C3E]/5 to-[#7BAD50]/10 rounded-full filter blur-3xl opacity-40 animate-blob animation-delay-4000"></div>
-        
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            className="relative"
-            initial={{ opacity: 0, y: 20 }}
-            animate={certifiedSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.6 }}
-          >
-            <motion.img 
-              src={certifiedBadge}
-              alt="Certified Organic" 
-              className="w-32 h-32 mx-auto mb-8"
-              animate={{ rotate: [0, 5, 0, -5, 0] }}
-              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      {/* Certified Products Section - 3D Interactive Showcase */}
+      <div ref={certifiedSectionRef} id="certified" className="py-24 bg-gradient-to-b from-[#f8f6f3] to-white relative overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Organic pattern lines */}
+          <svg className="w-full h-full opacity-10" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="certGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#5B8C3E" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#7BAD50" stopOpacity="0.1" />
+              </linearGradient>
+            </defs>
+            <motion.path
+              d="M0,25 C30,15 70,35 100,25 L100,100 L0,100 Z"
+              fill="url(#certGradient)"
+              initial={{ y: 100, opacity: 0 }}
+              animate={certifiedSectionVisible ? { y: 0, opacity: 0.05 } : { y: 100, opacity: 0 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
             />
+          </svg>
+          
+          {/* Removing floating certification symbols */}
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          {/* Two-column layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Left Column - 3D Interactive Badge */}
+            <div className="flex justify-center">
+              <motion.div
+                className="relative perspective-1000"
+                initial={{ opacity: 0 }}
+                animate={certifiedSectionVisible ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                {/* Static Container with Rotating Badge */}
+                <div className="relative w-72 h-72 md:w-96 md:h-96">
+                  {/* Main Rotating Certification Badge */}
+                  <motion.div
+                    className="absolute inset-0 z-10"
+                    animate={{ 
+                      rotateY: [0, 360],
+                    }}
+                    transition={{ 
+                      duration: 30,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                    style={{ 
+                      transformStyle: "preserve-3d",
+                    }}
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <img 
+                      src={certifiedBadge}
+                      alt="Certified Organic" 
+                      className="w-full h-full object-contain"
+                    />
+                  </motion.div>
+                  
+                  {/* Static Certification Icons */}
+                  {[...Array(4)].map((_, i) => {
+                    // Position badges at the four corners
+                    let position = {};
+                    
+                    // Top-left, top-right, bottom-right, bottom-left
+                    if (i === 0) {
+                      position = { top: '-10%', left: '-10%' }; // Top-left for USDA
+                    } else if (i === 1) {
+                      position = { top: '-10%', right: '-10%' }; // Top-right for Non GMO
+                    } else if (i === 2) {
+                      position = { bottom: '-10%', right: '-10%' }; // Bottom-right for Eco
+                    } else if (i === 3) {
+                      position = { bottom: '-10%', left: '-10%' }; // Bottom-left for FDA
+                    }
+                    
+                    return (
+                      <motion.div
+                        key={i}
+                        className="absolute rounded-full flex items-center justify-center"
+                        style={{ 
+                          width: 75, 
+                          height: 75,
+                          ...position,
+                          zIndex: 100,
+                          backgroundColor: i === 0 
+                            ? '#5B8C3E' 
+                            : i === 1 
+                            ? '#4A7033' 
+                            : i === 2 
+                            ? '#6B9D4E' 
+                            : '#3B5D26',
+                          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                          border: '1px solid rgba(255, 255, 255, 0.3)'
+                        }}
+                        whileHover={{ scale: 1.05 }}
+                      >
+                        <div>
+                          {i === 0 && (
+                            <div className="text-center">
+                              <div className="text-white text-lg font-bold">USDA</div>
+                              <div className="text-white text-xs">Organic</div>
+                            </div>
+                          )}
+                          
+                          {i === 1 && (
+                            <div className="text-center">
+                              <div className="text-white text-lg font-bold">Non</div>
+                              <div className="text-white text-xs">GMO</div>
+                            </div>
+                          )}
+                          
+                          {i === 2 && (
+                            <div className="text-center">
+                              <div className="text-white text-lg font-bold">Eco</div>
+                              <div className="text-white text-xs">Certified</div>
+                            </div>
+                          )}
+                          
+                          {i === 3 && (
+                            <div className="text-center">
+                              <div className="text-white text-lg font-bold">FDA</div>
+                              <div className="text-white text-xs">Approved</div>
+                            </div>
+                          )}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+                
+                {/* Glowing background effect */}
+                <motion.div
+                  className="absolute -inset-4 rounded-full bg-gradient-to-br from-[#5B8C3E]/20 to-[#7BAD50]/5 filter blur-xl"
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.5, 0.3],
+                  }}
+                  transition={{ 
+                    duration: 6,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                  }}
+                  style={{
+                    zIndex: -1,
+                  }}
+                />
+              </motion.div>
+            </div>
             
-            <h2 className="text-3xl md:text-4xl font-bold text-[#1F2937] mb-6 serif-heading">
-              Certified Products
-            </h2>
-            
-            <p className="text-[#6B7280] text-lg max-w-2xl mx-auto mb-10 sans-text">
-              Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
-            </p>
-            
-            <div className="flex justify-center space-x-4">
-              {[1, 2, 3, 4].map((badge, i) => (
-                <motion.div 
-                  key={i}
-                  className="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center"
+            {/* Right Column - Content with Animated Steps */}
+            <div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={certifiedSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.6 }}
+              >
+                <motion.div
+                  className="inline-block mb-4"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={certifiedSectionVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="bg-[#5B8C3E]/10 text-[#5B8C3E] text-sm font-medium py-1 px-4 rounded-full">
+                    Quality Assured
+                  </div>
+                </motion.div>
+                
+                <motion.h2 
+                  className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1F2937] mb-6"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={certifiedSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                  Our Health Standards <br/>
+                  <span className="text-[#5B8C3E]">Certification Process</span>
+                </motion.h2>
+                
+                <motion.p
+                  className="text-[#4B5563] text-lg mb-8 max-w-xl"
+                  initial={{ opacity: 0 }}
+                  animate={certifiedSectionVisible ? { opacity: 1 } : { opacity: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                >
+                  At Panchamritam, we ensure every product meets the highest standards of quality and authenticity. Our rigorous certification process guarantees you receive only the purest, healthiest organic products.
+                </motion.p>
+                
+                {/* Certification Steps with Animated Path */}
+                <div className="relative">
+                  {/* Connecting path line */}
+                  <motion.div 
+                    className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#5B8C3E] to-[#AECB95]"
+                    initial={{ scaleY: 0, originY: 0 }}
+                    animate={certifiedSectionVisible ? { scaleY: 1 } : { scaleY: 0 }}
+                    transition={{ duration: 1.5, delay: 0.4 }}
+                  />
+                  
+                  {/* Certification steps with animation */}
+                  <div className="space-y-8 relative">
+                    {[
+                      {
+                        title: "Source Verification",
+                        desc: "We verify all suppliers meet our strict organic farming standards",
+                        icon: "🌱",
+                        delay: 0.5
+                      },
+                      {
+                        title: "Lab Testing",
+                        desc: "Every batch undergoes thorough testing for purity and nutritional content",
+                        icon: "🔬",
+                        delay: 0.7
+                      },
+                      {
+                        title: "Certification",
+                        desc: "Products are certified by multiple independent organic authorities",
+                        icon: "✅",
+                        delay: 0.9
+                      },
+                      {
+                        title: "Quality Monitoring",
+                        desc: "Continuous monitoring ensures consistent quality standards",
+                        icon: "📊",
+                        delay: 1.1
+                      }
+                    ].map((step, i) => (
+                      <motion.div 
+                        key={i}
+                        className="flex items-start"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={certifiedSectionVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                        transition={{ duration: 0.6, delay: step.delay }}
+                      >
+                        <motion.div 
+                          className="flex-shrink-0 w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center mr-4 z-10"
+                          whileHover={{ 
+                            scale: 1.1,
+                            backgroundColor: "#5B8C3E10",
+                            transition: { duration: 0.2 }
+                          }}
+                        >
+                          <span className="text-2xl">{step.icon}</span>
+                        </motion.div>
+                        <div>
+                          <h3 className="text-xl font-semibold text-[#1F2937] mb-1">{step.title}</h3>
+                          <p className="text-[#6B7280]">{step.desc}</p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Learn more button */}
+                <motion.div
+                  className="mt-10"
                   initial={{ opacity: 0, y: 20 }}
                   animate={certifiedSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                  transition={{ duration: 0.4, delay: 0.2 + (i * 0.1) }}
+                  transition={{ duration: 0.6, delay: 1.3 }}
                 >
-                  <span className="text-[#5B8C3E] text-xl font-bold">
-                    {i + 1}
-                  </span>
+                  <motion.button
+                    className="inline-flex items-center px-6 py-3 bg-[#5B8C3E] text-white rounded-md font-medium text-base shadow-md hover:bg-[#4a7033] transition-colors"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <span>Learn More About Our Standards</span>
+                    <svg className="ml-2 w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </motion.button>
                 </motion.div>
-              ))}
-              </div>
-          </motion.div>
+              </motion.div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Product Categories Section */}
-      <div ref={categoriesSectionRef} id="categories" className="py-20 bg-white relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#EDF5E5] to-[#AECB95]/20 rounded-full filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+      {/* Product Categories Section - Organic Polaroid Gallery */}
+      <div ref={categoriesSectionRef} id="categories" className="py-24 bg-[#f8f8f5] relative overflow-hidden">
+        {/* Natural texture background */}
+        <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NiIgaGVpZ2h0PSIxMDAiPgo8cmVjdCB3aWR0aD0iNTYiIGhlaWdodD0iMTAwIiBmaWxsPSIjZjhmOGY1Ij48L3JlY3Q+CjxwYXRoIGQ9Ik0yOCA2NkwwIDUwTDAgMTZMMjggMEw1NiAxNkw1NiA1MEwyOCA2NkwyOCAxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzVCOEMzRSIgc3Ryb2tlLXdpZHRoPSIxIj48L3BhdGg+CjxwYXRoIGQ9Ik0yOCAwTDI4IDM0TDAgNTBMMCA4NEwyOCAxMDBMNTYgODRMNTYgNTBMMjggMzQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzVCOEMzRSIgc3Ryb2tlLXdpZHRoPSIyIj48L3BhdGg+Cjwvc3ZnPg==')]"></div>
         
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
             <motion.span 
               className="block px-6 py-1.5 rounded-full bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white text-sm font-medium shadow-md mb-4 mx-auto w-fit"
@@ -1835,49 +2061,121 @@ const About = () => {
             </motion.span>
             
             <motion.h2 
-              className="text-4xl font-bold text-[#1F2937] mb-6 serif-heading"
+              className="text-4xl font-bold text-[#1F2937] mb-2 serif-heading"
               initial={{ opacity: 0 }}
               animate={categoriesSectionVisible ? { opacity: 1 } : { opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               We Deal With Various Quality Organic Products!
             </motion.h2>
+            
+            <div className="w-24 h-1 bg-[#5B8C3E] mx-auto my-6 rounded-full"></div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { title: "Fresh Fruits", image: freshFruitsImg },
-              { title: "Dry Fruits", image: dryFruitsImg },
-              { title: "Fresh Vegetables", image: freshVegetablesImg },
-              { title: "Dried Vegetables", image: driedVegetablesImg },
-              { title: "Beauty Products", image: beautyProductsImg },
-              { title: "Milk Products", image: milkProductsImg },
-              { title: "Organic Honey", image: organicHoneyImg },
-              { title: "Organic Tea", image: organicTeaImg }
-            ].map((category, index) => (
-              <motion.div
-                key={index}
-                className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                initial={{ opacity: 0, y: 30 }}
-                animate={categoriesSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                transition={{ duration: 0.5, delay: 0.1 + (index * 0.1) }}
-              >
-                <div className="h-64 overflow-hidden">
-                  <img 
-                    src={category.image} 
-                    alt={category.title} 
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                </div>
-                
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1F2937]/90 via-transparent to-transparent flex items-end">
-                  <div className="p-4 w-full text-white">
-                    <h3 className="text-xl font-semibold mb-1 serif-heading">{category.title}</h3>
-                    <div className="w-12 h-1 bg-[#5B8C3E] rounded transition-all duration-300 group-hover:w-24"></div>
+          {/* Polaroid-style organic gallery */}
+          <div className="relative">
+            <motion.div 
+              className="flex flex-wrap justify-center gap-x-6 gap-y-10 md:gap-x-8 md:gap-y-16"
+              initial={{ opacity: 0 }}
+              animate={categoriesSectionVisible ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              {[
+                { title: "Fresh Fruits", image: freshFruitsImg, rotate: -2 },
+                { title: "Dry Fruits", image: dryFruitsImg, rotate: 3 },
+                { title: "Fresh Vegetables", image: freshVegetablesImg, rotate: -1 },
+                { title: "Dried Vegetables", image: driedVegetablesImg, rotate: 2 },
+                { title: "Beauty Products", image: beautyProductsImg, rotate: -3 },
+                { title: "Milk Products", image: milkProductsImg, rotate: 1 },
+                { title: "Organic Honey", image: organicHoneyImg, rotate: -2 },
+                { title: "Organic Tea", image: organicTeaImg, rotate: 2 }
+              ].map((category, index) => (
+                <motion.div
+                  key={index}
+                  className="w-[calc(50%-24px)] md:w-[calc(25%-24px)] relative"
+                  initial={{ 
+                    opacity: 0, 
+                    y: 50,
+                    rotate: category.rotate,
+                    boxShadow: "0 5px 15px rgba(0,0,0,0.08)"
+                  }}
+                  animate={categoriesSectionVisible ? { 
+                    opacity: 1, 
+                    y: 0,
+                    transition: { 
+                      duration: 0.6,
+                      delay: 0.1 * index,
+                      type: "spring",
+                      stiffness: 50
+                    }
+                  } : { opacity: 0, y: 50 }}
+                  whileHover={{ 
+                    y: -15, 
+                    rotate: 0,
+                    boxShadow: "0 15px 30px rgba(0,0,0,0.12), 0 5px 15px rgba(0,0,0,0.06)",
+                    transition: { duration: 0.3 }
+                  }}
+                >
+                  {/* Polaroid frame */}
+                  <div className="bg-white p-3 pb-12 rounded-sm shadow-md relative">
+                    {/* Image container with natural frame effect */}
+                    <div className="relative overflow-hidden aspect-square rounded-sm">
+                      <motion.img 
+                        src={category.image} 
+                        alt={category.title} 
+                        className="w-full h-full object-cover"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.5 }}
+                      />
+                      
+                      {/* Natural texture overlay */}
+                      <div className="absolute inset-0 shadow-inner pointer-events-none border border-black/5"></div>
+                    </div>
+                    
+                    {/* Handwritten-style caption */}
+                    <div className="absolute bottom-0 left-0 right-0 p-3 text-center">
+                      <h3 className="text-[#1F2937] text-lg font-medium" style={{ fontFamily: 'cursive, serif' }}>{category.title}</h3>
+                    </div>
+                    
+                    {/* Tape accent */}
+                    <div 
+                      className="absolute top-0 w-8 h-4 bg-[#5B8C3E]/20 transform -translate-y-1/2" 
+                      style={{ 
+                        left: `calc(50% - 16px)`, 
+                        clipPath: 'polygon(0% 0%, 100% 0%, 90% 100%, 10% 100%)' 
+                      }}
+                    ></div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+          
+          {/* Natural elements */}
+          <div className="mt-16 relative">
+            <motion.div 
+              className="w-32 h-32 absolute -bottom-10 -left-10 opacity-20 z-0 pointer-events-none"
+              initial={{ opacity: 0, rotate: 0 }}
+              animate={categoriesSectionVisible ? { 
+                opacity: 0.2, 
+                rotate: 15,
+                transition: { duration: 1, delay: 0.8 }
+              } : { opacity: 0 }}
+            >
+              <img src={leaf1Image} alt="" className="w-full h-full object-contain" />
+            </motion.div>
+            
+            <motion.div 
+              className="w-24 h-24 absolute -top-10 -right-10 opacity-20 z-0 pointer-events-none"
+              initial={{ opacity: 0, rotate: 0 }}
+              animate={categoriesSectionVisible ? { 
+                opacity: 0.2, 
+                rotate: -20,
+                transition: { duration: 1, delay: 1 }
+              } : { opacity: 0 }}
+            >
+              <img src={leafImage} alt="" className="w-full h-full object-contain" />
+            </motion.div>
           </div>
         </div>
       </div>
@@ -1949,7 +2247,11 @@ const About = () => {
                 viewBox="0 0 24 24" 
                 stroke="currentColor"
                 animate={{ x: [0, 8, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                transition={{ 
+                  duration: 2, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
               >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </motion.svg>
