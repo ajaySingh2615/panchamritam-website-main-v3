@@ -2194,9 +2194,12 @@ const About = () => {
                 animate={ctaSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
-                <h3 className="text-3xl md:text-4xl font-bold mb-2 text-shadow-lg">Pure Organic</h3>
-                <div className="w-20 h-1 bg-white mx-auto mb-4"></div>
-                <p className="text-xl text-shadow-md">Nature's Best Selection</p>
+                {/* Added background and enhanced text shadow for better visibility */}
+                <div className="bg-black/30 backdrop-blur-sm rounded-lg p-4 shadow-xl">
+                  <h3 className="text-3xl md:text-4xl font-bold mb-2" style={{ textShadow: "0 0 10px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.9)" }}>Pure Organic</h3>
+                  <div className="w-20 h-1 bg-white mx-auto mb-4"></div>
+                  <p className="text-xl" style={{ textShadow: "0 0 8px rgba(0,0,0,0.8), 0 2px 4px rgba(0,0,0,0.9)" }}>Nature's Best Selection</p>
+                </div>
               </motion.div>
             </div>
           </motion.div>
