@@ -12,6 +12,10 @@ import milkProductsImg from '../assets/images/milk-products.png';
 import organicHoneyImg from '../assets/images/organic-honey.png';
 import organicTeaImg from '../assets/images/organic-tea.png';
 import testimonialImg from '../assets/images/testimonial-person.png';
+import testimonialImg2 from '../assets/images/testimonial-person-2.png';
+import testimonialImg3 from '../assets/images/testimonial-person-3.png';
+import testimonialImg4 from '../assets/images/testimonial-person-4.png';
+import testimonialImg5 from '../assets/images/testimonial-person-5.png';
 import aboutImage from '../assets/images/about-image.png';
 import aboutImage2 from '../assets/images/about-image-2.png';
 import certifiedBadge from '../assets/images/certified-badge.png';
@@ -1751,7 +1755,7 @@ const About = () => {
                     <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-[#5B8C3E]/30 shadow-md">
                       {/* Replace with actual doctor image */}
                       <img 
-                        src={testimonialImg} 
+                        src={testimonialImg3} 
                         alt="Dr. Dharampal" 
                         className="w-full h-full object-cover"
                       />
@@ -1955,7 +1959,7 @@ const About = () => {
                     visible={testimonialSectionVisible}
                     delay={0.3}
                     image={testimonialImg}
-                    name="Mila Kunit"
+                    name="Ananya Sharma"
                     title="Recovered from digestive issues"
                     content="After struggling with digestive issues for years, switching to Panchamritam's organic products completely transformed my health. Their chemical-free products helped restore my gut health, and now I have more energy than ever before!"
                     highlight="100% Improvement"
@@ -1965,8 +1969,8 @@ const About = () => {
                   <TestimonialCard 
                     visible={testimonialSectionVisible}
                     delay={0.4}
-                    image={testimonialImg}
-                    name="Rajesh Kumar"
+                    image={testimonialImg2}
+                    name="Priya Mehta"
                     title="Managed blood pressure naturally"
                     content="I was looking for natural alternatives to manage my blood pressure. After incorporating Panchamritam's organic foods into my diet, my readings have stabilized, and my doctor is amazed at my progress without additional medication."
                     highlight="Natural Solution"
@@ -1976,8 +1980,8 @@ const About = () => {
                   <TestimonialCard 
                     visible={testimonialSectionVisible}
                     delay={0.5}
-                    image={testimonialImg}
-                    name="Sarah Williams"
+                    image={testimonialImg3}
+                    name="Rahul Khanna"
                     title="Stronger immune system"
                     content="My family and I used to catch every cold and flu that came around. Since making the switch to Panchamritam's organic products, we've noticed a significant improvement in our immune health. We rarely get sick now!"
                     highlight="Family Health"
@@ -1987,8 +1991,8 @@ const About = () => {
                   <TestimonialCard 
                     visible={testimonialSectionVisible}
                     delay={0.6}
-                    image={testimonialImg}
-                    name="Priya Sharma"
+                    image={testimonialImg4}
+                    name="Amit Verma"
                     title="Weight management journey"
                     content="I've struggled with weight management for years. Panchamritam's organic products have been a game changer. The natural ingredients have helped me maintain a healthy weight without crash diets. It's been a sustainable lifestyle change."
                     highlight="Sustainable Health"
@@ -1998,8 +2002,8 @@ const About = () => {
                   <TestimonialCard 
                     visible={testimonialSectionVisible}
                     delay={0.7}
-                    image={testimonialImg}
-                    name="David Chen"
+                    image={testimonialImg5}
+                    name="Siddharth Rao"
                     title="Enhanced mental clarity"
                     content="As a busy professional, I need to stay focused. Since incorporating Panchamritam's organic foods into my daily routine, I've experienced noticeably better mental clarity and sustained energy throughout the day."
                     highlight="Mental Focus"
