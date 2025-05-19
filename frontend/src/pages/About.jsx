@@ -1,24 +1,24 @@
 ﻿import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import leafImage from '../assets/images/leaf-2.png';
-import leaf1Image from '../assets/images/leaf1.png';
+import leafImage from '../assets/images/leaf-2.webp';
+import leaf1Image from '../assets/images/leaf1.webp';
 // You'll need to add these images to your assets folder
-import freshFruitsImg from '../assets/images/fresh-fruits.png';
-import dryFruitsImg from '../assets/images/dry-fruits.png';
-import freshVegetablesImg from '../assets/images/fresh-vegetables.png';
-import driedVegetablesImg from '../assets/images/dried-vegetables.png';
-import beautyProductsImg from '../assets/images/beauty-products.png';
-import milkProductsImg from '../assets/images/milk-products.png';
-import organicHoneyImg from '../assets/images/organic-honey.png';
-import organicTeaImg from '../assets/images/organic-tea.png';
-import testimonialImg from '../assets/images/testimonial-person.png';
-import testimonialImg2 from '../assets/images/testimonial-person-2.png';
-import testimonialImg3 from '../assets/images/testimonial-person-3.png';
-import testimonialImg4 from '../assets/images/testimonial-person-4.png';
-import testimonialImg5 from '../assets/images/testimonial-person-5.png';
-import aboutImage from '../assets/images/about-image.png';
-import aboutImage2 from '../assets/images/about-image-2.png';
-import certifiedBadge from '../assets/images/certified-badge.png';
+import freshFruitsImg from '../assets/images/fresh-fruits.webp';
+import dryFruitsImg from '../assets/images/dry-fruits.webp';
+import freshVegetablesImg from '../assets/images/fresh-vegetables.webp';
+import driedVegetablesImg from '../assets/images/dried-vegetables.webp';
+import beautyProductsImg from '../assets/images/beauty-products.webp';
+import milkProductsImg from '../assets/images/milk-products.webp';
+import organicHoneyImg from '../assets/images/organic-honey.webp';
+import organicTeaImg from '../assets/images/organic-tea.webp';
+import testimonialImg from '../assets/images/testimonial-person.webp';
+import testimonialImg2 from '../assets/images/testimonial-person-2.webp';
+import testimonialImg3 from '../assets/images/testimonial-person-3.webp';
+import testimonialImg4 from '../assets/images/testimonial-person-4.webp';
+import testimonialImg5 from '../assets/images/testimonial-person-5.webp';
+import aboutImage from '../assets/images/about-image.webp';
+import aboutImage2 from '../assets/images/about-image-2.webp';
+import certifiedBadge from '../assets/images/certified-badge.webp';
 
 // Testimonial Card Component
 const TestimonialCard = ({ visible, delay, image, name, title, content, highlight }) => {
@@ -73,6 +73,9 @@ const TestimonialCard = ({ visible, delay, image, name, title, content, highligh
                     src={image} 
                     alt={name}
                     className="w-full h-full object-cover"
+                    width="96"
+                    height="96"
+                    loading="lazy"
                   />
                 </motion.div>
               </div>
@@ -583,6 +586,8 @@ const About = () => {
               src={leaf1Image} 
               alt="" 
               className="w-full h-auto"
+              width="300"
+              height="300"
             />
           </motion.div>
           
@@ -595,7 +600,10 @@ const About = () => {
             <img 
               src={leafImage} 
               alt="" 
-              className="w-full h-auto"
+              className="w-full h-full object-contain filter drop-shadow-lg"
+              width="96"
+              height="96"
+              loading="lazy"
             />
           </motion.div>
           
@@ -1046,6 +1054,8 @@ const About = () => {
                   src={aboutImage2} 
                   alt="Our organic farm" 
                   className="w-full h-auto object-cover aspect-square transition-transform duration-1000 hover:scale-105"
+                  width="550"
+                  height="550"
                 />
                 
                 {/* Stats overlay at bottom */}
@@ -1758,6 +1768,9 @@ const About = () => {
                         src={testimonialImg3} 
                         alt="Dr. Dharampal" 
                         className="w-full h-full object-cover"
+                        width="80"
+                        height="80"
+                        loading="lazy"
                       />
                     </div>
                     <motion.div 
@@ -2076,6 +2089,9 @@ const About = () => {
                       src={certifiedBadge}
                       alt="Certified Organic" 
                       className="w-full h-full object-contain"
+                      width="384"
+                      height="384"
+                      loading="lazy"
                     />
                   </motion.div>
                   
@@ -2372,6 +2388,9 @@ const About = () => {
                         src={category.image} 
                         alt={category.title} 
                         className="w-full h-full object-cover"
+                        width="300"
+                        height="300"
+                        loading="lazy"
                         whileHover={{ scale: 1.05 }}
                         transition={{ duration: 0.5 }}
                       />
@@ -2432,6 +2451,9 @@ const About = () => {
                 src={aboutImage} 
                 alt="Organic products" 
                 className="w-full h-full object-cover"
+                width="800"
+                height="600"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-[#5B8C3E]/20 to-transparent mix-blend-multiply" />
             </motion.div>
@@ -2466,7 +2488,11 @@ const About = () => {
               animate={{ rotate: [0, 10, 0], y: [0, -5, 0] }}
               transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
             >
-              <img src={leafImage} alt="" className="w-full h-full" />
+              <img src={leafImage} alt="" className="w-full h-full" 
+                width="96"
+                height="96"
+                loading="lazy"
+              />
             </motion.div>
             
             <div className="max-w-md mx-auto relative z-10">

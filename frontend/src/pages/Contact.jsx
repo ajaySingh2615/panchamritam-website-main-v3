@@ -1,13 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
 import Breadcrumb from '../components/common/Breadcrumb';
-import personImage1 from '../assets/images/contact-page-hero-section-person-images/person1.jpg';
-import personImage2 from '../assets/images/contact-page-hero-section-person-images/person2.jpg';
-import personImage3 from '../assets/images/contact-page-hero-section-person-images/person3.jpg';
-import personImage4 from '../assets/images/contact-page-hero-section-person-images/person4.jpg';
-import personImage5 from '../assets/images/contact-page-hero-section-person-images/person5.jpg';
-import personImage6 from '../assets/images/contact-page-hero-section-person-images/person6.jpg';
-import leafImage from '../assets/images/leaf-2.png';
-import leaf1Image from '../assets/images/leaf1.png';
+import personImage1 from '../assets/images/contact-page-hero-section-person-images/person1.webp';
+import personImage2 from '../assets/images/contact-page-hero-section-person-images/person2.webp';
+import personImage3 from '../assets/images/contact-page-hero-section-person-images/person3.webp';
+import personImage4 from '../assets/images/contact-page-hero-section-person-images/person4.webp';
+import personImage5 from '../assets/images/contact-page-hero-section-person-images/person5.webp';
+import personImage6 from '../assets/images/contact-page-hero-section-person-images/person6.webp';
+import leafImage from '../assets/images/leaf-2.webp';
+import leaf1Image from '../assets/images/leaf1.webp';
 import { API_ENDPOINTS } from '../config/api';
 import { motion, AnimatePresence } from 'framer-motion';
 
