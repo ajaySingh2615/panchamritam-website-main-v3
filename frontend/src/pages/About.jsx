@@ -1801,65 +1801,6 @@ const About = () => {
             {/* Enhanced bottom accent pattern */}
             <div className="h-1.5 bg-gradient-to-r from-[#5B8C3E]/30 via-[#7BAD50]/70 to-[#AECB95]/30"></div>
           </motion.div>
-          
-          {/* Enhanced mission highlights with icons */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 max-w-5xl mx-auto">
-            {[
-              { 
-                title: "Pure Ingredients", 
-                description: "We source only the purest organic ingredients from certified farms",
-                icon: (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                  </svg>
-                )
-              },
-              { 
-                title: "Chemical-Free", 
-                description: "No harmful chemicals, preservatives or artificial additives in any products",
-                icon: (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                )
-              },
-              { 
-                title: "Health-Focused", 
-                description: "Every product is designed to support your body's natural healing processes",
-                icon: (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                  </svg>
-                )
-              }
-            ].map((item, index) => (
-                              <motion.div 
-                  key={index}
-                  className="bg-white rounded-xl shadow-lg overflow-hidden group"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.3 + (index * 0.1) }}
-                  whileHover={{ y: -5, boxShadow: "0 15px 30px -10px rgba(91, 140, 62, 0.3)" }}
-                >
-                <div className="h-2 bg-[#5B8C3E]" />
-                <div className="p-7">
-                  <div className="flex items-center mb-4">
-                    <motion.div 
-                      className="w-10 h-10 rounded-full bg-[#5B8C3E]/10 flex items-center justify-center mr-3 text-[#5B8C3E] shadow-sm"
-                      whileHover={{ rotate: 10, scale: 1.1 }}
-                    >
-                      {item.icon}
-                    </motion.div>
-                    <h3 className="text-lg font-semibold text-[#1F2937] group-hover:text-[#5B8C3E] transition-colors duration-300">
-                      {item.title}
-                    </h3>
-                  </div>
-                  <p className="text-[#4B5563]">{item.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </div>
 
