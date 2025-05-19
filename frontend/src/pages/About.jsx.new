@@ -1,58 +1,66 @@
-﻿import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import leafImage from '../assets/images/leaf-2.png';
-import leaf1Image from '../assets/images/leaf1.png';
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import leafImage from "../assets/images/leaf-2.png";
+import leaf1Image from "../assets/images/leaf1.png";
 // You'll need to add these images to your assets folder
-import freshFruitsImg from '../assets/images/fresh-fruits.png';
-import dryFruitsImg from '../assets/images/dry-fruits.png';
-import freshVegetablesImg from '../assets/images/fresh-vegetables.png';
-import driedVegetablesImg from '../assets/images/dried-vegetables.png';
-import beautyProductsImg from '../assets/images/beauty-products.png';
-import milkProductsImg from '../assets/images/milk-products.png';
-import organicHoneyImg from '../assets/images/organic-honey.png';
-import organicTeaImg from '../assets/images/organic-tea.png';
-import testimonialImg from '../assets/images/testimonial-person.png';
-import aboutImage from '../assets/images/about-image.png';
-import aboutImage2 from '../assets/images/about-image-2.png';
-import certifiedBadge from '../assets/images/certified-badge.png';
+import freshFruitsImg from "../assets/images/fresh-fruits.png";
+import dryFruitsImg from "../assets/images/dry-fruits.png";
+import freshVegetablesImg from "../assets/images/fresh-vegetables.png";
+import driedVegetablesImg from "../assets/images/dried-vegetables.png";
+import beautyProductsImg from "../assets/images/beauty-products.png";
+import milkProductsImg from "../assets/images/milk-products.png";
+import organicHoneyImg from "../assets/images/organic-honey.png";
+import organicTeaImg from "../assets/images/organic-tea.png";
+import testimonialImg from "../assets/images/testimonial-person.png";
+import aboutImage from "../assets/images/about-image.png";
+import aboutImage2 from "../assets/images/about-image-2.png";
+import certifiedBadge from "../assets/images/certified-badge.png";
 
 // Testimonial Card Component
-const TestimonialCard = ({ visible, delay, image, name, title, content, highlight }) => {
+const TestimonialCard = ({
+  visible,
+  delay,
+  image,
+  name,
+  title,
+  content,
+  highlight,
+}) => {
   return (
     <motion.div
       className="relative rounded-2xl overflow-hidden group"
       initial={{ opacity: 0, y: 60 }}
       animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
-      transition={{ 
-        duration: 0.7, 
+      transition={{
+        duration: 0.7,
         delay: delay,
         type: "spring",
-        stiffness: 50
+        stiffness: 50,
       }}
-      whileHover={{ 
+      whileHover={{
         y: -8,
-        transition: { duration: 0.3, ease: "easeOut" } 
+        transition: { duration: 0.3, ease: "easeOut" },
       }}
     >
       {/* Card with glass morphism effect */}
       <div className="bg-white/70 backdrop-blur-md shadow-xl border border-white/40 relative rounded-2xl overflow-hidden p-6 md:p-8">
         {/* Dynamic gradient accent */}
-        <motion.div 
+        <motion.div
           className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#5B8C3E] via-[#7BAD50] to-[#AECB95]"
           initial={{ scaleX: 0 }}
           animate={visible ? { scaleX: 1 } : { scaleX: 0 }}
           transition={{ duration: 0.8, delay: delay + 0.4 }}
         />
-        
+
         {/* Glowing highlight on hover */}
         <motion.div
           className="absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 bg-gradient-to-r from-[#5B8C3E]/10 via-[#7BAD50]/5 to-[#AECB95]/10 z-0"
           transition={{ duration: 0.3 }}
         />
-        
+
         <div className="flex flex-col md:flex-row gap-6 relative z-10">
           {/* User image with parallax effect and floating badge */}
-          <motion.div 
+          <motion.div
             className="flex-shrink-0 relative"
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3 }}
@@ -65,30 +73,32 @@ const TestimonialCard = ({ visible, delay, image, name, title, content, highligh
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <img 
-                    src={image} 
+                  <img
+                    src={image}
                     alt={name}
                     className="w-full h-full object-cover"
                   />
                 </motion.div>
               </div>
-              
+
               {/* Success badge */}
               <motion.div
                 className="absolute -right-4 -bottom-2 bg-[#5B8C3E] text-white text-xs font-bold py-1 px-2 rounded-md shadow-md"
                 initial={{ opacity: 0, scale: 0 }}
-                animate={visible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
-                transition={{ 
-                  duration: 0.4, 
+                animate={
+                  visible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }
+                }
+                transition={{
+                  duration: 0.4,
                   delay: delay + 0.7,
-                  type: "spring" 
+                  type: "spring",
                 }}
               >
                 {highlight}
               </motion.div>
             </div>
           </motion.div>
-          
+
           {/* Content with animated reveal */}
           <div className="flex-1">
             {/* Testimonial text with animated line reveal */}
@@ -101,7 +111,7 @@ const TestimonialCard = ({ visible, delay, image, name, title, content, highligh
               >
                 "{content}"
               </motion.p>
-              
+
               {/* Animated underline that follows reading */}
               <motion.div
                 className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-[#5B8C3E]/40 to-transparent"
@@ -110,7 +120,7 @@ const TestimonialCard = ({ visible, delay, image, name, title, content, highligh
                 transition={{ duration: 1.5, delay: 0.5 }}
               />
             </div>
-            
+
             {/* Author info with staggered animation */}
             <motion.div
               className="flex items-center"
@@ -119,13 +129,13 @@ const TestimonialCard = ({ visible, delay, image, name, title, content, highligh
               transition={{ duration: 0.5, delay: delay + 0.3 }}
             >
               <h4 className="font-semibold text-[#1F2937]">{name}</h4>
-              <span className="mx-2 text-gray-300">•</span>
+              <span className="mx-2 text-gray-300">�</span>
               <p className="text-[#5B8C3E] text-sm">{title}</p>
             </motion.div>
           </div>
         </div>
       </div>
-      
+
       {/* Simple hover effect - just a subtle glow */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-r from-[#5B8C3E]/10 to-[#7BAD50]/10 opacity-0 pointer-events-none"
@@ -142,28 +152,31 @@ const useScrollAnimation = (options = {}) => {
   const ref = useRef(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsVisible(true);
-        if (ref.current) observer.unobserve(ref.current);
-      }
-    }, {
-      threshold: options.threshold || 0.1,
-      rootMargin: options.rootMargin || '0px'
-    });
-    
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          if (ref.current) observer.unobserve(ref.current);
+        }
+      },
+      {
+        threshold: options.threshold || 0.1,
+        rootMargin: options.rootMargin || "0px",
+      },
+    );
+
     const currentRef = ref.current;
     if (currentRef) {
       observer.observe(currentRef);
     }
-    
+
     return () => {
       if (currentRef) {
         observer.unobserve(currentRef);
       }
     };
   }, [options.threshold, options.rootMargin]);
-  
+
   return [ref, isVisible];
 };
 
@@ -171,24 +184,24 @@ const useScrollAnimation = (options = {}) => {
 const useParallaxScroll = (speed = 0.5) => {
   const [offset, setOffset] = useState(0);
   const ref = useRef(null);
-  
+
   useEffect(() => {
     const handleScroll = () => {
       if (!ref.current) return;
-      
+
       const { top } = ref.current.getBoundingClientRect();
       const scrollOffset = window.scrollY;
       const elementPositionRelativeToViewport = top + scrollOffset;
       const scrollPosition = scrollOffset;
       const relativeScroll = scrollPosition - elementPositionRelativeToViewport;
-      
+
       setOffset(relativeScroll * speed);
     };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [speed]);
-  
+
   return [ref, offset];
 };
 
@@ -197,7 +210,7 @@ const useCounter = (end, duration = 2000, delay = 0) => {
   const [count, setCount] = useState(0);
   const countRef = useRef(null);
   const [shouldAnimate, setShouldAnimate] = useState(false);
-  
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -206,43 +219,43 @@ const useCounter = (end, duration = 2000, delay = 0) => {
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
-    
+
     if (countRef.current) {
       observer.observe(countRef.current);
     }
-    
+
     return () => {
       if (countRef.current) {
         observer.unobserve(countRef.current);
       }
     };
   }, []);
-  
+
   useEffect(() => {
     if (!shouldAnimate) return;
-    
+
     let startTimestamp = null;
     let animationFrameId = null;
-    
+
     const startAnimation = (timestamp) => {
       if (!startTimestamp) startTimestamp = timestamp;
-      
+
       const elapsed = timestamp - startTimestamp;
       const progress = Math.min(elapsed / duration, 1);
-      
+
       setCount(Math.floor(progress * end));
-      
+
       if (progress < 1) {
         animationFrameId = requestAnimationFrame(startAnimation);
       }
     };
-    
+
     const timeoutId = setTimeout(() => {
       animationFrameId = requestAnimationFrame(startAnimation);
     }, delay);
-    
+
     return () => {
       clearTimeout(timeoutId);
       if (animationFrameId) {
@@ -250,39 +263,53 @@ const useCounter = (end, duration = 2000, delay = 0) => {
       }
     };
   }, [end, duration, delay, shouldAnimate]);
-  
+
   return [countRef, count];
 };
 
 const About = () => {
   const [scrolled, setScrolled] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  
+
   // Animation refs
   const [heroLeafRef, leafOffset] = useParallaxScroll(0.1);
   const [sectionLeafRef, sectionLeafOffset] = useParallaxScroll(0.15);
-  
+
   // Scroll animation refs
-  const [heroSectionRef, heroSectionVisible] = useScrollAnimation({ threshold: 0.1 });
-  const [aboutSectionRef, aboutSectionVisible] = useScrollAnimation({ threshold: 0.1 });
-  const [statsSectionRef, statsSectionVisible] = useScrollAnimation({ threshold: 0.1 });
-  const [testimonialSectionRef, testimonialSectionVisible] = useScrollAnimation({ threshold: 0.1 });
-  const [certifiedSectionRef, certifiedSectionVisible] = useScrollAnimation({ threshold: 0.1 });
-  const [categoriesSectionRef, categoriesSectionVisible] = useScrollAnimation({ threshold: 0.1 });
-  const [ctaSectionRef, ctaSectionVisible] = useScrollAnimation({ threshold: 0.1 });
-  
+  const [heroSectionRef, heroSectionVisible] = useScrollAnimation({
+    threshold: 0.1,
+  });
+  const [aboutSectionRef, aboutSectionVisible] = useScrollAnimation({
+    threshold: 0.1,
+  });
+  const [statsSectionRef, statsSectionVisible] = useScrollAnimation({
+    threshold: 0.1,
+  });
+  const [testimonialSectionRef, testimonialSectionVisible] = useScrollAnimation(
+    { threshold: 0.1 },
+  );
+  const [certifiedSectionRef, certifiedSectionVisible] = useScrollAnimation({
+    threshold: 0.1,
+  });
+  const [categoriesSectionRef, categoriesSectionVisible] = useScrollAnimation({
+    threshold: 0.1,
+  });
+  const [ctaSectionRef, ctaSectionVisible] = useScrollAnimation({
+    threshold: 0.1,
+  });
+
   // Counters
   const [productCountRef, productCount] = useCounter(5000, 2500);
   const [brandCountRef, brandCount] = useCounter(800, 2500, 500);
   const [categoryCountRef, categoryCount] = useCounter(40, 2500, 1000);
-  
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -292,7 +319,7 @@ const About = () => {
 
   // Add animation and styling
   useEffect(() => {
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.textContent = `
       /* Animation classes */
       @keyframes blob {
@@ -522,7 +549,7 @@ const About = () => {
       }
     `;
     document.head.appendChild(style);
-    
+
     return () => {
       document.head.removeChild(style);
     };
@@ -535,66 +562,63 @@ const About = () => {
         {/* Background with animated elements */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="absolute inset-0 bg-[#f8f6f3]"></div>
-          
+
           {/* Animated gradient circles */}
-          <motion.div 
+          <motion.div
             className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] rounded-full bg-gradient-to-br from-[#5B8C3E]/10 to-[#7BAD50]/5"
-            animate={{ 
+            animate={{
               scale: [1, 1.1, 1],
               rotate: [0, 90, 0],
-              opacity: [0.3, 0.4, 0.3]
+              opacity: [0.3, 0.4, 0.3],
             }}
-            transition={{ 
-              duration: 20, 
-              repeat: Infinity,
-              ease: "easeInOut" 
-            }}
-            style={{ filter: 'blur(60px)' }}
-          />
-          
-          <motion.div 
-            className="absolute bottom-1/3 right-1/4 w-[30vw] h-[30vw] rounded-full bg-gradient-to-r from-[#f8f6f3]/80 to-[#EDF5E5]/50"
-            animate={{ 
-              scale: [1, 1.2, 1],
-              rotate: [0, -60, 0],
-              opacity: [0.2, 0.3, 0.2]
-            }}
-            transition={{ 
-              duration: 15, 
+            transition={{
+              duration: 20,
               repeat: Infinity,
               ease: "easeInOut",
-              delay: 2
             }}
-            style={{ filter: 'blur(50px)' }}
+            style={{ filter: "blur(60px)" }}
+          />
+
+          <motion.div
+            className="absolute bottom-1/3 right-1/4 w-[30vw] h-[30vw] rounded-full bg-gradient-to-r from-[#f8f6f3]/80 to-[#EDF5E5]/50"
+            animate={{
+              scale: [1, 1.2, 1],
+              rotate: [0, -60, 0],
+              opacity: [0.2, 0.3, 0.2],
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2,
+            }}
+            style={{ filter: "blur(50px)" }}
           />
 
           {/* Decorative image elements */}
           <motion.div
-            className="absolute -top-[10%] right-[5%] w-[25vw] max-w-lg opacity-10 z-0" 
+            className="absolute -top-[10%] right-[5%] w-[25vw] max-w-lg opacity-10 z-0"
             initial={{ rotate: 0 }}
             animate={{ rotate: [0, 10, -5, 0] }}
             transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
           >
-            <img 
-              src={leaf1Image} 
-              alt="" 
-              className="w-full h-auto"
-            />
+            <img src={leaf1Image} alt="" className="w-full h-auto" />
           </motion.div>
-          
+
           <motion.div
-            className="absolute bottom-[10%] left-[5%] w-[18vw] max-w-xs opacity-10 z-0" 
+            className="absolute bottom-[10%] left-[5%] w-[18vw] max-w-xs opacity-10 z-0"
             initial={{ rotate: 0 }}
             animate={{ rotate: [0, -5, 10, 0] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 5 }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 5,
+            }}
           >
-            <img 
-              src={leafImage} 
-              alt="" 
-              className="w-full h-auto"
-            />
+            <img src={leafImage} alt="" className="w-full h-auto" />
           </motion.div>
-          
+
           {/* Animated particles */}
           <div className="absolute inset-0 z-0 opacity-60">
             {[...Array(12)].map((_, index) => (
@@ -602,33 +626,42 @@ const About = () => {
                 key={`particle-${index}`}
                 className="particle absolute rounded-full"
                 style={{
-                  '--duration': `${Math.random() * 10 + 10}s`,
-                  '--translate-x': `${Math.random() * 100 - 50}px`,
-                  '--rotate': `${Math.random() * 360}deg`,
-                  '--opacity': Math.random() * 0.5 + 0.1,
+                  "--duration": `${Math.random() * 10 + 10}s`,
+                  "--translate-x": `${Math.random() * 100 - 50}px`,
+                  "--rotate": `${Math.random() * 360}deg`,
+                  "--opacity": Math.random() * 0.5 + 0.1,
                   width: `${Math.random() * 10 + 5}px`,
                   height: `${Math.random() * 10 + 5}px`,
                   bottom: `${Math.random() * 20}%`,
                   left: `${Math.random() * 100}%`,
-                  backgroundColor: index % 3 === 0 ? '#5B8C3E' : index % 3 === 1 ? '#7BAD50' : '#AECB95',
+                  backgroundColor:
+                    index % 3 === 0
+                      ? "#5B8C3E"
+                      : index % 3 === 1
+                        ? "#7BAD50"
+                        : "#AECB95",
                   opacity: Math.random() * 0.3 + 0.1,
                 }}
                 initial={{ y: 0, opacity: 0 }}
-                animate={{ 
+                animate={{
                   y: [-20, -100, -180],
-                  opacity: [0, 0.8, 0]
+                  opacity: [0, 0.8, 0],
                 }}
                 transition={{
                   duration: Math.random() * 10 + 10,
                   repeat: Infinity,
-                  delay: Math.random() * 5
+                  delay: Math.random() * 5,
                 }}
               />
             ))}
-        </div>
+          </div>
 
           {/* Animated svg design elements */}
-          <svg className="absolute inset-0 w-full h-full z-0" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <svg
+            className="absolute inset-0 w-full h-full z-0"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
             {/* Decorative accent lines */}
             <motion.path
               d="M0,50 Q25,30 50,50 T100,50"
@@ -639,7 +672,7 @@ const About = () => {
               animate={{ pathLength: 1, opacity: 0.3 }}
               transition={{ duration: 2, delay: 0.5 }}
             />
-            
+
             <motion.path
               d="M0,60 Q30,80 60,60 T100,60"
               fill="none"
@@ -649,7 +682,7 @@ const About = () => {
               animate={{ pathLength: 1, opacity: 0.2 }}
               transition={{ duration: 2, delay: 0.8 }}
             />
-            
+
             <motion.path
               d="M0,40 Q40,20 70,40 T100,40"
               fill="none"
@@ -661,9 +694,9 @@ const About = () => {
             />
           </svg>
         </div>
-        
+
         {/* Navigation */}
-        <motion.div 
+        <motion.div
           className="relative z-10 pt-16 px-6 md:pt-20 lg:pt-24"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -673,23 +706,37 @@ const About = () => {
             <nav className="flex justify-between items-center">
               <ol className="inline-flex items-center space-x-1 md:space-x-3">
                 <li className="inline-flex items-center">
-                  <a href="/" className="text-[#5B8C3E] hover:text-[#3B5323] text-sm font-medium transition-colors hover-underline">
+                  <a
+                    href="/"
+                    className="text-[#5B8C3E] hover:text-[#3B5323] text-sm font-medium transition-colors hover-underline"
+                  >
                     Home
                   </a>
                 </li>
                 <li>
                   <div className="flex items-center">
-                    <svg className="w-4 h-4 text-[#6B7280]" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path>
+                    <svg
+                      className="w-4 h-4 text-[#6B7280]"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                        clipRule="evenodd"
+                      ></path>
                     </svg>
-                    <span className="ml-1 text-sm font-medium text-[#6B7280] md:ml-2">About Us</span>
+                    <span className="ml-1 text-sm font-medium text-[#6B7280] md:ml-2">
+                      About Us
+                    </span>
                   </div>
                 </li>
               </ol>
             </nav>
           </div>
         </motion.div>
-        
+
         {/* Hero content with enhanced motion animations */}
         <div className="relative z-10 flex-grow flex flex-col justify-center items-center px-4 py-16 md:px-8 md:py-20 lg:py-24 text-center transition-all duration-1000">
           <div className="max-w-4xl mx-auto">
@@ -736,7 +783,7 @@ const About = () => {
                 />
               </svg>
             </motion.div>
-            
+
             <motion.div
               className="absolute top-3/4 right-1/4 transform translate-x-1/2 -translate-y-1/2 z-0 opacity-20"
               initial={{ scale: 0 }}
@@ -768,36 +815,36 @@ const About = () => {
                 />
               </svg>
             </motion.div>
-            
+
             {/* Animated subtitle */}
             <motion.div
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ 
-                duration: 0.5, 
+              transition={{
+                duration: 0.5,
                 delay: 0.3,
                 type: "spring",
-                stiffness: 200
+                stiffness: 200,
               }}
               className="inline-block mb-6 md:mb-8 relative z-10"
             >
               <div className="px-5 py-2 rounded-full bg-gradient-to-r from-[#5B8C3E]/10 to-[#7BAD50]/10 text-[#5B8C3E] text-sm md:text-base font-medium border border-[#5B8C3E]/20 relative overflow-hidden group">
                 <span className="relative z-10">Our Story</span>
-                <motion.div 
+                <motion.div
                   className="absolute inset-0 bg-[#5B8C3E]/5"
                   initial={{ x: "-100%" }}
                   animate={{ x: "100%" }}
-                  transition={{ 
-                    duration: 2, 
-                    repeat: Infinity, 
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
                     repeatType: "loop",
                     ease: "easeInOut",
-                    repeatDelay: 1
+                    repeatDelay: 1,
                   }}
                 />
               </div>
             </motion.div>
-            
+
             {/* Animated main heading with staggered character animations */}
             <div className="overflow-hidden mb-10 md:mb-14 relative">
               <motion.div
@@ -806,34 +853,31 @@ const About = () => {
                 animate={{ height: 64, opacity: 0.6 }}
                 transition={{ duration: 1, delay: 0.8 }}
               />
-              
+
               <motion.div
                 className="absolute -right-4 md:-right-8 top-1/2 transform -translate-y-1/2 w-1 h-16 bg-gradient-to-b from-[#5B8C3E] to-transparent z-0 opacity-60"
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: 64, opacity: 0.6 }}
                 transition={{ duration: 1, delay: 0.8 }}
               />
-              
-              <motion.h1 
+
+              <motion.h1
                 className="text-4xl md:text-6xl lg:text-7xl font-bold text-[#1F2937] leading-tight relative z-10"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                <motion.div
-                  initial={{ y: 0 }}
-                  className="overflow-hidden"
-                >
+                <motion.div initial={{ y: 0 }} className="overflow-hidden">
                   <motion.span
                     className="block mb-3"
                     initial={{ y: 100 }}
                     animate={{ y: 0 }}
-                    transition={{ 
-                      duration: 0.8, 
+                    transition={{
+                      duration: 0.8,
                       delay: 0.4,
                       type: "spring",
                       stiffness: 100,
-                      damping: 15
+                      damping: 15,
                     }}
                   >
                     {"We Are Your".split("").map((char, index) => (
@@ -845,7 +889,7 @@ const About = () => {
                         transition={{
                           duration: 0.3,
                           delay: 0.4 + index * 0.04,
-                          ease: "easeOut"
+                          ease: "easeOut",
                         }}
                       >
                         {char === " " ? "\u00A0" : char}
@@ -853,21 +897,18 @@ const About = () => {
                     ))}
                   </motion.span>
                 </motion.div>
-                
-                <motion.div
-                  initial={{ y: 0 }}
-                  className="overflow-hidden"
-                >
+
+                <motion.div initial={{ y: 0 }} className="overflow-hidden">
                   <motion.span
                     className="block animated-gradient-text"
                     initial={{ y: 100 }}
                     animate={{ y: 0 }}
-                    transition={{ 
-                      duration: 0.8, 
+                    transition={{
+                      duration: 0.8,
                       delay: 0.6,
                       type: "spring",
                       stiffness: 100,
-                      damping: 15
+                      damping: 15,
                     }}
                   >
                     {"Favourite Store".split("").map((char, index) => (
@@ -879,7 +920,7 @@ const About = () => {
                         transition={{
                           duration: 0.3,
                           delay: 0.9 + index * 0.04,
-                          ease: "easeOut"
+                          ease: "easeOut",
                         }}
                       >
                         {char === " " ? "\u00A0" : char}
@@ -888,7 +929,7 @@ const About = () => {
                   </motion.span>
                 </motion.div>
               </motion.h1>
-              
+
               {/* Animated underline */}
               <motion.div
                 className="w-24 h-1 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] mx-auto mt-5 rounded-full overflow-hidden"
@@ -898,56 +939,60 @@ const About = () => {
               >
                 <motion.div
                   className="w-full h-full bg-white"
-                  initial={{ x: '-100%' }}
-                  animate={{ x: '100%' }}
+                  initial={{ x: "-100%" }}
+                  animate={{ x: "100%" }}
                   transition={{
                     duration: 2,
                     delay: 2.2,
                     repeat: Infinity,
-                    repeatDelay: 3
+                    repeatDelay: 3,
                   }}
                 />
               </motion.div>
             </div>
-            
+
             {/* Animated paragraph with floating highlight effect */}
             <div className="max-w-2xl mx-auto mb-14 md:mb-16 relative">
               <motion.div
                 className="absolute -left-6 top-1/2 transform -translate-y-1/2 w-3 h-3 rounded-full bg-[#5B8C3E]/30"
-                animate={{ 
+                animate={{
                   scale: [1, 1.5, 1],
-                  opacity: [0.3, 0.7, 0.3]
+                  opacity: [0.3, 0.7, 0.3],
                 }}
-                transition={{ 
-                  duration: 4, 
-                  repeat: Infinity,
-                  repeatType: "reverse"
-                }}
-              />
-              
-              <motion.div
-                className="absolute -right-6 top-1/2 transform -translate-y-1/2 w-3 h-3 rounded-full bg-[#5B8C3E]/30"
-                animate={{ 
-                  scale: [1, 1.5, 1],
-                  opacity: [0.3, 0.7, 0.3]
-                }}
-                transition={{ 
-                  duration: 4, 
+                transition={{
+                  duration: 4,
                   repeat: Infinity,
                   repeatType: "reverse",
-                  delay: 2
                 }}
               />
-              
+
+              <motion.div
+                className="absolute -right-6 top-1/2 transform -translate-y-1/2 w-3 h-3 rounded-full bg-[#5B8C3E]/30"
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.3, 0.7, 0.3],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  delay: 2,
+                }}
+              />
+
               <motion.p
                 className="text-lg md:text-xl lg:text-2xl text-[#4B5563] leading-relaxed relative z-10"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.9 }}
               >
-                At <span className="text-[#5B8C3E] font-medium">Panchamritam</span>, we bring nature's best organic products directly to your doorstep, ensuring quality, sustainability, and health in every delivery.
+                At{" "}
+                <span className="text-[#5B8C3E] font-medium">Panchamritam</span>
+                , we bring nature's best organic products directly to your
+                doorstep, ensuring quality, sustainability, and health in every
+                delivery.
               </motion.p>
-              
+
               {/* Animated highlight */}
               <motion.div
                 className="absolute inset-0 bg-[#5B8C3E]/5 rounded-xl z-0"
@@ -957,11 +1002,11 @@ const About = () => {
                   duration: 5,
                   repeat: Infinity,
                   repeatType: "reverse",
-                  delay: 2
+                  delay: 2,
                 }}
               />
             </div>
-            
+
             {/* Animated CTA buttons with enhanced effects */}
             <motion.div
               className="flex flex-wrap justify-center gap-6 mb-16 md:mb-20"
@@ -969,8 +1014,8 @@ const About = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.1 }}
             >
-              <motion.a 
-                href="#our-mission" 
+              <motion.a
+                href="#our-mission"
                 className="inline-flex items-center justify-center bg-[#5B8C3E] text-white font-medium py-4 px-10 rounded-md transition-all duration-300 shadow-md hover:shadow-xl focus:outline-none transform hover:-translate-y-1 active:translate-y-0 text-base md:text-lg relative overflow-hidden group"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
@@ -979,21 +1024,21 @@ const About = () => {
                 <motion.span
                   className="absolute bottom-0 left-0 right-0 h-1 bg-white opacity-30 z-0"
                   initial={{ width: 0 }}
-                  whileHover={{ 
-                    width: '100%',
-                    transition: { duration: 0.3 }
+                  whileHover={{
+                    width: "100%",
+                    transition: { duration: 0.3 },
                   }}
                 />
-                <motion.div 
+                <motion.div
                   className="absolute inset-0 bg-white/20 z-0"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '100%' }}
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "100%" }}
                   transition={{ duration: 0.7 }}
                 />
               </motion.a>
-              
-              <motion.a 
-                href="#categories" 
+
+              <motion.a
+                href="#categories"
                 className="inline-flex items-center justify-center bg-white border border-[#5B8C3E] text-[#5B8C3E] font-medium py-4 px-10 rounded-md transition-all duration-300 focus:outline-none transform hover:-translate-y-1 active:translate-y-0 text-base md:text-lg hover:bg-[#5B8C3E] hover:text-white"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
@@ -1001,116 +1046,145 @@ const About = () => {
                 Our Products
               </motion.a>
             </motion.div>
-            
-
           </div>
         </div>
-        
-
       </div>
 
       {/* About Section */}
-      <div id="our-mission" ref={aboutSectionRef} className="py-20 bg-white relative overflow-hidden">
+      <div
+        id="our-mission"
+        ref={aboutSectionRef}
+        className="py-20 bg-white relative overflow-hidden"
+      >
         {/* Decorative blob gradients in background */}
         <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-br from-[#5B8C3E]/5 to-[#7BAD50]/10 rounded-full filter blur-3xl opacity-50 animate-blob"></div>
         <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-gradient-to-br from-[#EDF5E5] to-[#AECB95]/20 rounded-full filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
-        
+
         {/* Decorative leaf with parallax */}
-        <div 
+        <div
           ref={sectionLeafRef}
           className="absolute bottom-0 right-0 w-48 h-48 pointer-events-none z-0 opacity-20"
-          style={{ transform: `rotate(-45deg) translateY(${sectionLeafOffset * 0.3}px)` }}
+          style={{
+            transform: `rotate(-45deg) translateY(${sectionLeafOffset * 0.3}px)`,
+          }}
         >
-          <img 
-            src={leafImage} 
-            alt="" 
+          <img
+            src={leafImage}
+            alt=""
             className="w-full h-full object-contain filter drop-shadow-lg"
           />
         </div>
-        
+
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Image Column */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
-              animate={aboutSectionVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+              animate={
+                aboutSectionVisible
+                  ? { opacity: 1, x: 0 }
+                  : { opacity: 0, x: -50 }
+              }
               transition={{ duration: 0.8, delay: 0.2 }}
               className="relative"
             >
               <div className="relative rounded-2xl overflow-hidden shadow-2xl hover-3d">
-                <img 
-                  src={aboutImage2} 
-                  alt="Our organic farm" 
+                <img
+                  src={aboutImage2}
+                  alt="Our organic farm"
                   className="w-full h-auto object-cover aspect-square transition-transform duration-1000 hover:scale-105"
                 />
-                
+
                 {/* Stats overlay at bottom */}
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#1F2937]/90 to-transparent p-6 text-white">
                   <p className="text-2xl font-bold serif-heading">10+ Years</p>
-                  <p className="text-sm sans-text">of organic farming excellence</p>
+                  <p className="text-sm sans-text">
+                    of organic farming excellence
+                  </p>
                 </div>
               </div>
-              
+
               {/* Floating badge */}
-              <motion.div 
+              <motion.div
                 className="absolute -right-8 -top-8 w-32 h-32 bg-white shadow-xl rounded-full flex items-center justify-center p-4"
-                whileHover={{ 
-                  scale: 1.1, 
-                  boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" 
+                whileHover={{
+                  scale: 1.1,
+                  boxShadow:
+                    "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
                 }}
               >
                 <div className="text-center">
-                  <span className="block text-[#5B8C3E] text-lg font-bold serif-heading">100%</span>
-                  <span className="block text-[#6B7280] text-xs sans-text">Organic</span>
+                  <span className="block text-[#5B8C3E] text-lg font-bold serif-heading">
+                    100%
+                  </span>
+                  <span className="block text-[#6B7280] text-xs sans-text">
+                    Organic
+                  </span>
                 </div>
               </motion.div>
             </motion.div>
-            
+
             {/* Content Column */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
-              animate={aboutSectionVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+              animate={
+                aboutSectionVisible
+                  ? { opacity: 1, x: 0 }
+                  : { opacity: 0, x: 50 }
+              }
               transition={{ duration: 0.8, delay: 0.4 }}
               className="relative"
             >
               {/* Decorative accent elements */}
-              <motion.div 
+              <motion.div
                 className="absolute -left-12 top-20 w-8 h-8 rounded-full border border-[#5B8C3E]/30 z-0 hidden md:block"
                 initial={{ scale: 0, opacity: 0 }}
-                animate={aboutSectionVisible ? 
-                  { scale: [0, 1.2, 1], opacity: 1, x: [0, -20, 0], rotate: [0, 45, 0] } : 
-                  { scale: 0, opacity: 0 }
+                animate={
+                  aboutSectionVisible
+                    ? {
+                        scale: [0, 1.2, 1],
+                        opacity: 1,
+                        x: [0, -20, 0],
+                        rotate: [0, 45, 0],
+                      }
+                    : { scale: 0, opacity: 0 }
                 }
                 transition={{ duration: 1.5, delay: 0.5 }}
               />
-              
-              <motion.div 
+
+              <motion.div
                 className="absolute right-0 bottom-20 w-20 h-20 rounded-full border-2 border-[#5B8C3E]/10 z-0 hidden md:block"
                 initial={{ scale: 0, opacity: 0 }}
-                animate={aboutSectionVisible ? 
-                  { scale: 1, opacity: 0.5 } : 
-                  { scale: 0, opacity: 0 }
+                animate={
+                  aboutSectionVisible
+                    ? { scale: 1, opacity: 0.5 }
+                    : { scale: 0, opacity: 0 }
                 }
                 transition={{ duration: 1, delay: 0.8 }}
               />
-              
-              <motion.div 
+
+              <motion.div
                 className="absolute -right-8 top-10 w-4 h-4 rounded-full bg-[#5B8C3E]/20 z-0 hidden md:block"
-                animate={aboutSectionVisible ? 
-                  { y: [0, -15, 0], opacity: [0.2, 0.5, 0.2] } : 
-                  { opacity: 0 }
+                animate={
+                  aboutSectionVisible
+                    ? { y: [0, -15, 0], opacity: [0.2, 0.5, 0.2] }
+                    : { opacity: 0 }
                 }
-                transition={{ 
-                  duration: 3, 
-                  repeat: Infinity, 
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
                   repeatType: "reverse",
-                  delay: 1
+                  delay: 1,
                 }}
               />
-              
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={aboutSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                animate={
+                  aboutSectionVisible
+                    ? { opacity: 1, y: 0 }
+                    : { opacity: 0, y: 20 }
+                }
                 transition={{ duration: 0.6, delay: 0.5 }}
                 className="relative z-10"
               >
@@ -1118,69 +1192,112 @@ const About = () => {
                   Our Mission
                 </div>
               </motion.div>
-              
+
               <div className="relative">
-                <motion.h2 
+                <motion.h2
                   className="text-3xl md:text-4xl font-bold text-[#1F2937] mb-6 serif-heading relative z-10"
                   initial={{ opacity: 0 }}
-                  animate={aboutSectionVisible ? { opacity: 1 } : { opacity: 0 }}
+                  animate={
+                    aboutSectionVisible ? { opacity: 1 } : { opacity: 0 }
+                  }
                   transition={{ duration: 0.5, delay: 0.6 }}
                 >
-                  <motion.span 
+                  <motion.span
                     className="block"
                     initial={{ y: 50, opacity: 0 }}
-                    animate={aboutSectionVisible ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
+                    animate={
+                      aboutSectionVisible
+                        ? { y: 0, opacity: 1 }
+                        : { y: 50, opacity: 0 }
+                    }
                     transition={{ duration: 0.7, delay: 0.7 }}
                   >
                     Bringing Nature's Best
                   </motion.span>
-                  <motion.span 
+                  <motion.span
                     className="block"
                     initial={{ y: 50, opacity: 0 }}
-                    animate={aboutSectionVisible ? { y: 0, opacity: 1 } : { y: 50, opacity: 0 }}
+                    animate={
+                      aboutSectionVisible
+                        ? { y: 0, opacity: 1 }
+                        : { y: 50, opacity: 0 }
+                    }
                     transition={{ duration: 0.7, delay: 0.9 }}
                   >
                     To Your Doorstep
                   </motion.span>
                 </motion.h2>
               </div>
-              
+
               <div className="space-y-4 mb-8 relative z-10">
-                <motion.p 
+                <motion.p
                   className="text-[#6B7280] sans-text"
                   initial={{ opacity: 0, y: 20 }}
-                  animate={aboutSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  animate={
+                    aboutSectionVisible
+                      ? { opacity: 1, y: 0 }
+                      : { opacity: 0, y: 20 }
+                  }
                   transition={{ duration: 0.6, delay: 1.2 }}
                 >
-                  At Panchamritam, our mission is to provide healthier lives for all by delivering pure, organic products that strengthen immunity and prevent diseases. We believe that nature has given us everything we need to maintain optimal health, and our role is to bring these gifts directly to you.
+                  At Panchamritam, our mission is to provide healthier lives for
+                  all by delivering pure, organic products that strengthen
+                  immunity and prevent diseases. We believe that nature has
+                  given us everything we need to maintain optimal health, and
+                  our role is to bring these gifts directly to you.
                 </motion.p>
-                <motion.p 
+                <motion.p
                   className="text-[#6B7280] sans-text"
                   initial={{ opacity: 0, y: 20 }}
-                  animate={aboutSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  animate={
+                    aboutSectionVisible
+                      ? { opacity: 1, y: 0 }
+                      : { opacity: 0, y: 20 }
+                  }
                   transition={{ duration: 0.6, delay: 1.4 }}
                 >
-                  Every product in our collection is carefully selected to support your wellbeing. By choosing organic, you're not just enjoying superior taste and nutrition—you're making a conscious decision to protect your body from harmful chemicals and preservatives that can lead to chronic health issues over time.
+                  Every product in our collection is carefully selected to
+                  support your wellbeing. By choosing organic, you're not just
+                  enjoying superior taste and nutrition�you're making a
+                  conscious decision to protect your body from harmful chemicals
+                  and preservatives that can lead to chronic health issues over
+                  time.
                 </motion.p>
               </div>
-              
+
               {/* Feature list */}
               <div className="space-y-4">
                 {[
-                  { icon: "🌱", title: "Disease Prevention", desc: "Natural immunity boosters" },
-                  { icon: "🍃", title: "Chemical-Free", desc: "Pure products for better health" },
-                  { icon: "♻️", title: "Holistic Wellness", desc: "Supporting complete wellbeing" }
+                  {
+                    icon: "??",
+                    title: "Disease Prevention",
+                    desc: "Natural immunity boosters",
+                  },
+                  {
+                    icon: "??",
+                    title: "Chemical-Free",
+                    desc: "Pure products for better health",
+                  },
+                  {
+                    icon: "??",
+                    title: "Holistic Wellness",
+                    desc: "Supporting complete wellbeing",
+                  },
                 ].map((feature, i) => (
-                  <motion.div 
+                  <motion.div
                     key={i}
                     className="flex items-start group"
                     initial={{ opacity: 0, y: 20 }}
-                    animate={aboutSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                    transition={{ duration: 0.5, delay: 0.6 + (i * 0.2) }}
+                    animate={
+                      aboutSectionVisible
+                        ? { opacity: 1, y: 0 }
+                        : { opacity: 0, y: 20 }
+                    }
+                    transition={{ duration: 0.5, delay: 0.6 + i * 0.2 }}
                     whileHover={{ x: 5 }}
                   >
                     <div className="flex-shrink-0 mt-1">
-                      <motion.div 
+                      <motion.div
                         className="flex items-center justify-center h-10 w-10 rounded-md bg-gradient-to-br from-[#EDF5E5] to-[#EDF5E5] text-xl shadow-sm transition-transform duration-300 group-hover:scale-110"
                         whileHover={{ rotate: [0, 10, -10, 0] }}
                         transition={{ duration: 0.5 }}
@@ -1189,8 +1306,12 @@ const About = () => {
                       </motion.div>
                     </div>
                     <div className="ml-4">
-                      <h4 className="text-base font-medium text-[#1F2937] serif-heading hover-underline">{feature.title}</h4>
-                      <p className="mt-1 text-sm text-[#6B7280] sans-text">{feature.desc}</p>
+                      <h4 className="text-base font-medium text-[#1F2937] serif-heading hover-underline">
+                        {feature.title}
+                      </h4>
+                      <p className="mt-1 text-sm text-[#6B7280] sans-text">
+                        {feature.desc}
+                      </p>
                     </div>
                   </motion.div>
                 ))}
@@ -1201,17 +1322,29 @@ const About = () => {
       </div>
 
       {/* Statistics Section - Enhanced with Innovative Motion Design */}
-      <div ref={statsSectionRef} id="stats" className="py-24 bg-[#f8f6f3] relative overflow-hidden">
+      <div
+        ref={statsSectionRef}
+        id="stats"
+        className="py-24 bg-[#f8f6f3] relative overflow-hidden"
+      >
         {/* Interactive background elements */}
         <div className="absolute inset-0 pointer-events-none">
-          <svg className="w-full h-full opacity-10" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <svg
+            className="w-full h-full opacity-10"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
             <motion.path
               d="M0,25 Q25,50 50,25 T100,25"
               stroke="#5B8C3E"
               strokeWidth="0.2"
               fill="none"
               initial={{ pathLength: 0, opacity: 0 }}
-              animate={statsSectionVisible ? { pathLength: 1, opacity: 0.3 } : { pathLength: 0, opacity: 0 }}
+              animate={
+                statsSectionVisible
+                  ? { pathLength: 1, opacity: 0.3 }
+                  : { pathLength: 0, opacity: 0 }
+              }
               transition={{ duration: 2, delay: 0.3 }}
             />
             <motion.path
@@ -1220,7 +1353,11 @@ const About = () => {
               strokeWidth="0.2"
               fill="none"
               initial={{ pathLength: 0, opacity: 0 }}
-              animate={statsSectionVisible ? { pathLength: 1, opacity: 0.3 } : { pathLength: 0, opacity: 0 }}
+              animate={
+                statsSectionVisible
+                  ? { pathLength: 1, opacity: 0.3 }
+                  : { pathLength: 0, opacity: 0 }
+              }
               transition={{ duration: 2, delay: 0.6 }}
             />
             <motion.path
@@ -1229,12 +1366,16 @@ const About = () => {
               strokeWidth="0.2"
               fill="none"
               initial={{ pathLength: 0, opacity: 0 }}
-              animate={statsSectionVisible ? { pathLength: 1, opacity: 0.3 } : { pathLength: 0, opacity: 0 }}
+              animate={
+                statsSectionVisible
+                  ? { pathLength: 1, opacity: 0.3 }
+                  : { pathLength: 0, opacity: 0 }
+              }
               transition={{ duration: 2, delay: 0.9 }}
             />
           </svg>
         </div>
-        
+
         {/* Animated particles */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {[...Array(15)].map((_, i) => (
@@ -1252,64 +1393,81 @@ const About = () => {
                 y: [0, -Math.random() * 100 - 50],
                 x: [0, (Math.random() - 0.5) * 50],
                 opacity: [0.1, 0.2, 0],
-                scale: [1, Math.random() * 0.5 + 0.5]
+                scale: [1, Math.random() * 0.5 + 0.5],
               }}
               transition={{
                 duration: Math.random() * 10 + 10,
                 repeat: Infinity,
                 delay: Math.random() * 5,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             />
           ))}
         </div>
-        
+
         {/* Decorative leaf with 3D rotation */}
-        <motion.div 
+        <motion.div
           className="absolute top-0 left-0 w-40 h-40 pointer-events-none z-0 opacity-15 transform -translate-x-1/2 -translate-y-1/2"
           animate={{
             rotateX: [0, 10, 0, 10, 0],
             rotateY: [0, 15, 0, -15, 0],
-            rotateZ: [0, 5, 0]
+            rotateZ: [0, 5, 0],
           }}
           transition={{
             duration: 20,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         >
-          <img 
-            src={leafImage} 
-            alt="" 
+          <img
+            src={leafImage}
+            alt=""
             className="w-full h-full object-contain filter drop-shadow-lg transform rotate-45"
           />
         </motion.div>
-        
+
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
             {/* Animated heading with reveal effect */}
             <motion.div
               initial={{ width: 0, opacity: 0 }}
-              animate={statsSectionVisible ? { width: "auto", opacity: 1 } : { width: 0, opacity: 0 }}
+              animate={
+                statsSectionVisible
+                  ? { width: "auto", opacity: 1 }
+                  : { width: 0, opacity: 0 }
+              }
               transition={{ duration: 0.6 }}
               className="relative mx-auto overflow-hidden mb-6"
             >
-              <motion.span 
+              <motion.span
                 className="block px-6 py-1.5 rounded-full bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white text-sm font-medium shadow-md mb-4 mx-auto w-fit whitespace-nowrap"
                 initial={{ opacity: 0, scale: 0.8 }}
-                animate={statsSectionVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                animate={
+                  statsSectionVisible
+                    ? { opacity: 1, scale: 1 }
+                    : { opacity: 0, scale: 0.8 }
+                }
                 transition={{ duration: 0.5, delay: 0.3 }}
               >
                 Our Impact on Health
               </motion.span>
             </motion.div>
-            
+
             <div className="overflow-hidden">
-              <motion.h2 
+              <motion.h2
                 className="text-4xl font-bold text-[#1F2937] mb-6 serif-heading"
                 initial={{ y: 100, opacity: 0 }}
-                animate={statsSectionVisible ? { y: 0, opacity: 1 } : { y: 100, opacity: 0 }}
-                transition={{ duration: 0.7, delay: 0.4, type: "spring", stiffness: 50 }}
+                animate={
+                  statsSectionVisible
+                    ? { y: 0, opacity: 1 }
+                    : { y: 100, opacity: 0 }
+                }
+                transition={{
+                  duration: 0.7,
+                  delay: 0.4,
+                  type: "spring",
+                  stiffness: 50,
+                }}
               >
                 <span className="inline-block">Making </span>
                 <span className="inline-block bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] bg-clip-text text-transparent px-2">
@@ -1318,85 +1476,107 @@ const About = () => {
                 <span className="inline-block"> Possible</span>
               </motion.h2>
             </div>
-            
+
             <motion.p
               className="max-w-2xl mx-auto text-[#6B7280] text-lg"
               initial={{ opacity: 0 }}
               animate={statsSectionVisible ? { opacity: 1 } : { opacity: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
             >
-              Our mission to promote health through organic products has made a significant impact. Here's what we've achieved together.
+              Our mission to promote health through organic products has made a
+              significant impact. Here's what we've achieved together.
             </motion.p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Stat Card 1 - Enhanced with interactive hover */}
-            <motion.div 
+            <motion.div
               className="bg-white rounded-xl p-8 shadow-lg text-center relative overflow-hidden group"
               initial={{ opacity: 0, y: 50 }}
-              animate={statsSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              animate={
+                statsSectionVisible
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 50 }
+              }
               transition={{ duration: 0.6, delay: 0.3 }}
-              whileHover={{ 
-                y: -10, 
-                boxShadow: "0 25px 50px -12px rgba(91, 140, 62, 0.25)"
+              whileHover={{
+                y: -10,
+                boxShadow: "0 25px 50px -12px rgba(91, 140, 62, 0.25)",
               }}
             >
               {/* 3D rotating top accent */}
-              <motion.div 
+              <motion.div
                 className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] z-10"
                 whileHover={{ scaleX: 1.05 }}
                 transition={{ duration: 0.3 }}
               />
-              
+
               {/* Background glow effect */}
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 bg-gradient-to-br from-[#5B8C3E]/5 to-transparent rounded-xl"
                 initial={{ opacity: 0 }}
                 whileHover={{ opacity: 1 }}
                 transition={{ duration: 0.4 }}
               />
-              
+
               {/* 3D layered card contents */}
               <motion.div
                 className="relative z-10"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
-                <h3 className="text-lg font-medium text-[#6B7280] mb-4 serif-heading">Immunity Boosters</h3>
-                
+                <h3 className="text-lg font-medium text-[#6B7280] mb-4 serif-heading">
+                  Immunity Boosters
+                </h3>
+
                 <div className="flex items-center justify-center mb-2">
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
-                    animate={statsSectionVisible ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
+                    animate={
+                      statsSectionVisible
+                        ? { scale: 1, opacity: 1 }
+                        : { scale: 0.8, opacity: 0 }
+                    }
                     transition={{ duration: 0.6, delay: 0.5, type: "spring" }}
                     className="relative"
                   >
                     <div className="flex items-center">
-                      <span ref={productCountRef} className="text-5xl font-bold text-[#1F2937] mr-1 serif-heading relative z-10">
+                      <span
+                        ref={productCountRef}
+                        className="text-5xl font-bold text-[#1F2937] mr-1 serif-heading relative z-10"
+                      >
                         {productCount}
                       </span>
-                      <span className="text-2xl font-bold text-[#5B8C3E] relative z-10">+</span>
+                      <span className="text-2xl font-bold text-[#5B8C3E] relative z-10">
+                        +
+                      </span>
                     </div>
-                    
+
                     {/* Animated highlight ring */}
-                    <motion.div 
+                    <motion.div
                       className="absolute -inset-2 rounded-full bg-[#5B8C3E]/5"
                       animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.3, 0.2] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
                     />
                   </motion.div>
                 </div>
-                
-                <p className="text-sm text-[#6B7280] sans-text">immunity-enhancing products</p>
+
+                <p className="text-sm text-[#6B7280] sans-text">
+                  immunity-enhancing products
+                </p>
               </motion.div>
-              
+
               {/* Interactive reveal on hover */}
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#5B8C3E]/90 to-[#7BAD50]/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{ clipPath: "circle(0% at 50% 50%)" }}
-                whileHover={{ 
+                whileHover={{
                   clipPath: "circle(100% at 50% 50%)",
-                  transition: { duration: 0.6, ease: "easeOut" }
+                  transition: { duration: 0.6, ease: "easeOut" },
                 }}
               >
                 <p className="text-white text-lg font-medium">
@@ -1404,74 +1584,96 @@ const About = () => {
                 </p>
               </motion.div>
             </motion.div>
-            
+
             {/* Stat Card 2 - Enhanced with interactive hover */}
-            <motion.div 
+            <motion.div
               className="bg-white rounded-xl p-8 shadow-lg text-center relative overflow-hidden group"
               initial={{ opacity: 0, y: 50 }}
-              animate={statsSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              animate={
+                statsSectionVisible
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 50 }
+              }
               transition={{ duration: 0.6, delay: 0.5 }}
-              whileHover={{ 
+              whileHover={{
                 y: -10,
-                boxShadow: "0 25px 50px -12px rgba(91, 140, 62, 0.25)"
+                boxShadow: "0 25px 50px -12px rgba(91, 140, 62, 0.25)",
               }}
             >
               {/* 3D rotating top accent */}
-              <motion.div 
+              <motion.div
                 className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#7BAD50] to-[#AECB95] z-10"
                 whileHover={{ scaleX: 1.05 }}
                 transition={{ duration: 0.3 }}
               />
-              
+
               {/* Background glow effect */}
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 bg-gradient-to-br from-[#7BAD50]/5 to-transparent rounded-xl"
                 initial={{ opacity: 0 }}
                 whileHover={{ opacity: 1 }}
                 transition={{ duration: 0.4 }}
               />
-              
+
               {/* 3D layered card contents */}
               <motion.div
                 className="relative z-10"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
-                <h3 className="text-lg font-medium text-[#6B7280] mb-4 serif-heading">Healthy Partnerships</h3>
-                
+                <h3 className="text-lg font-medium text-[#6B7280] mb-4 serif-heading">
+                  Healthy Partnerships
+                </h3>
+
                 <div className="flex items-center justify-center mb-2">
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
-                    animate={statsSectionVisible ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
+                    animate={
+                      statsSectionVisible
+                        ? { scale: 1, opacity: 1 }
+                        : { scale: 0.8, opacity: 0 }
+                    }
                     transition={{ duration: 0.6, delay: 0.5, type: "spring" }}
                     className="relative"
                   >
                     <div className="flex items-center">
-                      <span ref={brandCountRef} className="text-5xl font-bold text-[#1F2937] mr-1 serif-heading relative z-10">
+                      <span
+                        ref={brandCountRef}
+                        className="text-5xl font-bold text-[#1F2937] mr-1 serif-heading relative z-10"
+                      >
                         {brandCount}
                       </span>
-                      <span className="text-2xl font-bold text-[#7BAD50] relative z-10">+</span>
+                      <span className="text-2xl font-bold text-[#7BAD50] relative z-10">
+                        +
+                      </span>
                     </div>
-                    
+
                     {/* Animated highlight ring */}
-                    <motion.div 
+                    <motion.div
                       className="absolute -inset-2 rounded-full bg-[#7BAD50]/5"
                       animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.3, 0.2] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: 0.5,
+                      }}
                     />
                   </motion.div>
                 </div>
-                
-                <p className="text-sm text-[#6B7280] sans-text">wellness-focused brands</p>
+
+                <p className="text-sm text-[#6B7280] sans-text">
+                  wellness-focused brands
+                </p>
               </motion.div>
-              
+
               {/* Interactive reveal on hover */}
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#7BAD50]/90 to-[#AECB95]/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{ clipPath: "circle(0% at 50% 50%)" }}
-                whileHover={{ 
+                whileHover={{
                   clipPath: "circle(100% at 50% 50%)",
-                  transition: { duration: 0.6, ease: "easeOut" }
+                  transition: { duration: 0.6, ease: "easeOut" },
                 }}
               >
                 <p className="text-white text-lg font-medium">
@@ -1479,74 +1681,96 @@ const About = () => {
                 </p>
               </motion.div>
             </motion.div>
-            
+
             {/* Stat Card 3 - Enhanced with interactive hover */}
-            <motion.div 
+            <motion.div
               className="bg-white rounded-xl p-8 shadow-lg text-center relative overflow-hidden group"
               initial={{ opacity: 0, y: 50 }}
-              animate={statsSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              animate={
+                statsSectionVisible
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 50 }
+              }
               transition={{ duration: 0.6, delay: 0.7 }}
-              whileHover={{ 
+              whileHover={{
                 y: -10,
-                boxShadow: "0 25px 50px -12px rgba(91, 140, 62, 0.25)"
+                boxShadow: "0 25px 50px -12px rgba(91, 140, 62, 0.25)",
               }}
             >
               {/* 3D rotating top accent */}
-              <motion.div 
+              <motion.div
                 className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#AECB95] to-[#EDF5E5] z-10"
                 whileHover={{ scaleX: 1.05 }}
                 transition={{ duration: 0.3 }}
               />
-              
+
               {/* Background glow effect */}
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 bg-gradient-to-br from-[#AECB95]/5 to-transparent rounded-xl"
                 initial={{ opacity: 0 }}
                 whileHover={{ opacity: 1 }}
                 transition={{ duration: 0.4 }}
               />
-              
+
               {/* 3D layered card contents */}
               <motion.div
                 className="relative z-10"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
-                <h3 className="text-lg font-medium text-[#6B7280] mb-4 serif-heading">Wellness Categories</h3>
-                
+                <h3 className="text-lg font-medium text-[#6B7280] mb-4 serif-heading">
+                  Wellness Categories
+                </h3>
+
                 <div className="flex items-center justify-center mb-2">
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
-                    animate={statsSectionVisible ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
+                    animate={
+                      statsSectionVisible
+                        ? { scale: 1, opacity: 1 }
+                        : { scale: 0.8, opacity: 0 }
+                    }
                     transition={{ duration: 0.6, delay: 0.5, type: "spring" }}
                     className="relative"
                   >
                     <div className="flex items-center">
-                      <span ref={categoryCountRef} className="text-5xl font-bold text-[#1F2937] mr-1 serif-heading relative z-10">
+                      <span
+                        ref={categoryCountRef}
+                        className="text-5xl font-bold text-[#1F2937] mr-1 serif-heading relative z-10"
+                      >
                         {categoryCount}
                       </span>
-                      <span className="text-2xl font-bold text-[#AECB95] relative z-10">+</span>
-          </div>
-                    
+                      <span className="text-2xl font-bold text-[#AECB95] relative z-10">
+                        +
+                      </span>
+                    </div>
+
                     {/* Animated highlight ring */}
-                    <motion.div 
+                    <motion.div
                       className="absolute -inset-2 rounded-full bg-[#AECB95]/5"
                       animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.3, 0.2] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: 1,
+                      }}
                     />
                   </motion.div>
-        </div>
+                </div>
 
-                <p className="text-sm text-[#6B7280] sans-text">disease-prevention categories</p>
+                <p className="text-sm text-[#6B7280] sans-text">
+                  disease-prevention categories
+                </p>
               </motion.div>
-              
+
               {/* Interactive reveal on hover */}
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#AECB95]/90 to-[#EDF5E5]/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{ clipPath: "circle(0% at 50% 50%)" }}
-                whileHover={{ 
+                whileHover={{
                   clipPath: "circle(100% at 50% 50%)",
-                  transition: { duration: 0.6, ease: "easeOut" }
+                  transition: { duration: 0.6, ease: "easeOut" },
                 }}
               >
                 <p className="text-white text-lg font-medium">
@@ -1556,24 +1780,28 @@ const About = () => {
             </motion.div>
           </div>
         </div>
-            </div>
+      </div>
 
       {/* Founder's Message Section - Enhanced Premium Design */}
       <div className="py-24 relative overflow-hidden">
         {/* Textured background with subtle pattern */}
         <div className="absolute inset-0 bg-[#f8f6f3] opacity-80 z-0">
-          <div className="absolute inset-0" style={{ 
-            backgroundImage: "radial-gradient(#5B8C3E 0.5px, transparent 0.5px), radial-gradient(#5B8C3E 0.5px, #f8f6f3 0.5px)",
-            backgroundSize: "20px 20px",
-            backgroundPosition: "0 0, 10px 10px",
-            opacity: 0.05
-          }}></div>
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                "radial-gradient(#5B8C3E 0.5px, transparent 0.5px), radial-gradient(#5B8C3E 0.5px, #f8f6f3 0.5px)",
+              backgroundSize: "20px 20px",
+              backgroundPosition: "0 0, 10px 10px",
+              opacity: 0.05,
+            }}
+          ></div>
         </div>
-        
+
         {/* Subtle decorative accent */}
         <div className="absolute top-24 right-10 w-64 h-64 rounded-full bg-gradient-to-br from-[#5B8C3E]/5 to-[#7BAD50]/10 blur-3xl"></div>
         <div className="absolute bottom-24 left-10 w-64 h-64 rounded-full bg-gradient-to-br from-[#EDF5E5]/50 to-[#AECB95]/10 blur-3xl"></div>
-        
+
         {/* Enhanced layout container */}
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           {/* Premium header with animated accent */}
@@ -1605,30 +1833,8 @@ const About = () => {
                 A MESSAGE FROM OUR FOUNDER
               </span>
             </motion.div>
-            
+
             <div className="max-w-4xl mx-auto">
-              <motion.h2
-                className="text-3xl md:text-4xl font-bold text-[#1F2937] mb-6 leading-tight"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-              >
-                <span className="relative inline-block mb-2">
-                  Dr. Dharampal on the
-                  <motion.div 
-                    className="absolute -bottom-2 left-0 right-0 h-1 bg-[#5B8C3E]/20"
-                    initial={{ scaleX: 0, transformOrigin: "left" }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1, delay: 0.5 }}
-                  />
-                </span>
-                <span className="block text-[#5B8C3E] mt-1 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] bg-clip-text text-transparent">
-                  Health Revolution
-                </span>
-              </motion.h2>
-              
               <motion.p
                 className="text-[#4B5563] text-lg md:text-xl max-w-3xl mx-auto"
                 initial={{ opacity: 0 }}
@@ -1636,67 +1842,81 @@ const About = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: 0.4 }}
               >
-                Discover the vision and commitment that guides our mission to bring nature's healing power to your doorstep.
+                Discover the vision and commitment that guides our mission to
+                bring nature's healing power to your doorstep.
               </motion.p>
             </div>
           </div>
-          
+
           {/* Enhanced paper-like container with depth and shadows */}
-                        <motion.div
-                className="bg-white rounded-xl shadow-2xl max-w-5xl mx-auto overflow-hidden border border-[#5B8C3E]/5"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8 }}
-                whileHover={{ boxShadow: "0 25px 50px -12px rgba(91, 140, 62, 0.25)" }}
-              >
+          <motion.div
+            className="bg-white rounded-xl shadow-2xl max-w-5xl mx-auto overflow-hidden border border-[#5B8C3E]/5"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8 }}
+            whileHover={{
+              boxShadow: "0 25px 50px -12px rgba(91, 140, 62, 0.25)",
+            }}
+          >
             {/* Rich green top accent bar with subtle pattern */}
             <div className="h-2 bg-[#5B8C3E] relative overflow-hidden">
-              <motion.div 
+              <motion.div
                 className="absolute inset-0 opacity-30"
                 animate={{ x: [-20, 20, -20] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 style={{
-                  backgroundImage: "linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.2) 25%, rgba(255,255,255,0.2) 50%, transparent 50%, transparent 75%, rgba(255,255,255,0.2) 75%, rgba(255,255,255,0.2))",
-                  backgroundSize: "10px 10px"
+                  backgroundImage:
+                    "linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.2) 25%, rgba(255,255,255,0.2) 50%, transparent 50%, transparent 75%, rgba(255,255,255,0.2) 75%, rgba(255,255,255,0.2))",
+                  backgroundSize: "10px 10px",
                 }}
               />
             </div>
-            
+
             {/* Main content with elegant layout and enhanced spacing */}
             <div className="p-8 sm:p-12 md:p-16 lg:p-20">
               {/* Premium quote highlight with icon and animations */}
-                              <motion.div
-                  className="bg-gradient-to-br from-[#5B8C3E]/5 to-[#5B8C3E]/10 border-l-4 border-[#5B8C3E] p-6 md:p-8 mb-14 rounded-lg relative"
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                  whileHover={{ x: 5 }}
-                >
-                {/* Fixed quote icon with appropriate SVG */}
+              <motion.div
+                className="bg-gradient-to-br from-[#5B8C3E]/5 to-[#5B8C3E]/10 border-l-4 border-[#5B8C3E] p-6 md:p-8 mb-14 rounded-lg relative"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                whileHover={{ x: 5 }}
+              >
+                {/* Quote icon with animation */}
                 <div className="absolute -top-5 -left-3 bg-white rounded-full p-2.5 shadow-lg">
-                  <motion.svg 
-                    className="w-7 h-7 text-[#5B8C3E]" 
-                    fill="currentColor" 
+                  <motion.svg
+                    className="w-7 h-7 text-[#5B8C3E]"
+                    fill="currentColor"
                     viewBox="0 0 24 24"
-                    animate={{ 
+                    animate={{
                       rotate: [0, 5, 0, -5, 0],
-                      scale: [1, 1.05, 1, 1.05, 1]
+                      scale: [1, 1.05, 1, 1.05, 1],
                     }}
-                    transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                    transition={{
+                      duration: 10,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                   >
-                    <path d="M9.6,5.58C7.58,6.5,6.07,7.58,5.08,8.82C4.09,10.06,3.6,11.41,3.6,12.86c0,2.19,0.7,3.91,2.11,5.16 C7.12,19.26,8.93,19.89,11.14,19.89c0.59,0,1.07-0.22,1.45-0.65c0.38-0.43,0.58-0.96,0.58-1.59c0-0.59-0.19-1.08-0.57-1.47 c-0.38-0.38-0.82-0.58-1.34-0.58c-1.52,0-2.28-0.68-2.28-2.05c0-0.67,0.26-1.26,0.79-1.77c0.52-0.51,1.12-0.76,1.81-0.76 c1.01,0,1.89,0.44,2.66,1.3c0.77,0.86,1.15,1.89,1.15,3.09c0,1.38-0.44,2.66-1.32,3.84c-0.88,1.19-2.05,2.08-3.5,2.68 c-1.45,0.6-2.99,0.9-4.61,0.9c-1.6,0-3.08-0.28-4.42-0.85s-2.49-1.36-3.42-2.37C7.03,19.37,6.45,19,5.95,18.5 c-0.51-0.5-0.76-1.12-0.76-1.85c0-0.12,0.01-0.23,0.03-0.33c0.21,0.27,0.49,0.47,0.86,0.61c0.37,0.14,0.77,0.21,1.22,0.21 c0.76,0,1.42-0.25,1.97-0.75c0.55-0.5,0.83-1.11,0.83-1.83c0-0.69-0.23-1.27-0.69-1.74C8.95,12.35,8.34,12.12,7.6,12.12 c-1.26,0-2.34,0.72-3.24,2.16c-0.41-1.31-0.62-2.35-0.62-3.14c0-0.65,0.19-1.27,0.58-1.86c0.39-0.59,0.93-1.06,1.62-1.42 c0.69-0.36,1.56-0.7,2.61-1.02c1.05-0.32,2.26-0.61,3.62-0.86L9.6,5.58z M22.04,5.58c-2.02,0.92-3.53,2-4.51,3.24 c-0.99,1.24-1.48,2.59-1.48,4.04c0,2.19,0.7,3.91,2.11,5.16c1.41,1.25,3.21,1.87,5.42,1.87c0.59,0,1.07-0.22,1.45-0.65 c0.38-0.43,0.58-0.96,0.58-1.59c0-0.59-0.19-1.08-0.57-1.47c-0.38-0.38-0.83-0.58-1.35-0.58c-1.52,0-2.28-0.68-2.28-2.05 c0-0.67,0.26-1.26,0.79-1.77c0.52-0.51,1.12-0.76,1.81-0.76c1.01,0,1.89,0.44,2.66,1.3c0.77,0.86,1.15,1.89,1.15,3.09 c0,1.38-0.44,2.66-1.32,3.84c-0.88,1.19-2.05,2.08-3.5,2.68c-1.45,0.6-2.99,0.9-4.61,0.9c-1.6,0-3.08-0.28-4.42-0.85 c-1.34-0.57-2.49-1.36-3.42-2.37c0.94-0.5,1.67-1.05,2.17-1.67s0.76-1.31,0.76-2.09c0-0.88-0.34-1.61-1.03-2.17 s-1.51-0.85-2.48-0.85c-1.26,0-2.34,0.72-3.24,2.16c-0.41-1.31-0.62-2.35-0.62-3.14c0-0.65,0.19-1.27,0.58-1.86 c0.39-0.59,0.93-1.06,1.62-1.42c0.69-0.36,1.56-0.7,2.61-1.02c1.05-0.32,2.26-0.61,3.62-0.86L22.04,5.58z"/>
+                    <path d="M11.192 15.757c0-.88-.23-1.618-.69-2.217-.326-.412-.768-.683-1.327-.812-.55-.128-1.07-.137-1.54-.028-.16.032-.52.112-1.065.242l-.522.15V14.2c.36-.05.717-.182 1.068-.394.35-.21.64-.467.867-.766.216-.3.324-.63.324-.98 0-.23-.07-.413-.21-.552-.147-.14-.353-.21-.61-.21-.253 0-.476.06-.665.173-.19.116-.368.332-.537.648l-1.92-.432c.253-.601.649-1.088 1.187-1.465.538-.377 1.169-.565 1.895-.565.71 0 1.327.16 1.85.483.522.323.774.74.774 1.251 0 .602-.207 1.155-.621 1.659-.414.504-.924.777-1.529.822v.073c.327.067.64.216.937.446.297.23.533.517.708.858.174.34.262.706.262 1.097 0 .396-.067.748-.2 1.058-.132.31-.329.574-.591.793-.261.219-.566.377-.914.475-.347.099-.714.148-1.099.148-.484 0-.934-.057-1.349-.172a2.38 2.38 0 01-.997-.54 2.482 2.482 0 01-.666-.964c-.147-.386-.222-.842-.222-1.367l2.093-.34c0 .054-.01.118-.026.191a1.09 1.09 0 00-.026.159c0 .245.035.479.104.7.07.221.164.406.28.552.116.146.253.254.41.325.157.071.327.107.51.107.626 0 .939-.349.939-1.047 0-.25-.049-.48-.149-.697a1.625 1.625 0 00-.453-.574 1.119 1.119 0 00-.673-.224h-.147v-1.45zm8.45 0c0-.88-.23-1.618-.69-2.217-.326-.412-.768-.683-1.327-.812-.55-.128-1.07-.137-1.54-.028-.16.032-.52.112-1.065.242l-.522.15V14.2c.36-.05.717-.182 1.068-.394.35-.21.64-.467.867-.766.216-.3.324-.63.324-.98 0-.23-.07-.413-.21-.552-.147-.14-.353-.21-.61-.21-.253 0-.476.06-.665.173-.19.116-.368.332-.537.648l-1.92-.432c.253-.601.649-1.088 1.187-1.465.538-.377 1.169-.565 1.895-.565.71 0 1.327.16 1.85.483.522.323.774.74.774 1.251 0 .602-.207 1.155-.621 1.659-.414.504-.924.777-1.529.822v.073c.327.067.64.216.937.446.297.23.533.517.708.858.174.34.262.706.262 1.097 0 .396-.067.748-.2 1.058-.132.31-.329.574-.591.793-.261.219-.566.377-.914.475-.347.099-.714.148-1.099.148-.484 0-.934-.057-1.349-.172a2.38 2.38 0 01-.997-.54 2.482 2.482 0 01-.666-.964c-.147-.386-.222-.842-.222-1.367l2.093-.34c0 .054-.01.118-.026.191a1.09 1.09 0 00-.026.159c0 .245.035.479.104.7.07.221.164.406.28.552.116.146.253.254.41.325.157.071.327.107.51.107.626 0 .939-.349.939-1.047 0-.25-.049-.48-.149-.697a1.625 1.625 0 00-.453-.574 1.119 1.119 0 00-.673-.224h-.147v-1.45z" />
                   </motion.svg>
                 </div>
-                
-                {/* Improved quote styling */}
+
                 <p className="text-xl md:text-2xl lg:text-3xl italic text-[#1F2937] leading-relaxed font-light">
-                  "My journey to create Panchamritam began with a simple belief: nature provides everything we need for optimal health. Our mission is to bring these pure gifts to you, untainted by chemicals and preservatives."
+                  "My journey to create Panchamritam began with a simple belief:
+                  nature provides everything we need for optimal health. Our
+                  mission is to bring these pure gifts to you, untainted by
+                  chemicals and preservatives."
                 </p>
-                
+
                 {/* Enhanced visual accent */}
-                <motion.div 
+                <motion.div
                   className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#5B8C3E]/0 via-[#5B8C3E]/30 to-[#5B8C3E]/0"
                   initial={{ scaleX: 0 }}
                   whileInView={{ scaleX: 1 }}
@@ -1704,14 +1924,14 @@ const About = () => {
                   transition={{ duration: 1.5, delay: 0.6 }}
                 />
               </motion.div>
-              
+
               {/* Enhanced message paragraphs with careful typography */}
               <div className="space-y-8 mb-14">
                 {[
                   "Dear Health Enthusiasts,",
                   "When I founded Panchamritam over a decade ago, I was driven by a deep concern for the declining quality of our food supply and its impact on public health. As a medical professional, I witnessed firsthand how chemical-laden foods were contributing to chronic diseases and weakened immunity.",
                   "Our philosophy is simple yet profound: return to nature's original design. Every product we offer is carefully selected to support your body's natural healing mechanisms and promote long-term wellbeing.",
-                  "We work directly with organic farmers who share our vision, ensuring that what reaches your table is pure, potent, and full of life-giving properties. This commitment to quality is not just a business strategy—it's our sacred mission."
+                  "We work directly with organic farmers who share our vision, ensuring that what reaches your table is pure, potent, and full of life-giving properties. This commitment to quality is not just a business strategy�it's our sacred mission.",
                 ].map((paragraph, index) => (
                   <motion.div
                     key={index}
@@ -1719,77 +1939,57 @@ const About = () => {
                     initial={{ opacity: 0, y: 25 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.7, delay: 0.4 + (index * 0.1) }}
+                    transition={{ duration: 0.7, delay: 0.4 + index * 0.1 }}
                   >
                     {index === 0 && (
                       <div className="absolute -left-3 top-1.5 h-6 w-1 bg-[#5B8C3E]/30 rounded-full"></div>
                     )}
-                    <p className={`${index === 0 ? "text-xl md:text-2xl font-semibold text-[#1F2937]" : "text-[#4B5563] leading-relaxed"} ${index === 2 ? "font-medium text-[#1F2937]" : ""}`}>
+                    <p
+                      className={`${index === 0 ? "text-xl md:text-2xl font-semibold text-[#1F2937]" : "text-[#4B5563] leading-relaxed"} ${index === 2 ? "font-medium text-[#1F2937]" : ""}`}
+                    >
                       {paragraph}
                     </p>
                   </motion.div>
                 ))}
               </div>
-              
+
               {/* Premium signature block with enhanced styling */}
               <motion.div
-                className="flex flex-col md:flex-row items-end md:items-center md:justify-between mt-10"
+                className="flex flex-col items-end"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: 0.9 }}
               >
-                {/* Left side - Doctor image with decorative accent */}
-                <motion.div 
-                  className="hidden md:flex items-center mb-6 md:mb-0"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 1.1 }}
-                >
-                  <div className="relative">
-                    <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-[#5B8C3E]/30 shadow-md">
-                      {/* Replace with actual doctor image */}
-                      <img 
-                        src={testimonialImg} 
-                        alt="Dr. Dharampal" 
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <motion.div 
-                      className="absolute -bottom-1 -right-1 w-8 h-8 bg-[#5B8C3E] rounded-full flex items-center justify-center shadow-lg text-white"
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ duration: 3, repeat: Infinity }}
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
-                      </svg>
-                    </motion.div>
-                  </div>
-                  <div className="ml-4">
-                    <div className="font-semibold text-[#1F2937]">Verified</div>
-                    <div className="text-sm text-[#6B7280]">Medical Professional</div>
-                  </div>
-                </motion.div>
-                
-                {/* Right side - Signature */}
                 <div className="flex items-center mb-3">
-                  <motion.div 
+                  <motion.div
                     className="w-8 h-8 rounded-full flex items-center justify-center bg-[#5B8C3E]/10 mr-3 shadow-sm"
                     animate={{ scale: [1, 1.1, 1] }}
                     transition={{ duration: 3, repeat: Infinity }}
                   >
-                    <svg className="w-4 h-4 text-[#5B8C3E]" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M5.5 17a4.5 4.5 0 01-1.44-8.765 4.5 4.5 0 018.302-3.046 3.5 3.5 0 014.504 4.272A4 4 0 0115 17H5.5zm3.75-2.75a.75.75 0 001.5 0V9.66l1.95 2.1a.75.75 0 101.1-1.02l-3.25-3.5a.75.75 0 00-1.1 0l-3.25 3.5a.75.75 0 101.1 1.02l1.95-2.1v4.59z" clipRule="evenodd" />
+                    <svg
+                      className="w-4 h-4 text-[#5B8C3E]"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.5 17a4.5 4.5 0 01-1.44-8.765 4.5 4.5 0 018.302-3.046 3.5 3.5 0 014.504 4.272A4 4 0 0115 17H5.5zm3.75-2.75a.75.75 0 001.5 0V9.66l1.95 2.1a.75.75 0 101.1-1.02l-3.25-3.5a.75.75 0 00-1.1 0l-3.25 3.5a.75.75 0 101.1 1.02l1.95-2.1v4.59z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                   </motion.div>
                   <div className="text-right">
-                    <div className="text-2xl font-bold text-[#1F2937]">Dr. Dharampal</div>
-                    <div className="text-[#5B8C3E] text-sm font-medium tracking-wide">Founder & Chief Health Advocate</div>
+                    <div className="text-2xl font-bold text-[#1F2937]">
+                      Dr. Dharampal
+                    </div>
+                    <div className="text-[#5B8C3E] text-sm font-medium tracking-wide">
+                      Founder & Chief Health Advocate
+                    </div>
                   </div>
                 </div>
-                <motion.div 
-                  className="h-px w-64 bg-gradient-to-l from-[#5B8C3E] via-[#5B8C3E]/60 to-transparent md:hidden"
+                <motion.div
+                  className="h-px w-64 bg-gradient-to-l from-[#5B8C3E] via-[#5B8C3E]/60 to-transparent"
                   initial={{ width: 0 }}
                   whileInView={{ width: 256 }}
                   viewport={{ once: true }}
@@ -1797,55 +1997,94 @@ const About = () => {
                 />
               </motion.div>
             </div>
-            
+
             {/* Enhanced bottom accent pattern */}
             <div className="h-1.5 bg-gradient-to-r from-[#5B8C3E]/30 via-[#7BAD50]/70 to-[#AECB95]/30"></div>
           </motion.div>
-          
+
           {/* Enhanced mission highlights with icons */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 max-w-5xl mx-auto">
             {[
-              { 
-                title: "Pure Ingredients", 
-                description: "We source only the purest organic ingredients from certified farms",
+              {
+                title: "Pure Ingredients",
+                description:
+                  "We source only the purest organic ingredients from certified farms",
                 icon: (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                    />
                   </svg>
-                )
+                ),
               },
-              { 
-                title: "Chemical-Free", 
-                description: "No harmful chemicals, preservatives or artificial additives in any products",
+              {
+                title: "Chemical-Free",
+                description:
+                  "No harmful chemicals, preservatives or artificial additives in any products",
                 icon: (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
                   </svg>
-                )
+                ),
               },
-              { 
-                title: "Health-Focused", 
-                description: "Every product is designed to support your body's natural healing processes",
+              {
+                title: "Health-Focused",
+                description:
+                  "Every product is designed to support your body's natural healing processes",
                 icon: (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                    />
                   </svg>
-                )
-              }
+                ),
+              },
             ].map((item, index) => (
-                              <motion.div 
-                  key={index}
-                  className="bg-white rounded-xl shadow-lg overflow-hidden group"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.3 + (index * 0.1) }}
-                  whileHover={{ y: -5, boxShadow: "0 15px 30px -10px rgba(91, 140, 62, 0.3)" }}
-                >
+              <motion.div
+                key={index}
+                className="bg-white rounded-xl shadow-lg overflow-hidden group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
+                whileHover={{
+                  y: -5,
+                  boxShadow: "0 15px 30px -10px rgba(91, 140, 62, 0.3)",
+                }}
+              >
                 <div className="h-2 bg-[#5B8C3E]" />
                 <div className="p-7">
                   <div className="flex items-center mb-4">
-                    <motion.div 
+                    <motion.div
                       className="w-10 h-10 rounded-full bg-[#5B8C3E]/10 flex items-center justify-center mr-3 text-[#5B8C3E] shadow-sm"
                       whileHover={{ rotate: 10, scale: 1.1 }}
                     >
@@ -1864,10 +2103,13 @@ const About = () => {
       </div>
 
       {/* Testimonial Section - Innovative Magnetic Split Design */}
-      <div ref={testimonialSectionRef} className="py-24 relative overflow-hidden">
+      <div
+        ref={testimonialSectionRef}
+        className="py-24 relative overflow-hidden"
+      >
         {/* Dynamic background gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-white via-[#f9fbf7] to-white"></div>
-        
+
         {/* Floating organic elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {/* Organic shapes with parallax effect */}
@@ -1880,8 +2122,8 @@ const About = () => {
                 height: `${Math.random() * 300 + 100}px`,
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
-                backgroundColor: i % 2 === 0 ? '#5B8C3E10' : '#AECB9510',
-                filter: 'blur(60px)',
+                backgroundColor: i % 2 === 0 ? "#5B8C3E10" : "#AECB9510",
+                filter: "blur(60px)",
                 opacity: Math.random() * 0.5 + 0.1,
               }}
               animate={{
@@ -1893,28 +2135,34 @@ const About = () => {
                 duration: Math.random() * 10 + 15,
                 repeat: Infinity,
                 repeatType: "reverse",
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             />
           ))}
-              </div>
-        
+        </div>
+
         {/* Main content container */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Split design layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
             {/* Left side - Staggered title reveal with magnetic hover */}
-            <motion.div 
+            <motion.div
               className="relative pb-16 lg:pb-0 z-20"
               initial={{ opacity: 0 }}
-              animate={testimonialSectionVisible ? { opacity: 1 } : { opacity: 0 }}
+              animate={
+                testimonialSectionVisible ? { opacity: 1 } : { opacity: 0 }
+              }
               transition={{ duration: 0.8 }}
             >
               <div className="lg:sticky lg:top-1/3 px-4 lg:pr-16">
                 {/* Accent pill */}
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
-                  animate={testimonialSectionVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                  animate={
+                    testimonialSectionVisible
+                      ? { opacity: 1, x: 0 }
+                      : { opacity: 0, x: -20 }
+                  }
                   transition={{ duration: 0.7 }}
                   className="inline-block mb-4"
                 >
@@ -1922,83 +2170,101 @@ const About = () => {
                     Transformational Stories
                   </div>
                 </motion.div>
-                
+
                 {/* Magnetic heading with each word animated separately */}
                 <div className="mb-8">
                   {/* Staggered word animation */}
-                  <motion.h2 
+                  <motion.h2
                     className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#1F2937] tracking-tight leading-tight"
                     initial={{ opacity: 0 }}
-                    animate={testimonialSectionVisible ? { opacity: 1 } : { opacity: 0 }}
+                    animate={
+                      testimonialSectionVisible
+                        ? { opacity: 1 }
+                        : { opacity: 0 }
+                    }
                     transition={{ duration: 0.5 }}
                   >
-                    {["Health", "Stories", "From", "Real", "People"].map((word, index) => (
-                      <motion.span
-                        key={index}
-                        className="inline-block mr-4 relative"
-                        initial={{ y: 80, opacity: 0 }}
-                        animate={testimonialSectionVisible ? { y: 0, opacity: 1 } : { y: 80, opacity: 0 }}
-                        transition={{ 
-                          duration: 0.7,
-                          delay: 0.1 + (index * 0.1),
-                          type: "spring",
-                          stiffness: 50
-                        }}
-                        whileHover={{ 
-                          scale: 1.05, 
-                          color: "#5B8C3E",
-                          transition: { duration: 0.2 }
-                        }}
-                      >
-                        {word}
-                      </motion.span>
-                    ))}
+                    {["Health", "Stories", "From", "Real", "People"].map(
+                      (word, index) => (
+                        <motion.span
+                          key={index}
+                          className="inline-block mr-4 relative"
+                          initial={{ y: 80, opacity: 0 }}
+                          animate={
+                            testimonialSectionVisible
+                              ? { y: 0, opacity: 1 }
+                              : { y: 80, opacity: 0 }
+                          }
+                          transition={{
+                            duration: 0.7,
+                            delay: 0.1 + index * 0.1,
+                            type: "spring",
+                            stiffness: 50,
+                          }}
+                          whileHover={{
+                            scale: 1.05,
+                            color: "#5B8C3E",
+                            transition: { duration: 0.2 },
+                          }}
+                        >
+                          {word}
+                        </motion.span>
+                      ),
+                    )}
                   </motion.h2>
-          </div>
-                
+                </div>
+
                 {/* Description with sliding reveal */}
                 <motion.div
                   className="relative overflow-hidden"
                   initial={{ opacity: 0 }}
-                  animate={testimonialSectionVisible ? { opacity: 1 } : { opacity: 0 }}
+                  animate={
+                    testimonialSectionVisible ? { opacity: 1 } : { opacity: 0 }
+                  }
                   transition={{ duration: 0.5, delay: 0.7 }}
                 >
-                  <motion.p 
+                  <motion.p
                     className="text-lg text-[#4B5563] pr-4 max-w-md"
                     initial={{ y: 40 }}
                     animate={testimonialSectionVisible ? { y: 0 } : { y: 40 }}
                     transition={{ duration: 0.6, delay: 0.8 }}
                   >
-                    Our organic products have helped countless people transform their health and wellness. Hear their inspiring journeys of recovery and vitality.
+                    Our organic products have helped countless people transform
+                    their health and wellness. Hear their inspiring journeys of
+                    recovery and vitality.
                   </motion.p>
                 </motion.div>
-                
+
                 {/* Scroll indicator */}
                 <motion.div
                   className="hidden lg:flex items-center mt-8 text-[#5B8C3E]"
                   initial={{ opacity: 0 }}
-                  animate={testimonialSectionVisible ? { opacity: 1 } : { opacity: 0 }}
+                  animate={
+                    testimonialSectionVisible ? { opacity: 1 } : { opacity: 0 }
+                  }
                   transition={{ duration: 0.5, delay: 1 }}
                 >
-                  <motion.div 
+                  <motion.div
                     className="w-10 h-px bg-[#5B8C3E]"
                     animate={{ scaleX: [1, 1.5, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   />
-                  <span className="ml-2 text-sm font-medium">Explore stories</span>
+                  <span className="ml-2 text-sm font-medium">
+                    Explore stories
+                  </span>
                 </motion.div>
-        </div>
+              </div>
             </motion.div>
-            
-                          {/* Right side - Auto-scrolling testimonial carousel */}
+
+            {/* Right side - Auto-scrolling testimonial carousel */}
             <div className="relative z-10">
               {/* Auto-scrolling container with overflow */}
               <div className="relative h-[75vh] overflow-hidden">
                 {/* Auto-scrolling carousel */}
-                <motion.div 
+                <motion.div
                   className="space-y-6 md:space-y-8 py-6 pr-4"
                   initial={{ y: 0 }}
-                  animate={{ 
+                  animate={{
                     y: [0, -1000, 0],
                   }}
                   transition={{
@@ -2006,11 +2272,11 @@ const About = () => {
                     repeat: Infinity,
                     repeatType: "loop",
                     ease: "linear",
-                    times: [0, 0.9, 1]
+                    times: [0, 0.9, 1],
                   }}
                 >
                   {/* First testimonial */}
-                  <TestimonialCard 
+                  <TestimonialCard
                     visible={testimonialSectionVisible}
                     delay={0.3}
                     image={testimonialImg}
@@ -2019,9 +2285,9 @@ const About = () => {
                     content="After struggling with digestive issues for years, switching to Panchamritam's organic products completely transformed my health. Their chemical-free products helped restore my gut health, and now I have more energy than ever before!"
                     highlight="100% Improvement"
                   />
-                  
+
                   {/* Second testimonial */}
-                  <TestimonialCard 
+                  <TestimonialCard
                     visible={testimonialSectionVisible}
                     delay={0.4}
                     image={testimonialImg}
@@ -2030,9 +2296,9 @@ const About = () => {
                     content="I was looking for natural alternatives to manage my blood pressure. After incorporating Panchamritam's organic foods into my diet, my readings have stabilized, and my doctor is amazed at my progress without additional medication."
                     highlight="Natural Solution"
                   />
-                  
+
                   {/* Third testimonial */}
-                  <TestimonialCard 
+                  <TestimonialCard
                     visible={testimonialSectionVisible}
                     delay={0.5}
                     image={testimonialImg}
@@ -2041,9 +2307,9 @@ const About = () => {
                     content="My family and I used to catch every cold and flu that came around. Since making the switch to Panchamritam's organic products, we've noticed a significant improvement in our immune health. We rarely get sick now!"
                     highlight="Family Health"
                   />
-                  
+
                   {/* Fourth testimonial */}
-                  <TestimonialCard 
+                  <TestimonialCard
                     visible={testimonialSectionVisible}
                     delay={0.6}
                     image={testimonialImg}
@@ -2052,9 +2318,9 @@ const About = () => {
                     content="I've struggled with weight management for years. Panchamritam's organic products have been a game changer. The natural ingredients have helped me maintain a healthy weight without crash diets. It's been a sustainable lifestyle change."
                     highlight="Sustainable Health"
                   />
-                  
+
                   {/* Fifth testimonial */}
-                  <TestimonialCard 
+                  <TestimonialCard
                     visible={testimonialSectionVisible}
                     delay={0.7}
                     image={testimonialImg}
@@ -2064,7 +2330,7 @@ const About = () => {
                     highlight="Mental Focus"
                   />
                 </motion.div>
-                
+
                 {/* Gradient fade effect at top and bottom */}
                 <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-[#f9fbf7] to-transparent pointer-events-none"></div>
                 <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#f9fbf7] to-transparent pointer-events-none"></div>
@@ -2075,13 +2341,27 @@ const About = () => {
       </div>
 
       {/* Certified Products Section - 3D Interactive Showcase */}
-      <div ref={certifiedSectionRef} id="certified" className="py-24 bg-[#f8f6f3] relative overflow-hidden">
+      <div
+        ref={certifiedSectionRef}
+        id="certified"
+        className="py-24 bg-[#f8f6f3] relative overflow-hidden"
+      >
         {/* Animated background elements */}
         <div className="absolute inset-0 pointer-events-none">
           {/* Organic pattern lines */}
-          <svg className="w-full h-full opacity-10" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <svg
+            className="w-full h-full opacity-10"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
             <defs>
-              <linearGradient id="certGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <linearGradient
+                id="certGradient"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
                 <stop offset="0%" stopColor="#5B8C3E" stopOpacity="0.3" />
                 <stop offset="100%" stopColor="#7BAD50" stopOpacity="0.1" />
               </linearGradient>
@@ -2090,14 +2370,18 @@ const About = () => {
               d="M0,25 C30,15 70,35 100,25 L100,100 L0,100 Z"
               fill="url(#certGradient)"
               initial={{ y: 100, opacity: 0 }}
-              animate={certifiedSectionVisible ? { y: 0, opacity: 0.05 } : { y: 100, opacity: 0 }}
+              animate={
+                certifiedSectionVisible
+                  ? { y: 0, opacity: 0.05 }
+                  : { y: 100, opacity: 0 }
+              }
               transition={{ duration: 1.2, ease: "easeOut" }}
             />
           </svg>
-          
+
           {/* Removing floating certification symbols */}
         </div>
-        
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           {/* Two-column layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -2106,7 +2390,9 @@ const About = () => {
               <motion.div
                 className="relative perspective-1000"
                 initial={{ opacity: 0 }}
-                animate={certifiedSectionVisible ? { opacity: 1 } : { opacity: 0 }}
+                animate={
+                  certifiedSectionVisible ? { opacity: 1 } : { opacity: 0 }
+                }
                 transition={{ duration: 0.8 }}
               >
                 {/* Static Container with Rotating Badge */}
@@ -2114,88 +2400,99 @@ const About = () => {
                   {/* Main Rotating Certification Badge */}
                   <motion.div
                     className="absolute inset-0 z-10"
-                    animate={{ 
+                    animate={{
                       rotateY: [0, 360],
                     }}
-                    transition={{ 
+                    transition={{
                       duration: 30,
                       repeat: Infinity,
-                      ease: "linear"
+                      ease: "linear",
                     }}
-                    style={{ 
+                    style={{
                       transformStyle: "preserve-3d",
                     }}
                     whileHover={{ scale: 1.05 }}
                   >
-                    <img 
+                    <img
                       src={certifiedBadge}
-                      alt="Certified Organic" 
+                      alt="Certified Organic"
                       className="w-full h-full object-contain"
                     />
                   </motion.div>
-                  
+
                   {/* Static Certification Icons */}
                   {[...Array(4)].map((_, i) => {
                     // Position badges at the four corners
                     let position = {};
-                    
+
                     // Top-left, top-right, bottom-right, bottom-left
                     if (i === 0) {
-                      position = { top: '-10%', left: '-10%' }; // Top-left for USDA
+                      position = { top: "-10%", left: "-10%" }; // Top-left for USDA
                     } else if (i === 1) {
-                      position = { top: '-10%', right: '-10%' }; // Top-right for Non GMO
+                      position = { top: "-10%", right: "-10%" }; // Top-right for Non GMO
                     } else if (i === 2) {
-                      position = { bottom: '-10%', right: '-10%' }; // Bottom-right for Eco
+                      position = { bottom: "-10%", right: "-10%" }; // Bottom-right for Eco
                     } else if (i === 3) {
-                      position = { bottom: '-10%', left: '-10%' }; // Bottom-left for FDA
+                      position = { bottom: "-10%", left: "-10%" }; // Bottom-left for FDA
                     }
-                    
+
                     return (
                       <motion.div
                         key={i}
                         className="absolute rounded-full flex items-center justify-center"
-                        style={{ 
-                          width: 75, 
+                        style={{
+                          width: 75,
                           height: 75,
                           ...position,
                           zIndex: 100,
-                          backgroundColor: i === 0 
-                            ? '#5B8C3E' 
-                            : i === 1 
-                            ? '#4A7033' 
-                            : i === 2 
-                            ? '#6B9D4E' 
-                            : '#3B5D26',
-                          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                          border: '1px solid rgba(255, 255, 255, 0.3)'
+                          backgroundColor:
+                            i === 0
+                              ? "#5B8C3E"
+                              : i === 1
+                                ? "#4A7033"
+                                : i === 2
+                                  ? "#6B9D4E"
+                                  : "#3B5D26",
+                          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                          border: "1px solid rgba(255, 255, 255, 0.3)",
                         }}
                         whileHover={{ scale: 1.05 }}
                       >
                         <div>
                           {i === 0 && (
                             <div className="text-center">
-                              <div className="text-white text-lg font-bold">USDA</div>
+                              <div className="text-white text-lg font-bold">
+                                USDA
+                              </div>
                               <div className="text-white text-xs">Organic</div>
-              </div>
+                            </div>
                           )}
-                          
+
                           {i === 1 && (
                             <div className="text-center">
-                              <div className="text-white text-lg font-bold">Non</div>
+                              <div className="text-white text-lg font-bold">
+                                Non
+                              </div>
                               <div className="text-white text-xs">GMO</div>
                             </div>
                           )}
-                          
+
                           {i === 2 && (
                             <div className="text-center">
-                              <div className="text-white text-lg font-bold">Eco</div>
-                              <div className="text-white text-xs">Certified</div>
+                              <div className="text-white text-lg font-bold">
+                                Eco
+                              </div>
+                              <div className="text-white text-xs">
+                                Certified
+                              </div>
                             </div>
                           )}
-                          
+
                           {i === 3 && (
                             <div className="text-center">
-                              <div className="text-white text-lg font-bold">FDA</div>
+                              <div className="text-white text-lg font-bold">
+                                FDA
+                              </div>
                               <div className="text-white text-xs">Approved</div>
                             </div>
                           )}
@@ -2204,15 +2501,15 @@ const About = () => {
                     );
                   })}
                 </div>
-                
+
                 {/* Glowing background effect */}
                 <motion.div
                   className="absolute -inset-4 rounded-full bg-gradient-to-br from-[#5B8C3E]/20 to-[#7BAD50]/5 filter blur-xl"
-                  animate={{ 
+                  animate={{
                     scale: [1, 1.2, 1],
                     opacity: [0.3, 0.5, 0.3],
                   }}
-                  transition={{ 
+                  transition={{
                     duration: 6,
                     repeat: Infinity,
                     repeatType: "reverse",
@@ -2223,113 +2520,142 @@ const About = () => {
                 />
               </motion.div>
             </div>
-            
+
             {/* Right Column - Content with Animated Steps */}
             <div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={certifiedSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                animate={
+                  certifiedSectionVisible
+                    ? { opacity: 1, y: 0 }
+                    : { opacity: 0, y: 20 }
+                }
                 transition={{ duration: 0.6 }}
               >
                 <motion.div
                   className="inline-block mb-4"
                   initial={{ opacity: 0, x: -20 }}
-                  animate={certifiedSectionVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                  animate={
+                    certifiedSectionVisible
+                      ? { opacity: 1, x: 0 }
+                      : { opacity: 0, x: -20 }
+                  }
                   transition={{ duration: 0.5 }}
                 >
                   <div className="bg-[#5B8C3E]/10 text-[#5B8C3E] text-sm font-medium py-1 px-4 rounded-full">
                     Quality Assured
                   </div>
                 </motion.div>
-                
-                <motion.h2 
+
+                <motion.h2
                   className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1F2937] mb-6"
                   initial={{ opacity: 0, y: 30 }}
-                  animate={certifiedSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                  animate={
+                    certifiedSectionVisible
+                      ? { opacity: 1, y: 0 }
+                      : { opacity: 0, y: 30 }
+                  }
                   transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                  Our Health Standards <br/>
+                  Our Health Standards <br />
                   <span className="text-[#5B8C3E]">Certification Process</span>
                 </motion.h2>
-                
+
                 <motion.p
                   className="text-[#4B5563] text-lg mb-8 max-w-xl"
                   initial={{ opacity: 0 }}
-                  animate={certifiedSectionVisible ? { opacity: 1 } : { opacity: 0 }}
+                  animate={
+                    certifiedSectionVisible ? { opacity: 1 } : { opacity: 0 }
+                  }
                   transition={{ duration: 0.6, delay: 0.3 }}
                 >
-                  At Panchamritam, we ensure every product meets the highest standards of quality and authenticity. Our rigorous certification process guarantees you receive only the purest, healthiest organic products.
+                  At Panchamritam, we ensure every product meets the highest
+                  standards of quality and authenticity. Our rigorous
+                  certification process guarantees you receive only the purest,
+                  healthiest organic products.
                 </motion.p>
-                
+
                 {/* Certification Steps with Animated Path */}
                 <div className="relative">
                   {/* Connecting path line */}
-                  <motion.div 
+                  <motion.div
                     className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#5B8C3E] to-[#AECB95]"
                     initial={{ scaleY: 0, originY: 0 }}
-                    animate={certifiedSectionVisible ? { scaleY: 1 } : { scaleY: 0 }}
+                    animate={
+                      certifiedSectionVisible ? { scaleY: 1 } : { scaleY: 0 }
+                    }
                     transition={{ duration: 1.5, delay: 0.4 }}
                   />
-                  
+
                   {/* Certification steps with animation */}
                   <div className="space-y-8 relative">
                     {[
                       {
                         title: "Source Verification",
                         desc: "We verify all suppliers meet our strict organic farming standards",
-                        icon: "🌱",
-                        delay: 0.5
+                        icon: "??",
+                        delay: 0.5,
                       },
                       {
                         title: "Lab Testing",
                         desc: "Every batch undergoes thorough testing for purity and nutritional content",
-                        icon: "🔬",
-                        delay: 0.7
+                        icon: "??",
+                        delay: 0.7,
                       },
                       {
                         title: "Certification",
                         desc: "Products are certified by multiple independent organic authorities",
-                        icon: "✅",
-                        delay: 0.9
+                        icon: "?",
+                        delay: 0.9,
                       },
                       {
                         title: "Quality Monitoring",
                         desc: "Continuous monitoring ensures consistent quality standards",
-                        icon: "📊",
-                        delay: 1.1
-                      }
+                        icon: "??",
+                        delay: 1.1,
+                      },
                     ].map((step, i) => (
-                      <motion.div 
+                      <motion.div
                         key={i}
                         className="flex items-start"
                         initial={{ opacity: 0, x: -20 }}
-                        animate={certifiedSectionVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                        animate={
+                          certifiedSectionVisible
+                            ? { opacity: 1, x: 0 }
+                            : { opacity: 0, x: -20 }
+                        }
                         transition={{ duration: 0.6, delay: step.delay }}
                       >
-                        <motion.div 
+                        <motion.div
                           className="flex-shrink-0 w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center mr-4 z-10"
-                          whileHover={{ 
+                          whileHover={{
                             scale: 1.1,
                             backgroundColor: "#5B8C3E10",
-                            transition: { duration: 0.2 }
+                            transition: { duration: 0.2 },
                           }}
                         >
                           <span className="text-2xl">{step.icon}</span>
                         </motion.div>
                         <div>
-                          <h3 className="text-xl font-semibold text-[#1F2937] mb-1">{step.title}</h3>
+                          <h3 className="text-xl font-semibold text-[#1F2937] mb-1">
+                            {step.title}
+                          </h3>
                           <p className="text-[#6B7280]">{step.desc}</p>
                         </div>
                       </motion.div>
-            ))}
-          </div>
-        </div>
+                    ))}
+                  </div>
+                </div>
 
                 {/* Learn more button */}
                 <motion.div
                   className="mt-10"
                   initial={{ opacity: 0, y: 20 }}
-                  animate={certifiedSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                  animate={
+                    certifiedSectionVisible
+                      ? { opacity: 1, y: 0 }
+                      : { opacity: 0, y: 20 }
+                  }
                   transition={{ duration: 0.6, delay: 1.3 }}
                 >
                   <motion.button
@@ -2338,114 +2664,155 @@ const About = () => {
                     whileTap={{ scale: 0.98 }}
                   >
                     <span>Learn More About Our Standards</span>
-                    <svg className="ml-2 w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                    <svg
+                      className="ml-2 w-5 h-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                   </motion.button>
                 </motion.div>
               </motion.div>
-              </div>
+            </div>
           </div>
         </div>
-        </div>
+      </div>
 
       {/* Product Categories Section - Organic Polaroid Gallery */}
-      <div ref={categoriesSectionRef} id="categories" className="py-24 bg-white relative overflow-hidden">
-        
+      <div
+        ref={categoriesSectionRef}
+        id="categories"
+        className="py-24 bg-white relative overflow-hidden"
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
-            <motion.span 
+            <motion.span
               className="block px-6 py-1.5 rounded-full bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white text-sm font-medium shadow-md mb-4 mx-auto w-fit"
               initial={{ opacity: 0, y: -10 }}
-              animate={categoriesSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
+              animate={
+                categoriesSectionVisible
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: -10 }
+              }
               transition={{ duration: 0.5 }}
             >
               Our Products
             </motion.span>
-            
-            <motion.h2 
+
+            <motion.h2
               className="text-4xl font-bold text-[#1F2937] mb-2 serif-heading"
               initial={{ opacity: 0 }}
-              animate={categoriesSectionVisible ? { opacity: 1 } : { opacity: 0 }}
+              animate={
+                categoriesSectionVisible ? { opacity: 1 } : { opacity: 0 }
+              }
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               We Deal With Various Quality Organic Products!
             </motion.h2>
-            
+
             <div className="w-24 h-1 bg-[#5B8C3E] mx-auto my-6 rounded-full"></div>
           </div>
-          
+
           {/* Polaroid-style organic gallery */}
           <div className="relative">
-            <motion.div 
+            <motion.div
               className="flex flex-wrap justify-center gap-x-6 gap-y-10 md:gap-x-8 md:gap-y-16"
               initial={{ opacity: 0 }}
-              animate={categoriesSectionVisible ? { opacity: 1 } : { opacity: 0 }}
+              animate={
+                categoriesSectionVisible ? { opacity: 1 } : { opacity: 0 }
+              }
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               {[
                 { title: "Fresh Fruits", image: freshFruitsImg, rotate: -2 },
                 { title: "Dry Fruits", image: dryFruitsImg, rotate: 3 },
-                { title: "Fresh Vegetables", image: freshVegetablesImg, rotate: -1 },
-                { title: "Dried Vegetables", image: driedVegetablesImg, rotate: 2 },
-                { title: "Beauty Products", image: beautyProductsImg, rotate: -3 },
+                {
+                  title: "Fresh Vegetables",
+                  image: freshVegetablesImg,
+                  rotate: -1,
+                },
+                {
+                  title: "Dried Vegetables",
+                  image: driedVegetablesImg,
+                  rotate: 2,
+                },
+                {
+                  title: "Beauty Products",
+                  image: beautyProductsImg,
+                  rotate: -3,
+                },
                 { title: "Milk Products", image: milkProductsImg, rotate: 1 },
                 { title: "Organic Honey", image: organicHoneyImg, rotate: -2 },
-                { title: "Organic Tea", image: organicTeaImg, rotate: 2 }
+                { title: "Organic Tea", image: organicTeaImg, rotate: 2 },
               ].map((category, index) => (
                 <motion.div
                   key={index}
                   className="w-[calc(50%-24px)] md:w-[calc(25%-24px)] relative"
-                  initial={{ 
-                    opacity: 0, 
+                  initial={{
+                    opacity: 0,
                     y: 50,
                     rotate: category.rotate,
-                    boxShadow: "0 5px 15px rgba(0,0,0,0.08)"
+                    boxShadow: "0 5px 15px rgba(0,0,0,0.08)",
                   }}
-                  animate={categoriesSectionVisible ? { 
-                    opacity: 1, 
-                    y: 0,
-                    transition: { 
-                      duration: 0.6,
-                      delay: 0.1 * index,
-                      type: "spring",
-                      stiffness: 50
-                    }
-                  } : { opacity: 0, y: 50 }}
-                  whileHover={{ 
-                    y: -15, 
+                  animate={
+                    categoriesSectionVisible
+                      ? {
+                          opacity: 1,
+                          y: 0,
+                          transition: {
+                            duration: 0.6,
+                            delay: 0.1 * index,
+                            type: "spring",
+                            stiffness: 50,
+                          },
+                        }
+                      : { opacity: 0, y: 50 }
+                  }
+                  whileHover={{
+                    y: -15,
                     rotate: 0,
-                    boxShadow: "0 15px 30px rgba(0,0,0,0.12), 0 5px 15px rgba(0,0,0,0.06)",
-                    transition: { duration: 0.3 }
+                    boxShadow:
+                      "0 15px 30px rgba(0,0,0,0.12), 0 5px 15px rgba(0,0,0,0.06)",
+                    transition: { duration: 0.3 },
                   }}
                 >
                   {/* Polaroid frame */}
                   <div className="bg-white p-3 pb-12 rounded-sm shadow-md relative">
                     {/* Image container with natural frame effect */}
                     <div className="relative overflow-hidden aspect-square rounded-sm">
-                      <motion.img 
-                        src={category.image} 
-                        alt={category.title} 
+                      <motion.img
+                        src={category.image}
+                        alt={category.title}
                         className="w-full h-full object-cover"
                         whileHover={{ scale: 1.05 }}
                         transition={{ duration: 0.5 }}
                       />
-                      
+
                       {/* Natural texture overlay */}
                       <div className="absolute inset-0 shadow-inner pointer-events-none border border-black/5"></div>
-          </div>
-                    
+                    </div>
+
                     {/* Handwritten-style caption */}
                     <div className="absolute bottom-0 left-0 right-0 p-3 text-center">
-                      <h3 className="text-[#1F2937] text-lg font-medium" style={{ fontFamily: 'cursive, serif' }}>{category.title}</h3>
-        </div>
+                      <h3
+                        className="text-[#1F2937] text-lg font-medium"
+                        style={{ fontFamily: "cursive, serif" }}
+                      >
+                        {category.title}
+                      </h3>
+                    </div>
 
                     {/* Tape accent */}
-                    <div 
-                      className="absolute top-0 w-8 h-4 bg-[#5B8C3E]/20 transform -translate-y-1/2" 
-                      style={{ 
-                        left: `calc(50% - 16px)`, 
-                        clipPath: 'polygon(0% 0%, 100% 0%, 90% 100%, 10% 100%)' 
+                    <div
+                      className="absolute top-0 w-8 h-4 bg-[#5B8C3E]/20 transform -translate-y-1/2"
+                      style={{
+                        left: `calc(50% - 16px)`,
+                        clipPath: "polygon(0% 0%, 100% 0%, 90% 100%, 10% 100%)",
                       }}
                     ></div>
                   </div>
@@ -2453,7 +2820,7 @@ const About = () => {
               ))}
             </motion.div>
           </div>
-          
+
           {/* Remove natural elements */}
         </div>
       </div>
@@ -2463,192 +2830,289 @@ const About = () => {
         {/* Full-width container without padding for the split design */}
         <div className="flex flex-col lg:flex-row">
           {/* Left side - Organic imagery with parallax effect */}
-          <motion.div 
+          <motion.div
             className="relative w-full lg:w-1/2 h-80 lg:h-auto overflow-hidden"
             initial={{ opacity: 0, x: -50 }}
-            animate={ctaSectionVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+            animate={
+              ctaSectionVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }
+            }
             transition={{ duration: 0.8 }}
           >
             {/* Main image with parallax effect */}
             <motion.div
               className="absolute inset-0 z-0"
               initial={{ scale: 1.1 }}
-              animate={ctaSectionVisible ? 
-                { y: [0, -15, 0], scale: [1.1, 1, 1.1] } : 
-                { scale: 1.1 }
+              animate={
+                ctaSectionVisible
+                  ? { y: [0, -15, 0], scale: [1.1, 1, 1.1] }
+                  : { scale: 1.1 }
               }
-              transition={{ 
-                duration: 20, 
-                repeat: Infinity, 
-                repeatType: "reverse" 
+              transition={{
+                duration: 20,
+                repeat: Infinity,
+                repeatType: "reverse",
               }}
             >
-              <img 
-                src={aboutImage} 
-                alt="Organic products" 
+              <img
+                src={aboutImage}
+                alt="Organic products"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-[#5B8C3E]/20 to-transparent mix-blend-multiply" />
             </motion.div>
-            
+
             {/* Overlay message */}
             <div className="absolute inset-0 flex items-center justify-center z-10">
-              <motion.div 
+              <motion.div
                 className="text-white text-center px-6"
                 initial={{ opacity: 0, y: 20 }}
-                animate={ctaSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                animate={
+                  ctaSectionVisible
+                    ? { opacity: 1, y: 0 }
+                    : { opacity: 0, y: 20 }
+                }
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
                 {/* Added background and enhanced text shadow for better visibility */}
                 <div className="bg-black/30 backdrop-blur-sm rounded-lg p-4 shadow-xl">
-                  <h3 className="text-3xl md:text-4xl font-bold mb-2" style={{ textShadow: "0 0 10px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.9)" }}>Pure Organic</h3>
+                  <h3
+                    className="text-3xl md:text-4xl font-bold mb-2"
+                    style={{
+                      textShadow:
+                        "0 0 10px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.9)",
+                    }}
+                  >
+                    Pure Organic
+                  </h3>
                   <div className="w-20 h-1 bg-white mx-auto mb-4"></div>
-                  <p className="text-xl" style={{ textShadow: "0 0 8px rgba(0,0,0,0.8), 0 2px 4px rgba(0,0,0,0.9)" }}>Nature's Best Selection</p>
-              </div>
+                  <p
+                    className="text-xl"
+                    style={{
+                      textShadow:
+                        "0 0 8px rgba(0,0,0,0.8), 0 2px 4px rgba(0,0,0,0.9)",
+                    }}
+                  >
+                    Nature's Best Selection
+                  </p>
+                </div>
               </motion.div>
-          </div>
+            </div>
           </motion.div>
-          
+
           {/* Right side - CTA content */}
           <div className="w-full lg:w-1/2 bg-gradient-to-br from-[#f8f6f3] via-[#f8f6f3] to-[#f1efe8] py-20 lg:py-24 px-6 md:px-12 relative overflow-hidden">
             {/* Background decorative elements */}
             <div className="absolute top-0 right-0 w-32 h-32 border-t border-r border-[#5B8C3E]/10 rounded-bl-full"></div>
             <div className="absolute bottom-0 left-0 w-40 h-40 border-b border-l border-[#5B8C3E]/10 rounded-tr-full"></div>
-            
+
             {/* Subtle leaf pattern */}
-            <motion.div 
+            <motion.div
               className="absolute -right-8 top-1/4 w-24 h-24 opacity-5"
               animate={{ rotate: [0, 10, 0], y: [0, -5, 0] }}
               transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
             >
               <img src={leafImage} alt="" className="w-full h-full" />
             </motion.div>
-            
+
             <div className="max-w-md mx-auto relative z-10">
-              <motion.div 
+              <motion.div
                 className="mb-10"
                 initial={{ opacity: 0, x: 20 }}
-                animate={ctaSectionVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+                animate={
+                  ctaSectionVisible
+                    ? { opacity: 1, x: 0 }
+                    : { opacity: 0, x: 20 }
+                }
                 transition={{ duration: 0.6 }}
               >
                 <div className="inline-block bg-[#5B8C3E]/10 px-4 py-1.5 rounded-full">
-                  <span className="text-[#5B8C3E] text-sm font-medium tracking-wider">EXPERIENCE NATURE'S GOODNESS</span>
-        </div>
+                  <span className="text-[#5B8C3E] text-sm font-medium tracking-wider">
+                    EXPERIENCE NATURE'S GOODNESS
+                  </span>
+                </div>
               </motion.div>
-              
-              <motion.h2 
+
+              <motion.h2
                 className="text-4xl md:text-5xl font-bold mb-6 leading-tight"
                 initial={{ opacity: 0, y: 20 }}
-                animate={ctaSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                animate={
+                  ctaSectionVisible
+                    ? { opacity: 1, y: 0 }
+                    : { opacity: 0, y: 20 }
+                }
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
                 <span className="text-[#1F2937]">Ready to Taste </span>
                 <span className="text-[#5B8C3E] relative inline-block">
                   Organic Goodness
-                  <motion.div 
+                  <motion.div
                     className="absolute -bottom-2 left-0 h-1 bg-[#5B8C3E]/30 w-full"
                     initial={{ width: 0 }}
-                    animate={ctaSectionVisible ? { width: "100%" } : { width: 0 }}
+                    animate={
+                      ctaSectionVisible ? { width: "100%" } : { width: 0 }
+                    }
                     transition={{ duration: 0.8, delay: 0.6 }}
                   />
                 </span>
                 <span className="text-[#1F2937]">?</span>
               </motion.h2>
-              
-              <motion.p 
+
+              <motion.p
                 className="text-[#4B5563] text-lg mb-10 leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
-                animate={ctaSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                animate={
+                  ctaSectionVisible
+                    ? { opacity: 1, y: 0 }
+                    : { opacity: 0, y: 20 }
+                }
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
-                Discover our premium selection of organic products and transform your daily routine with nature's finest ingredients. Your journey to healthier living starts here.
+                Discover our premium selection of organic products and transform
+                your daily routine with nature's finest ingredients. Your
+                journey to healthier living starts here.
               </motion.p>
-              
+
               {/* Button group with enhanced styling */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={ctaSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                animate={
+                  ctaSectionVisible
+                    ? { opacity: 1, y: 0 }
+                    : { opacity: 0, y: 20 }
+                }
                 transition={{ duration: 0.6, delay: 0.6 }}
                 className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-12"
               >
-                <motion.a 
-                  href="/shop" 
+                <motion.a
+                  href="/shop"
                   className="group relative inline-flex items-center justify-center bg-[#5B8C3E] text-white font-medium py-4 px-10 rounded-md shadow-md overflow-hidden"
-                  whileHover={{ 
+                  whileHover={{
                     scale: 1.03,
-                    boxShadow: "0 10px 25px -5px rgba(91, 140, 62, 0.3)"
+                    boxShadow: "0 10px 25px -5px rgba(91, 140, 62, 0.3)",
                   }}
                   whileTap={{ scale: 0.98 }}
                 >
                   {/* Shine effect */}
-                  <motion.div 
+                  <motion.div
                     className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-20"
                     initial={{ left: "-100%" }}
                     animate={{ left: "200%" }}
-                    transition={{ repeat: Infinity, duration: 3, repeatDelay: 5 }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 3,
+                      repeatDelay: 5,
+                    }}
                   />
-                  
+
                   <span className="relative z-10 text-lg">Shop Now</span>
-                  <svg className="ml-2 w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                  <svg
+                    className="ml-2 w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                 </motion.a>
-                
-                <motion.a 
-                  href="/about" 
+
+                <motion.a
+                  href="/about"
                   className="group relative inline-flex items-center justify-center bg-white text-[#5B8C3E] border border-[#5B8C3E] font-medium py-4 px-8 rounded-md overflow-hidden"
-                  whileHover={{ 
+                  whileHover={{
                     scale: 1.03,
-                    backgroundColor: "rgba(91, 140, 62, 0.05)"
+                    backgroundColor: "rgba(91, 140, 62, 0.05)",
                   }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <span>Learn More</span>
-                  <svg className="ml-2 w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                  <svg
+                    className="ml-2 w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                 </motion.a>
               </motion.div>
-              
+
               {/* Trust indicators with improved design */}
-              <motion.div 
+              <motion.div
                 className="relative"
                 initial={{ opacity: 0 }}
                 animate={ctaSectionVisible ? { opacity: 1 } : { opacity: 0 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
               >
                 <div className="absolute -left-6 -right-6 top-0 h-px bg-gradient-to-r from-transparent via-[#5B8C3E]/20 to-transparent" />
-                
+
                 <div className="pt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="flex flex-col items-center text-center">
                     <div className="w-12 h-12 rounded-full bg-[#5B8C3E]/10 flex items-center justify-center mb-3">
-                      <svg className="w-6 h-6 text-[#5B8C3E]" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      <svg
+                        className="w-6 h-6 text-[#5B8C3E]"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clipRule="evenodd"
+                        />
                       </svg>
-              </div>
-                    <span className="font-medium text-[#1F2937]">Certified Organic</span>
-                    <span className="text-xs text-[#6B7280] mt-1">100% Verified</span>
-          </div>
-                  
-                  <div className="flex flex-col items-center text-center">
-                    <div className="w-12 h-12 rounded-full bg-[#5B8C3E]/10 flex items-center justify-center mb-3">
-                      <svg className="w-6 h-6 text-[#5B8C3E]" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clipRule="evenodd" />
-                      </svg>
-        </div>
-                    <span className="font-medium text-[#1F2937]">Money-Back Guarantee</span>
-                    <span className="text-xs text-[#6B7280] mt-1">30-Day Returns</span>
+                    </div>
+                    <span className="font-medium text-[#1F2937]">
+                      Certified Organic
+                    </span>
+                    <span className="text-xs text-[#6B7280] mt-1">
+                      100% Verified
+                    </span>
                   </div>
-                  
+
                   <div className="flex flex-col items-center text-center">
                     <div className="w-12 h-12 rounded-full bg-[#5B8C3E]/10 flex items-center justify-center mb-3">
-                      <svg className="w-6 h-6 text-[#5B8C3E]" fill="currentColor" viewBox="0 0 20 20">
+                      <svg
+                        className="w-6 h-6 text-[#5B8C3E]"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                    <span className="font-medium text-[#1F2937]">
+                      Money-Back Guarantee
+                    </span>
+                    <span className="text-xs text-[#6B7280] mt-1">
+                      30-Day Returns
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-12 h-12 rounded-full bg-[#5B8C3E]/10 flex items-center justify-center mb-3">
+                      <svg
+                        className="w-6 h-6 text-[#5B8C3E]"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
                         <path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z" />
                       </svg>
                     </div>
-                    <span className="font-medium text-[#1F2937]">Free Shipping</span>
-                    <span className="text-xs text-[#6B7280] mt-1">On Orders Over $50</span>
+                    <span className="font-medium text-[#1F2937]">
+                      Free Shipping
+                    </span>
+                    <span className="text-xs text-[#6B7280] mt-1">
+                      On Orders Over $50
+                    </span>
                   </div>
                 </div>
               </motion.div>
@@ -2660,4 +3124,4 @@ const About = () => {
   );
 };
 
-export default About; 
+export default About;
