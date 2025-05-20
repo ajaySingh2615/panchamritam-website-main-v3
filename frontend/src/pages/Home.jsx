@@ -94,21 +94,70 @@ const ProductCard = ({ image, category, title, price, salePrice, index, inView }
 };
 
 // Feature Card Component
-const FeatureCard = ({ icon, title, description, index, inView }) => {
+const FeatureCard = ({ icon, title, description, index, inView, benefits }) => {
   const delay = index * 0.2;
+  const [isHovered, setIsHovered] = useState(false);
   
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.6, delay }}
-      className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+      className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden group"
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
     >
-      <div className="w-12 h-12 bg-[#EDF5E5] rounded-full flex items-center justify-center mb-4">
-        <span className="text-[#5B8C3E] text-2xl">{icon}</span>
+      {/* Gradient background effect on hover */}
+      <motion.div 
+        className="absolute inset-0 bg-gradient-to-br from-[#f2f8f4] to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        aria-hidden="true"
+      />
+      
+      <div className="relative z-10">
+        <div className="w-16 h-16 bg-[#EDF5E5] rounded-full flex items-center justify-center mb-5 group-hover:bg-[#daeacd] transition-colors duration-300">
+          <span className="text-[#5B8C3E] text-3xl">{icon}</span>
+        </div>
+        
+        <h3 className="text-xl font-semibold text-[#1F2937] mb-3">{title}</h3>
+        <p className="text-[#6B7280] text-sm mb-4">{description}</p>
+        
+        {/* Benefits list */}
+        {benefits && benefits.length > 0 && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={isHovered ? { height: 'auto', opacity: 1 } : { height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden"
+          >
+            <ul className="space-y-2 mt-2 text-sm text-gray-600">
+              {benefits.map((benefit, i) => (
+                <li key={i} className="flex items-center">
+                  <svg className="w-4 h-4 mr-2 text-[#5B8C3E]" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  {benefit}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+        
+        <div className="flex items-center mt-4">
+          <motion.span 
+            initial={{ opacity: 0.7 }}
+            whileHover={{ opacity: 1 }}
+            className="text-xs font-medium text-[#5B8C3E] inline-flex items-center"
+          >
+            <span>Learn more</span>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 ml-1 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </motion.span>
+        </div>
       </div>
-      <h3 className="text-lg font-semibold text-[#1F2937] mb-2">{title}</h3>
-      <p className="text-[#6B7280] text-sm">{description}</p>
+      
+      {/* Decorative element */}
+      <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-[#f2f8f4] rounded-full opacity-30 group-hover:scale-150 transition-transform duration-700" aria-hidden="true" />
     </motion.div>
   );
 };
@@ -380,10 +429,30 @@ const Home = () => {
 
   // Feature data
   const features = [
-    { icon: '🚚', title: 'Free Shipping', description: 'Above $5 Only' },
-    { icon: '✓', title: 'Certified Organic', description: '100% Guarantee' },
-    { icon: '💰', title: 'Huge Savings', description: 'At Lowest Price' },
-    { icon: '↩️', title: 'Easy Returns', description: 'No Questions Asked' },
+    { 
+      icon: '🌱', 
+      title: 'Certified Organic', 
+      description: 'All our products are certified organic, ensuring you get the purest quality without harmful chemicals.',
+      benefits: ['Pesticide-free farming', 'No GMOs', 'Strict certification process']
+    },
+    { 
+      icon: '🚚', 
+      title: 'Free Delivery', 
+      description: 'Enjoy free carbon-neutral delivery on all orders above $50, anywhere within the country.',
+      benefits: ['Fast & reliable service', 'Order tracking available', 'Eco-friendly packaging']
+    },
+    { 
+      icon: '💰', 
+      title: 'Premium Quality', 
+      description: 'We carefully select all products to ensure exceptional quality while keeping prices affordable.',
+      benefits: ['Direct from farmers', 'Freshness guaranteed', 'Regular quality checks']
+    },
+    { 
+      icon: '↩️', 
+      title: 'Easy Returns', 
+      description: 'Not completely satisfied? Our no-questions-asked return policy ensures your peace of mind.',
+      benefits: ['100% money back', '30-day return window', 'Simple return process']
+    },
   ];
 
   // Categories data
@@ -703,32 +772,57 @@ const Home = () => {
           </motion.div>
         </section>
         
-        {/* Features Section */}
-        <section ref={featuresRef} className="min-h-screen w-full bg-[#f8f6f3] py-20 snap-start flex items-center">
-          <div className="container mx-auto px-4">
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl font-bold text-[#1F2937] mb-4">Why Choose Our Products?</h2>
+        {/* Features Section - Enhanced */}
+        <section ref={featuresRef} className="min-h-screen w-full bg-[#f8f6f3] py-24 snap-start flex items-center relative overflow-hidden">
+          {/* Background elements */}
+          <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-white to-transparent opacity-70" aria-hidden="true" />
+          <div className="absolute -left-24 top-1/4 w-48 h-48 rounded-full bg-[#5B8C3E] opacity-5" aria-hidden="true" />
+          <div className="absolute -right-24 bottom-1/4 w-64 h-64 rounded-full bg-[#5B8C3E] opacity-5" aria-hidden="true" />
+          
+          <div className="container mx-auto px-6 relative z-10">
+                          <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={{ duration: 0.8 }}
+                className="text-center mb-20"
+              >
+                <span className="text-[#5B8C3E] font-medium text-sm uppercase tracking-wider block mb-2">Why Choose Us</span>
+                <h2 className="text-4xl md:text-5xl font-bold text-[#1F2937] mb-4">The Organic Advantage</h2>
               <div className="w-24 h-1 bg-[#5B8C3E] mx-auto my-6 rounded-full"></div>
-              <p className="text-[#6B7280] max-w-2xl mx-auto">Experience the finest quality organic products with our premium selection.</p>
+              <p className="text-[#6B7280] max-w-2xl mx-auto text-lg">
+                We're committed to providing the highest quality organic products while maintaining sustainable practices
+                and supporting local farmers. Here's what sets our products apart:
+              </p>
             </motion.div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {features.map((feature, index) => (
                 <FeatureCard
                   key={index}
                   icon={feature.icon}
                   title={feature.title}
                   description={feature.description}
+                  benefits={feature.benefits}
                   index={index}
                   inView={featuresInView}
                 />
               ))}
             </div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="flex justify-center mt-16"
+            >
+              <motion.button 
+                whileHover={{ scale: 1.05 }} 
+                whileTap={{ scale: 0.95 }}
+                className="bg-[#5B8C3E] text-white px-8 py-3 rounded-md font-medium text-lg hover:bg-[#4a7033] transition-colors shadow-lg"
+              >
+                Shop Now
+              </motion.button>
+            </motion.div>
           </div>
         </section>
         
