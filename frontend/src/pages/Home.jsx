@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence, useMotionValue, useMotionTemplate } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence, useMotionValue, useMotionTemplate, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 // Import available images
@@ -229,30 +229,63 @@ const TestimonialCard = ({ image, name, content, rating, index, inView }) => {
   );
 };
 
-// Text reveal animation component
-const AnimatedText = ({ text, delay = 0, className, inView }) => {
+// SVG Shape components for decorative elements
+const DecorativeShape = ({ className }) => (
+  <svg 
+    viewBox="0 0 200 200" 
+    className={className}
+    aria-hidden="true"
+    fill="none"
+  >
+    <path 
+      fill="#5B8C3E" 
+      fillOpacity="0.1"
+      d="M45.3,-69.3C59.9,-62.8,73.5,-52.7,80.1,-39.1C86.7,-25.5,86.4,-8.4,81.8,6.7C77.2,21.8,68.4,34.9,57.5,44.4C46.6,54,33.6,60.1,19.3,66.3C5,72.6,-10.6,79,-24.1,76.5C-37.6,74,-49.1,62.6,-58.3,49.8C-67.4,37,-74.2,22.8,-76.6,7.7C-79,-7.4,-77,-23.3,-68.5,-34.4C-60,-45.4,-45,-51.5,-31.6,-58.4C-18.3,-65.3,-6.6,-73,6.9,-83.8C20.5,-94.6,40.9,-108.5,48.7,-102.3C56.5,-96.1,51.7,-69.7,45.3,-69.3Z" 
+      transform="translate(100 100)" 
+    />
+  </svg>
+);
+
+// Animated badge component
+const AnimatedBadge = ({ text, delay = 0, inView }) => {
+  const prefersReducedMotion = useReducedMotion();
+  
   return (
-    <span className={`inline-block ${className}`}>
-      {text.split(" ").map((word, wordIndex) => (
-        <span key={wordIndex} className="inline-block mr-1">
-          {word.split("").map((char, charIndex) => (
-            <motion.span
-              key={`${wordIndex}-${charIndex}`}
-              className="inline-block"
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{
-                duration: 0.4,
-                delay: delay + (wordIndex * 0.1) + (charIndex * 0.03),
-                ease: "easeOut"
-              }}
-            >
-              {char}
-            </motion.span>
-          ))}
-        </span>
-      ))}
-    </span>
+    <motion.span 
+      className="inline-block bg-[#f2f8f4] px-3 py-1 rounded-full text-[#5B8C3E] text-sm font-medium group"
+      initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 10, scale: 0.95 }}
+      animate={inView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 10, scale: 0.95 }}
+      transition={{ 
+        duration: 0.5, 
+        delay, 
+        ease: [0.22, 1, 0.36, 1]
+      }}
+    >
+      <span className="flex items-center gap-2">
+        <motion.span 
+          className="inline-block w-2 h-2 bg-[#5B8C3E] rounded-full"
+          animate={{ scale: [1, 1.2, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        />
+        {text}
+      </span>
+    </motion.span>
+  );
+};
+
+// Text reveal animation component (keeping existing AnimatedText but improving it)
+const AnimatedText = ({ text, delay = 0, className, inView }) => {
+  const prefersReducedMotion = useReducedMotion();
+  
+  return (
+    <motion.span 
+      className={`block ${className}`}
+      initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {text}
+    </motion.span>
   );
 };
 
@@ -282,8 +315,8 @@ const Home = () => {
   useEffect(() => {
     const handleMouseMove = (e) => {
       setMousePosition({
-        x: (e.clientX - window.innerWidth / 2) / 20,
-        y: (e.clientY - window.innerHeight / 2) / 20
+        x: (e.clientX - window.innerWidth / 2) / 40,
+        y: (e.clientY - window.innerHeight / 2) / 40
       });
     };
     
@@ -302,7 +335,7 @@ const Home = () => {
   const brandsRef = useRef(null);
   
   // Use inView booleans separately
-  const heroInView = useInView(heroRef, { once: false, threshold: 0.5 });
+  const heroInView = useInView(heroRef, { once: false, threshold: 0.2 });
   const featuresInView = useInView(featuresRef, { once: false, threshold: 0.2 });
   const productsInView = useInView(productsRef, { once: false, threshold: 0.1 });
   const categoriesInView = useInView(categoriesRef, { once: false, threshold: 0.1 });
@@ -314,22 +347,28 @@ const Home = () => {
   // Scroll indicator opacity animation
   const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
   
-  // Text reveal progress based on scroll
-  const textRevealProgress = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
-  const textClipPath = useMotionTemplate`inset(0% 0% ${textRevealProgress.get() * 100}% 0%)`;
+  // Add accessibility hooks
+  const prefersReducedMotion = useReducedMotion();
   
-  // Parallax transformations for different elements
-  const heroImageY = useTransform(scrollYProgress, [0, 0.3], ["0%", "30%"]);
-  const heroBackgroundY = useTransform(scrollYProgress, [0, 0.3], ["0%", "10%"]);
-  const heroContentY = useTransform(scrollYProgress, [0, 0.3], ["0%", "15%"]);
+  // Stripe-inspired animations - improved
+  const heroContentY = useTransform(scrollYProgress, [0, 0.3], [0, prefersReducedMotion ? 0 : 50]);
+  const heroContentOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0.3]);
   
-  // 3D rotation effect based on scroll and mouse position
-  const heroRotateX = useTransform(scrollYProgress, [0, 0.3], [0, -5]);
-  const heroRotateY = useMotionValue(0);
+  // Subtle parallax for components - improved
+  const heroImageX = useTransform(scrollYProgress, [0, 0.3], [prefersReducedMotion ? 0 : 30, 0]);
+  const heroImageOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0.8]);
   
+  // Control loading state
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+  
+  // Handle image loading
   useEffect(() => {
-    heroRotateY.set(mousePosition.x / 5);
-  }, [mousePosition.x, heroRotateY]);
+    const heroImg = new Image();
+    heroImg.src = heroImage;
+    heroImg.onload = () => {
+      setImagesLoaded(true);
+    };
+  }, []);
 
   // Product data
   const products = [
@@ -380,399 +419,285 @@ const Home = () => {
 
   return (
     <div className="bg-[#f8f6f3] min-h-screen overflow-x-hidden">
+      {/* Custom progress bar - improved */}
+      <motion.div 
+        className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#5B8C3E] to-[#85b565] origin-left z-50"
+        style={{ scaleX: smoothY }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+      />
+      
       {/* Tesla-style full-screen scroll sections */}
-      <div className="relative snap-y snap-mandatory h-screen overflow-y-auto overflow-x-hidden scroll-smooth">
-        {/* Hero Section - Enhanced with scroll-based animations */}
-        <section ref={heroRef} className="h-screen w-full relative flex flex-col justify-center items-center snap-start overflow-hidden">
-          {/* Background gradient with parallax effect */}
-          <ParallaxElement 
-            scrollYProgress={scrollYProgress} 
-            strength={0.1}
-            className="absolute inset-0 z-0"
-          >
-            <motion.div 
-              className="absolute inset-0 bg-gradient-to-b from-[#f3f8f1] to-[#e8f0e3]"
-              style={{ y: heroBackgroundY }}
-            ></motion.div>
-          </ParallaxElement>
-          
-          {/* Animated decorative elements with parallax effect */}
-          <ParallaxElement 
-            scrollYProgress={scrollYProgress}
-            strength={-0.2}
-            className="absolute -top-20 -right-20 w-96 h-96 opacity-50 pointer-events-none z-10"
-          >
-            <motion.div
-              animate={{ 
-                rotate: [0, 10, -5, 0],
-                x: mousePosition.x * -0.5,
-                y: mousePosition.y * -0.5
-              }}
-              transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <img 
-                src={heroLogoLeaf2} 
-                alt="" 
-                className="w-full h-full"
-                width="300"
-                height="300"
-              />
-            </motion.div>
-          </ParallaxElement>
-          
-          <ParallaxElement 
-            scrollYProgress={scrollYProgress}
-            strength={0.3}
-            className="absolute bottom-0 left-0 w-80 h-80 opacity-40 pointer-events-none z-10"
-          >
-            <motion.div
-              animate={{ 
-                y: [0, 15, 0],
-                rotate: [0, 5, 0],
-                x: mousePosition.x * 0.3,
-                y: mousePosition.y * 0.3
-              }}
-              transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <img 
-                src={heroLeaves} 
-                alt="" 
-                className="w-full h-full"
-                width="300"
-                height="300"
-              />
-            </motion.div>
-          </ParallaxElement>
-          
-          {/* Animated particles background */}
-          <div className="absolute inset-0 z-5">
-            {[...Array(20)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute rounded-full bg-[#5B8C3E]/10"
-                initial={{
-                  x: Math.random() * window.innerWidth,
-                  y: Math.random() * window.innerHeight,
-                  scale: Math.random() * 0.5 + 0.5
-                }}
-                animate={{
-                  y: [null, Math.random() * -100, null],
-                  x: [null, Math.random() * 100 - 50, null]
-                }}
-                transition={{
-                  duration: 10 + Math.random() * 10,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: Math.random() * 5
-                }}
-                style={{
-                  width: `${Math.random() * 30 + 10}px`,
-                  height: `${Math.random() * 30 + 10}px`,
-                  opacity: Math.random() * 0.3 + 0.1
-                }}
-              />
-            ))}
+      <div className="relative snap-y snap-mandatory h-screen overflow-y-auto overflow-x-hidden scroll-smooth bg-[#f8f6f3]">
+        {/* Hero Section - Stripe-inspired Design with further enhancements */}
+        <section 
+          ref={heroRef} 
+          className="min-h-screen w-full relative flex items-center py-20 snap-start overflow-hidden bg-[#f8f6f3]"
+          aria-label="Hero section"
+        >
+          {/* Improved background with subtle grain texture */}
+          <div className="absolute inset-0 bg-[#f8f6f3] opacity-90 z-0">
+            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjZmZmZmZmIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNmNWY1ZjUiPjwvcmVjdD4KPC9zdmc+')] opacity-20" />
           </div>
           
-          <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center h-full z-20">
-            {/* Left - Hero Content with scroll-based animations */}
+          {/* Decorative shapes in background */}
+          <div className="absolute inset-0 overflow-hidden z-0" aria-hidden="true">
+            <DecorativeShape className="absolute -top-24 -left-24 w-64 h-64 opacity-50 transform rotate-12" />
+            <DecorativeShape className="absolute top-1/3 -right-24 w-80 h-80 opacity-40 transform -rotate-12" />
+            <DecorativeShape className="absolute -bottom-32 left-1/4 w-72 h-72 opacity-30 transform rotate-45" />
+          </div>
+          
+          <div className="container mx-auto px-6 md:px-12 relative z-10">
             <motion.div 
-              className="text-left order-2 lg:order-1"
-              style={{ y: heroContentY }}
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center"
+              initial={prefersReducedMotion ? {} : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
             >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={heroInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="inline-block bg-[#f1f8eb] px-4 py-2 rounded-full mb-5 shadow-sm"
-                style={{
-                  x: mousePosition.x * 0.1,
-                  y: mousePosition.y * 0.1
+              {/* Left - Content Side (Stripe-inspired fade up) - Enhanced */}
+              <motion.div 
+                className="lg:col-span-5 z-20"
+                style={{ 
+                  opacity: heroContentOpacity,
+                  y: heroContentY
                 }}
               >
-                <span className="text-[#5B8C3E] font-medium text-sm flex items-center gap-2">
-                  <img src={heroLogoLeaf} alt="" className="h-4 w-4" width="16" height="16" />
-                  100% Organic Products
-                </span>
+                <div className="mb-4">
+                  <AnimatedBadge 
+                    text="100% Organic Products" 
+                    delay={0.1}
+                    inView={heroInView}
+                  />
+                </div>
+                
+                <div className="mb-8">
+                  <div className="overflow-hidden mb-2">
+                    <motion.h1 
+                      className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#1A2B33] leading-[1.1]"
+                      initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
+                      animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                      transition={{ 
+                        duration: 0.8, 
+                        delay: 0.2,
+                        ease: [0.22, 1, 0.36, 1]
+                      }}
+                    >
+                      <span className="block mb-1">Natural solutions for</span>
+                      <span className="text-[#5B8C3E]">healthier living</span>
+                    </motion.h1>
+                  </div>
+                  
+                  <motion.p
+                    className="text-lg text-[#4B5563] opacity-90 max-w-xl mb-8"
+                    initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
+                    animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                    transition={{ 
+                      duration: 0.8, 
+                      delay: 0.3,
+                      ease: [0.22, 1, 0.36, 1]
+                    }}
+                  >
+                    Experience the pure goodness of nature with our premium organic 
+                    products. Certified chemical-free and sustainably sourced for 
+                    your health and the planet.
+                  </motion.p>
+                  
+                  <motion.div
+                    className="flex flex-wrap gap-4"
+                    initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
+                    animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                    transition={{ 
+                      duration: 0.6, 
+                      delay: 0.5,
+                      ease: [0.22, 1, 0.36, 1]
+                    }}
+                  >
+                    <motion.a 
+                      href="#products"
+                      whileHover={{ scale: prefersReducedMotion ? 1 : 1.02 }}
+                      whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }}
+                      className="relative bg-[#5B8C3E] text-white px-7 py-3 rounded-md font-medium overflow-hidden group"
+                    >
+                      <span className="relative z-10">Shop Now</span>
+                      <motion.span
+                        className="absolute inset-0 bg-[#4a7033] z-0"
+                        initial={{ x: '-100%' }}
+                        whileHover={{ x: 0 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </motion.a>
+                    
+                    <motion.a 
+                      href="#about"
+                      whileHover={{ scale: prefersReducedMotion ? 1 : 1.02 }}
+                      whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }}
+                      className="relative bg-white text-[#5B8C3E] border border-[#5B8C3E] px-7 py-3 rounded-md font-medium overflow-hidden group"
+                    >
+                      <span className="relative z-10">Learn More</span>
+                      <motion.span
+                        className="absolute inset-0 bg-[#f2f8f4] z-0"
+                        initial={{ x: '-100%' }}
+                        whileHover={{ x: 0 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </motion.a>
+                  </motion.div>
+                </div>
+                
+                {/* Trust symbols/indicators */}
+                <motion.div
+                  initial={prefersReducedMotion ? {} : { opacity: 0 }}
+                  animate={heroInView ? { opacity: 1 } : { opacity: 0 }}
+                  transition={{ duration: 0.6, delay: 0.7 }}
+                  className="flex items-center gap-4 text-sm text-[#6B7280]"
+                >
+                  <div className="flex items-center">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#5B8C3E]">
+                      <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <span className="ml-1">Certified Organic</span>
+                  </div>
+                  <div className="flex items-center">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#5B8C3E]">
+                      <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <span className="ml-1">Free Shipping</span>
+                  </div>
+                </motion.div>
               </motion.div>
               
-              <motion.div className="overflow-hidden">
-                <motion.h1 
-                  className="text-4xl md:text-6xl font-bold mb-6 text-[#1F2937]"
-                  style={{ 
-                    x: mousePosition.x * 0.05,
-                    y: mousePosition.y * 0.05
-                  }}
-                >
-                  <AnimatedText 
-                    text="Healthy Living" 
-                    delay={0.5} 
-                    inView={heroInView}
-                    className="block"
+              {/* Right - Image Side (Stripe-inspired fade from right) - Enhanced */}
+              <motion.div 
+                className="lg:col-span-7 relative z-10"
+                initial={prefersReducedMotion ? {} : { opacity: 0, x: 80 }}
+                animate={heroInView && imagesLoaded ? { opacity: 1, x: 0 } : { opacity: 0, x: 80 }}
+                transition={{ 
+                  duration: 1.2, 
+                  delay: 0.4,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+                style={{
+                  x: heroImageX,
+                  opacity: heroImageOpacity
+                }}
+              >
+                {/* Improved product image presentation */}
+                <div className="relative">
+                  {/* Background gradient blob - enhanced */}
+                  <motion.div 
+                    className="absolute -z-10 w-full h-full rounded-full filter blur-[80px] bg-gradient-to-tr from-[#dff0e3] to-[#f1faf4]"
+                    animate={{
+                      scale: [1, 1.05, 1],
+                    }}
+                    transition={{
+                      duration: 8,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
                   />
                   
-                  <motion.span 
-                    className="block mt-2 text-5xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-[#5B8C3E] to-[#85b565]"
-                  >
-                    <AnimatedText
-                      text="Starts With Nature" 
-                      delay={1} 
-                      inView={heroInView}
-                    />
-                  </motion.span>
-                </motion.h1>
+                  {/* Improved hero image presentation */}
+                  <div className="relative">
+                    {/* Loading placeholder */}
+                    {!imagesLoaded && (
+                      <div className="w-full h-[500px] bg-gray-100 rounded-lg animate-pulse flex items-center justify-center">
+                        <svg className="w-12 h-12 text-gray-300" viewBox="0 0 24 24" fill="none">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                      </div>
+                    )}
+                    
+                    {/* Subtle floating animation with better physics */}
+                    <motion.div
+                      animate={prefersReducedMotion ? {} : { y: [0, -10, 0] }}
+                      transition={{ 
+                        duration: 6, 
+                        repeat: Infinity, 
+                        ease: "easeInOut",
+                      }}
+                      style={{
+                        x: prefersReducedMotion ? 0 : mousePosition.x,
+                        y: prefersReducedMotion ? 0 : mousePosition.y,
+                      }}
+                      className={`${!imagesLoaded ? 'invisible' : 'visible'}`}
+                    >
+                      <img 
+                        src={heroImage} 
+                        alt="Organic Products Collection" 
+                        className="w-full h-auto object-contain max-w-2xl mx-auto drop-shadow-xl"
+                        width="800"
+                        height="800"
+                        loading="eager"
+                      />
+                    </motion.div>
+                    
+                    {/* Enhanced decorative elements that follow mouse subtly */}
+                    <motion.div
+                      className="absolute top-1/4 -right-10 w-32 h-32 opacity-30 pointer-events-none"
+                      animate={prefersReducedMotion ? {} : { rotate: [0, 5, 0] }}
+                      transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                      style={{
+                        x: prefersReducedMotion ? 0 : mousePosition.x * -0.2,
+                        y: prefersReducedMotion ? 0 : mousePosition.y * -0.2,
+                      }}
+                    >
+                      <img 
+                        src={heroLogoLeaf2} 
+                        alt="" 
+                        className="w-full h-full"
+                        width="120"
+                        height="120"
+                        loading="lazy"
+                        aria-hidden="true"
+                      />
+                    </motion.div>
+                    
+                    <motion.div
+                      className="absolute bottom-1/4 -left-10 w-28 h-28 opacity-30 pointer-events-none"
+                      animate={prefersReducedMotion ? {} : { rotate: [0, -5, 0] }}
+                      transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                      style={{
+                        x: prefersReducedMotion ? 0 : mousePosition.x * 0.2,
+                        y: prefersReducedMotion ? 0 : mousePosition.y * 0.2,
+                      }}
+                    >
+                      <img 
+                        src={heroLeaves} 
+                        alt="" 
+                        className="w-full h-full"
+                        width="120"
+                        height="120"
+                        loading="lazy"
+                        aria-hidden="true"
+                      />
+                    </motion.div>
+                  </div>
+                </div>
               </motion.div>
-              
-              <motion.p 
-                initial={{ opacity: 0 }}
-                animate={heroInView ? { opacity: 1 } : { opacity: 0 }}
-                transition={{ duration: 0.8, delay: 1.5 }}
-                className="text-lg text-[#4B5563] mb-8 max-w-xl"
-              >
-                Experience the pure goodness of nature with our premium organic products. 
-                Certified chemical-free and sustainably sourced for your health and the planet.
-              </motion.p>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, delay: 1.8 }}
-                className="flex flex-wrap gap-4"
-              >
-                <motion.button 
-                  whileHover={{ 
-                    scale: 1.05, 
-                    boxShadow: "0 10px 25px -5px rgba(91, 140, 62, 0.4)",
-                    x: 5,
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-[#5B8C3E] text-white px-8 py-3 rounded-md font-semibold text-lg shadow-lg hover:bg-[#4a7033] transition-colors relative overflow-hidden group"
-                >
-                  <span className="relative z-10">Shop Now</span>
-                  <motion.span 
-                    className="absolute inset-0 bg-[#4a7033] z-0"
-                    initial={{ x: "-100%" }}
-                    whileHover={{ x: 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                  />
-                </motion.button>
-                
-                <motion.button 
-                  whileHover={{ 
-                    scale: 1.05,
-                    x: 5
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  className="border-2 border-[#5B8C3E] text-[#5B8C3E] px-8 py-3 rounded-md font-semibold text-lg hover:bg-[#f1f8eb] transition-colors relative overflow-hidden group"
-                >
-                  <span className="relative z-10">Learn More</span>
-                  <motion.span 
-                    className="absolute inset-0 bg-[#f1f8eb] z-0"
-                    initial={{ x: "-100%" }}
-                    whileHover={{ x: 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                  />
-                </motion.button>
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={heroInView ? { opacity: 1 } : { opacity: 0 }}
-                transition={{ duration: 0.8, delay: 2 }}
-                className="mt-12 grid grid-cols-3 gap-6"
-              >
-                {[
-                  { icon: '🌿', title: '100% Organic', desc: 'Certified Products' },
-                  { icon: '🔍', title: 'Transparent', desc: 'Sourcing Process' },
-                  { icon: '🌎', title: 'Eco-Friendly', desc: 'Packaging Materials' }
-                ].map((item, index) => (
-                  <motion.div 
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                    transition={{ duration: 0.5, delay: 2.2 + (index * 0.1) }}
-                    className="text-center"
-                    whileHover={{ 
-                      y: -5, 
-                      scale: 1.05,
-                      transition: { duration: 0.2 }
-                    }}
-                    style={{
-                      x: mousePosition.x * (0.05 * (index + 1)),
-                      y: mousePosition.y * (0.05 * (index + 1)),
-                    }}
-                  >
-                    <div className="text-2xl mb-1">{item.icon}</div>
-                    <h3 className="text-[#1F2937] font-medium text-sm">{item.title}</h3>
-                    <p className="text-[#6B7280] text-xs">{item.desc}</p>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </motion.div>
-            
-            {/* Right - Hero Image with 3D effect */}
-            <motion.div 
-              className="relative order-1 lg:order-2 flex justify-center items-center"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={heroInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-              transition={{ duration: 1, delay: 0.3 }}
-              style={{ 
-                y: heroImageY,
-                rotateX: heroRotateX,
-                rotateY: heroRotateY,
-                transformPerspective: 1000,
-                transformStyle: "preserve-3d"
-              }}
-            >
-              <motion.div
-                className="relative z-10 max-w-md"
-                animate={{ 
-                  y: [0, -15, 0],
-                }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                style={{
-                  x: mousePosition.x * -0.2,
-                  y: mousePosition.y * -0.2,
-                }}
-                whileHover={{
-                  scale: 1.05,
-                  transition: { duration: 0.3 }
-                }}
-              >
-                <img 
-                  src={heroImage} 
-                  alt="Organic Products" 
-                  className="w-full h-auto"
-                  width="600"
-                  height="600"
-                />
-                
-                {/* Interactive glow effect */}
-                <motion.div
-                  className="absolute inset-0 rounded-full bg-[#5B8C3E]/20 blur-3xl"
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.4, 0.7, 0.4]
-                  }}
-                  transition={{
-                    duration: 8,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  style={{
-                    x: mousePosition.x * 0.5,
-                    y: mousePosition.y * 0.5,
-                  }}
-                />
-              </motion.div>
-              
-              <motion.div
-                className="absolute w-40 h-40 top-0 right-0 z-20"
-                animate={{ 
-                  rotate: [0, 10, 0, -10, 0],
-                  x: [0, 10, 0, -10, 0],
-                  y: [0, -10, 0, 10, 0],
-                }}
-                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-                style={{
-                  x: mousePosition.x * 0.3,
-                  y: mousePosition.y * 0.3,
-                  rotateY: mousePosition.x * 0.1,
-                  rotateX: mousePosition.y * 0.1,
-                }}
-              >
-                <img 
-                  src={heroBasilLeaf} 
-                  alt="" 
-                  className="w-full h-full"
-                  width="160"
-                  height="160"
-                />
-              </motion.div>
-              
-              {/* Floating circles decoration with mouse interaction */}
-              <motion.div
-                className="absolute rounded-full w-20 h-20 bg-[#f1f8eb] -bottom-8 left-20 z-0"
-                animate={{ 
-                  y: [0, -20, 0],
-                  scale: [1, 1.1, 1]
-                }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                style={{
-                  x: mousePosition.x * 0.2,
-                  y: mousePosition.y * 0.2,
-                }}
-              />
-              
-              <motion.div
-                className="absolute rounded-full w-12 h-12 bg-[#5B8C3E]/10 top-20 -left-10 z-0"
-                animate={{ 
-                  y: [0, 15, 0],
-                  x: [0, 10, 0]
-                }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                style={{
-                  x: mousePosition.x * -0.15,
-                  y: mousePosition.y * -0.15,
-                }}
-              />
-              
-              <motion.div
-                className="absolute rounded-full w-16 h-16 bg-[#5B8C3E]/20 -top-10 right-20 z-0"
-                animate={{ 
-                  scale: [1, 1.2, 1],
-                }}
-                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-                style={{
-                  x: mousePosition.x * 0.1,
-                  y: mousePosition.y * 0.1,
-                }}
-              />
             </motion.div>
           </div>
           
-          {/* Custom scroll progress indicator */}
+          {/* Improved scroll indicator */}
           <motion.div 
-            className="fixed top-0 left-0 right-0 h-1 bg-[#5B8C3E] origin-left z-50"
-            style={{ scaleX: smoothY }}
-          />
-          
-          {/* Scroll indicator with enhanced animation */}
-          <motion.div 
-            className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center"
-            style={{ 
-              opacity: scrollIndicatorOpacity,
-              y: useTransform(scrollYProgress, [0, 0.1], [0, 50]) 
-            }}
+            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
+            style={{ opacity: scrollIndicatorOpacity }}
+            aria-hidden="true"
           >
-            <motion.span 
-              className="text-[#6B7280] text-sm mb-2"
-              animate={{
-                opacity: [0.5, 1, 0.5],
-                y: [0, -5, 0]
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              Scroll Down
-            </motion.span>
             <motion.div 
-              animate={{ 
-                y: [0, 10, 0],
-                boxShadow: [
-                  "0 0 0 rgba(91, 140, 62, 0)",
-                  "0 0 15px rgba(91, 140, 62, 0.5)",
-                  "0 0 0 rgba(91, 140, 62, 0)"
-                ]
-              }}
+              animate={prefersReducedMotion ? {} : { y: [0, 5, 0] }}
               transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-              className="bg-white/80 rounded-full p-2 shadow-md"
+              className="flex flex-col items-center"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#5B8C3E]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              <span className="text-[#4B5563] text-xs font-medium mb-2">Scroll to explore</span>
+              <svg width="16" height="24" viewBox="0 0 16 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="1" y="1" width="14" height="22" rx="7" stroke="#5B8C3E" strokeWidth="2"/>
+                <motion.circle 
+                  animate={prefersReducedMotion ? {} : { y: [4, 12, 4] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  cx="8" cy="8" r="3" fill="#5B8C3E"
+                />
               </svg>
             </motion.div>
           </motion.div>
