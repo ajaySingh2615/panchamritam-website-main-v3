@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence, useMotionValue, useMotionTemplate } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 // Import available images
@@ -229,10 +229,67 @@ const TestimonialCard = ({ image, name, content, rating, index, inView }) => {
   );
 };
 
+// Text reveal animation component
+const AnimatedText = ({ text, delay = 0, className, inView }) => {
+  return (
+    <span className={`inline-block ${className}`}>
+      {text.split(" ").map((word, wordIndex) => (
+        <span key={wordIndex} className="inline-block mr-1">
+          {word.split("").map((char, charIndex) => (
+            <motion.span
+              key={`${wordIndex}-${charIndex}`}
+              className="inline-block"
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{
+                duration: 0.4,
+                delay: delay + (wordIndex * 0.1) + (charIndex * 0.03),
+                ease: "easeOut"
+              }}
+            >
+              {char}
+            </motion.span>
+          ))}
+        </span>
+      ))}
+    </span>
+  );
+};
+
+// Parallax element component
+const ParallaxElement = ({ children, scrollYProgress, strength = 0.2, className }) => {
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", `${strength * 100}%`]);
+  
+  return (
+    <motion.div
+      style={{ y }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
 const Home = () => {
   // Animation hooks for scroll sections
   const { scrollYProgress } = useScroll();
   const smoothY = useSpring(scrollYProgress, { damping: 15, mass: 0.1, stiffness: 100 });
+  
+  // Mouse position state
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  
+  // Handle mouse move for interactive elements
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: (e.clientX - window.innerWidth / 2) / 20,
+        y: (e.clientY - window.innerHeight / 2) / 20
+      });
+    };
+    
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
   
   // Create refs with useRef
   const heroRef = useRef(null);
@@ -256,6 +313,23 @@ const Home = () => {
 
   // Scroll indicator opacity animation
   const scrollIndicatorOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
+  
+  // Text reveal progress based on scroll
+  const textRevealProgress = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
+  const textClipPath = useMotionTemplate`inset(0% 0% ${textRevealProgress.get() * 100}% 0%)`;
+  
+  // Parallax transformations for different elements
+  const heroImageY = useTransform(scrollYProgress, [0, 0.3], ["0%", "30%"]);
+  const heroBackgroundY = useTransform(scrollYProgress, [0, 0.3], ["0%", "10%"]);
+  const heroContentY = useTransform(scrollYProgress, [0, 0.3], ["0%", "15%"]);
+  
+  // 3D rotation effect based on scroll and mouse position
+  const heroRotateX = useTransform(scrollYProgress, [0, 0.3], [0, -5]);
+  const heroRotateY = useMotionValue(0);
+  
+  useEffect(() => {
+    heroRotateY.set(mousePosition.x / 5);
+  }, [mousePosition.x, heroRotateY]);
 
   // Product data
   const products = [
@@ -308,56 +382,113 @@ const Home = () => {
     <div className="bg-[#f8f6f3] min-h-screen overflow-x-hidden">
       {/* Tesla-style full-screen scroll sections */}
       <div className="relative snap-y snap-mandatory h-screen overflow-y-auto overflow-x-hidden scroll-smooth">
-        {/* Hero Section - Redesigned */}
+        {/* Hero Section - Enhanced with scroll-based animations */}
         <section ref={heroRef} className="h-screen w-full relative flex flex-col justify-center items-center snap-start overflow-hidden">
-          {/* Background gradient */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#f3f8f1] to-[#e8f0e3] z-0"></div>
+          {/* Background gradient with parallax effect */}
+          <ParallaxElement 
+            scrollYProgress={scrollYProgress} 
+            strength={0.1}
+            className="absolute inset-0 z-0"
+          >
+            <motion.div 
+              className="absolute inset-0 bg-gradient-to-b from-[#f3f8f1] to-[#e8f0e3]"
+              style={{ y: heroBackgroundY }}
+            ></motion.div>
+          </ParallaxElement>
           
-          {/* Animated decorative elements */}
-          <motion.div
+          {/* Animated decorative elements with parallax effect */}
+          <ParallaxElement 
+            scrollYProgress={scrollYProgress}
+            strength={-0.2}
             className="absolute -top-20 -right-20 w-96 h-96 opacity-50 pointer-events-none z-10"
-            animate={{ rotate: [0, 10, -5, 0] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
           >
-            <img 
-              src={heroLogoLeaf2} 
-              alt="" 
-              className="w-full h-full"
-              width="300"
-              height="300"
-            />
-          </motion.div>
+            <motion.div
+              animate={{ 
+                rotate: [0, 10, -5, 0],
+                x: mousePosition.x * -0.5,
+                y: mousePosition.y * -0.5
+              }}
+              transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <img 
+                src={heroLogoLeaf2} 
+                alt="" 
+                className="w-full h-full"
+                width="300"
+                height="300"
+              />
+            </motion.div>
+          </ParallaxElement>
           
-          <motion.div
+          <ParallaxElement 
+            scrollYProgress={scrollYProgress}
+            strength={0.3}
             className="absolute bottom-0 left-0 w-80 h-80 opacity-40 pointer-events-none z-10"
-            animate={{ 
-              y: [0, 15, 0],
-              rotate: [0, 5, 0]
-            }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
           >
-            <img 
-              src={heroLeaves} 
-              alt="" 
-              className="w-full h-full"
-              width="300"
-              height="300"
-            />
-          </motion.div>
+            <motion.div
+              animate={{ 
+                y: [0, 15, 0],
+                rotate: [0, 5, 0],
+                x: mousePosition.x * 0.3,
+                y: mousePosition.y * 0.3
+              }}
+              transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <img 
+                src={heroLeaves} 
+                alt="" 
+                className="w-full h-full"
+                width="300"
+                height="300"
+              />
+            </motion.div>
+          </ParallaxElement>
+          
+          {/* Animated particles background */}
+          <div className="absolute inset-0 z-5">
+            {[...Array(20)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute rounded-full bg-[#5B8C3E]/10"
+                initial={{
+                  x: Math.random() * window.innerWidth,
+                  y: Math.random() * window.innerHeight,
+                  scale: Math.random() * 0.5 + 0.5
+                }}
+                animate={{
+                  y: [null, Math.random() * -100, null],
+                  x: [null, Math.random() * 100 - 50, null]
+                }}
+                transition={{
+                  duration: 10 + Math.random() * 10,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: Math.random() * 5
+                }}
+                style={{
+                  width: `${Math.random() * 30 + 10}px`,
+                  height: `${Math.random() * 30 + 10}px`,
+                  opacity: Math.random() * 0.3 + 0.1
+                }}
+              />
+            ))}
+          </div>
           
           <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center h-full z-20">
-            {/* Left - Hero Content */}
+            {/* Left - Hero Content with scroll-based animations */}
             <motion.div 
               className="text-left order-2 lg:order-1"
-              initial={{ opacity: 0, y: 50 }}
-              animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              style={{ y: heroContentY }}
             >
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={heroInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
                 className="inline-block bg-[#f1f8eb] px-4 py-2 rounded-full mb-5 shadow-sm"
+                style={{
+                  x: mousePosition.x * 0.1,
+                  y: mousePosition.y * 0.1
+                }}
               >
                 <span className="text-[#5B8C3E] font-medium text-sm flex items-center gap-2">
                   <img src={heroLogoLeaf} alt="" className="h-4 w-4" width="16" height="16" />
@@ -365,22 +496,37 @@ const Home = () => {
                 </span>
               </motion.div>
               
-              <motion.h1 
-                initial={{ opacity: 0, y: 30 }}
-                animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
-                className="text-4xl md:text-6xl font-bold mb-6 text-[#1F2937]"
-              >
-                <span className="block">Healthy Living</span>
-                <span className="block mt-2 text-5xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-[#5B8C3E] to-[#85b565]">
-                  Starts With Nature
-                </span>
-              </motion.h1>
+              <motion.div className="overflow-hidden">
+                <motion.h1 
+                  className="text-4xl md:text-6xl font-bold mb-6 text-[#1F2937]"
+                  style={{ 
+                    x: mousePosition.x * 0.05,
+                    y: mousePosition.y * 0.05
+                  }}
+                >
+                  <AnimatedText 
+                    text="Healthy Living" 
+                    delay={0.5} 
+                    inView={heroInView}
+                    className="block"
+                  />
+                  
+                  <motion.span 
+                    className="block mt-2 text-5xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-[#5B8C3E] to-[#85b565]"
+                  >
+                    <AnimatedText
+                      text="Starts With Nature" 
+                      delay={1} 
+                      inView={heroInView}
+                    />
+                  </motion.span>
+                </motion.h1>
+              </motion.div>
               
               <motion.p 
                 initial={{ opacity: 0 }}
                 animate={heroInView ? { opacity: 1 } : { opacity: 0 }}
-                transition={{ duration: 0.8, delay: 0.7 }}
+                transition={{ duration: 0.8, delay: 1.5 }}
                 className="text-lg text-[#4B5563] mb-8 max-w-xl"
               >
                 Experience the pure goodness of nature with our premium organic products. 
@@ -390,30 +536,49 @@ const Home = () => {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, delay: 0.9 }}
+                transition={{ duration: 0.5, delay: 1.8 }}
                 className="flex flex-wrap gap-4"
               >
                 <motion.button 
-                  whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(91, 140, 62, 0.4)" }}
+                  whileHover={{ 
+                    scale: 1.05, 
+                    boxShadow: "0 10px 25px -5px rgba(91, 140, 62, 0.4)",
+                    x: 5,
+                  }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-[#5B8C3E] text-white px-8 py-3 rounded-md font-semibold text-lg shadow-lg hover:bg-[#4a7033] transition-colors"
+                  className="bg-[#5B8C3E] text-white px-8 py-3 rounded-md font-semibold text-lg shadow-lg hover:bg-[#4a7033] transition-colors relative overflow-hidden group"
                 >
-                  Shop Now
+                  <span className="relative z-10">Shop Now</span>
+                  <motion.span 
+                    className="absolute inset-0 bg-[#4a7033] z-0"
+                    initial={{ x: "-100%" }}
+                    whileHover={{ x: 0 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                  />
                 </motion.button>
                 
                 <motion.button 
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    x: 5
+                  }}
                   whileTap={{ scale: 0.95 }}
-                  className="border-2 border-[#5B8C3E] text-[#5B8C3E] px-8 py-3 rounded-md font-semibold text-lg hover:bg-[#f1f8eb] transition-colors"
+                  className="border-2 border-[#5B8C3E] text-[#5B8C3E] px-8 py-3 rounded-md font-semibold text-lg hover:bg-[#f1f8eb] transition-colors relative overflow-hidden group"
                 >
-                  Learn More
+                  <span className="relative z-10">Learn More</span>
+                  <motion.span 
+                    className="absolute inset-0 bg-[#f1f8eb] z-0"
+                    initial={{ x: "-100%" }}
+                    whileHover={{ x: 0 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                  />
                 </motion.button>
               </motion.div>
               
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={heroInView ? { opacity: 1 } : { opacity: 0 }}
-                transition={{ duration: 0.8, delay: 1.1 }}
+                transition={{ duration: 0.8, delay: 2 }}
                 className="mt-12 grid grid-cols-3 gap-6"
               >
                 {[
@@ -425,8 +590,17 @@ const Home = () => {
                     key={index}
                     initial={{ opacity: 0, y: 20 }}
                     animate={heroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                    transition={{ duration: 0.5, delay: 1.2 + (index * 0.1) }}
+                    transition={{ duration: 0.5, delay: 2.2 + (index * 0.1) }}
                     className="text-center"
+                    whileHover={{ 
+                      y: -5, 
+                      scale: 1.05,
+                      transition: { duration: 0.2 }
+                    }}
+                    style={{
+                      x: mousePosition.x * (0.05 * (index + 1)),
+                      y: mousePosition.y * (0.05 * (index + 1)),
+                    }}
                   >
                     <div className="text-2xl mb-1">{item.icon}</div>
                     <h3 className="text-[#1F2937] font-medium text-sm">{item.title}</h3>
@@ -436,12 +610,19 @@ const Home = () => {
               </motion.div>
             </motion.div>
             
-            {/* Right - Hero Image */}
+            {/* Right - Hero Image with 3D effect */}
             <motion.div 
               className="relative order-1 lg:order-2 flex justify-center items-center"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={heroInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
               transition={{ duration: 1, delay: 0.3 }}
+              style={{ 
+                y: heroImageY,
+                rotateX: heroRotateX,
+                rotateY: heroRotateY,
+                transformPerspective: 1000,
+                transformStyle: "preserve-3d"
+              }}
             >
               <motion.div
                 className="relative z-10 max-w-md"
@@ -449,6 +630,14 @@ const Home = () => {
                   y: [0, -15, 0],
                 }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                style={{
+                  x: mousePosition.x * -0.2,
+                  y: mousePosition.y * -0.2,
+                }}
+                whileHover={{
+                  scale: 1.05,
+                  transition: { duration: 0.3 }
+                }}
               >
                 <img 
                   src={heroImage} 
@@ -456,6 +645,24 @@ const Home = () => {
                   className="w-full h-auto"
                   width="600"
                   height="600"
+                />
+                
+                {/* Interactive glow effect */}
+                <motion.div
+                  className="absolute inset-0 rounded-full bg-[#5B8C3E]/20 blur-3xl"
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.4, 0.7, 0.4]
+                  }}
+                  transition={{
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  style={{
+                    x: mousePosition.x * 0.5,
+                    y: mousePosition.y * 0.5,
+                  }}
                 />
               </motion.div>
               
@@ -467,6 +674,12 @@ const Home = () => {
                   y: [0, -10, 0, 10, 0],
                 }}
                 transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                style={{
+                  x: mousePosition.x * 0.3,
+                  y: mousePosition.y * 0.3,
+                  rotateY: mousePosition.x * 0.1,
+                  rotateX: mousePosition.y * 0.1,
+                }}
               >
                 <img 
                   src={heroBasilLeaf} 
@@ -477,7 +690,7 @@ const Home = () => {
                 />
               </motion.div>
               
-              {/* Floating circles decoration */}
+              {/* Floating circles decoration with mouse interaction */}
               <motion.div
                 className="absolute rounded-full w-20 h-20 bg-[#f1f8eb] -bottom-8 left-20 z-0"
                 animate={{ 
@@ -485,6 +698,10 @@ const Home = () => {
                   scale: [1, 1.1, 1]
                 }}
                 transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                style={{
+                  x: mousePosition.x * 0.2,
+                  y: mousePosition.y * 0.2,
+                }}
               />
               
               <motion.div
@@ -494,6 +711,10 @@ const Home = () => {
                   x: [0, 10, 0]
                 }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                style={{
+                  x: mousePosition.x * -0.15,
+                  y: mousePosition.y * -0.15,
+                }}
               />
               
               <motion.div
@@ -502,18 +723,51 @@ const Home = () => {
                   scale: [1, 1.2, 1],
                 }}
                 transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+                style={{
+                  x: mousePosition.x * 0.1,
+                  y: mousePosition.y * 0.1,
+                }}
               />
             </motion.div>
           </div>
           
-          {/* Scroll indicator */}
+          {/* Custom scroll progress indicator */}
+          <motion.div 
+            className="fixed top-0 left-0 right-0 h-1 bg-[#5B8C3E] origin-left z-50"
+            style={{ scaleX: smoothY }}
+          />
+          
+          {/* Scroll indicator with enhanced animation */}
           <motion.div 
             className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center"
-            style={{ opacity: scrollIndicatorOpacity }}
+            style={{ 
+              opacity: scrollIndicatorOpacity,
+              y: useTransform(scrollYProgress, [0, 0.1], [0, 50]) 
+            }}
           >
-            <span className="text-[#6B7280] text-sm mb-2">Scroll Down</span>
+            <motion.span 
+              className="text-[#6B7280] text-sm mb-2"
+              animate={{
+                opacity: [0.5, 1, 0.5],
+                y: [0, -5, 0]
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              Scroll Down
+            </motion.span>
             <motion.div 
-              animate={{ y: [0, 10, 0] }}
+              animate={{ 
+                y: [0, 10, 0],
+                boxShadow: [
+                  "0 0 0 rgba(91, 140, 62, 0)",
+                  "0 0 15px rgba(91, 140, 62, 0.5)",
+                  "0 0 0 rgba(91, 140, 62, 0)"
+                ]
+              }}
               transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
               className="bg-white/80 rounded-full p-2 shadow-md"
             >
