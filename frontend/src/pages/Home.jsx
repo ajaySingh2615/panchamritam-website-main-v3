@@ -93,6 +93,197 @@ const ProductCard = ({ image, category, title, price, salePrice, index, inView }
   );
 };
 
+// Gallery Image Component
+const GalleryImage = ({ image, title, category, description, index, inView, size = "medium", onClick }) => {
+  const prefersReducedMotion = useReducedMotion();
+  const [isHovered, setIsHovered] = useState(false);
+  
+  // Different animation delays based on index
+  const delay = index * 0.1;
+  
+  // Different size classes
+  const sizeClasses = {
+    large: "aspect-[4/3] md:col-span-2 md:row-span-2",
+    medium: "aspect-[3/4]",
+    wide: "aspect-[16/9] md:col-span-2", 
+    square: "aspect-square"
+  };
+  
+  return (
+    <motion.div
+      className={`relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 ${sizeClasses[size]}`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.7, delay }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      onClick={onClick}
+    >
+      {/* Natural frame effect with border */}
+      <div className="absolute inset-0 border-2 border-[#e2e8e0] rounded-lg z-10 pointer-events-none"></div>
+      
+      {/* Image */}
+      <div className="w-full h-full overflow-hidden bg-[#f5f7f3]">
+        <motion.img
+          src={image}
+          alt={title || "Natural farming product"}
+          className="w-full h-full object-cover"
+          animate={isHovered && !prefersReducedMotion ? { scale: 1.05 } : { scale: 1 }}
+          transition={{ duration: 0.7 }}
+          loading="lazy"
+        />
+      </div>
+      
+      {/* Overlay with info */}
+      <motion.div 
+        className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex flex-col justify-end p-4 sm:p-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isHovered ? 1 : 0.7 }}
+        transition={{ duration: 0.4 }}
+      >
+        {category && (
+          <motion.span 
+            className="bg-[#5B8C3E]/90 text-white text-xs px-2 py-1 rounded-full w-fit mb-2"
+            initial={{ opacity: 0, y: 10 }}
+            animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0.7, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {category}
+          </motion.span>
+        )}
+        
+        {title && (
+          <motion.h3 
+            className="text-white text-xl font-semibold mb-1"
+            initial={{ opacity: 0.7, y: 10 }}
+            animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0.8, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
+            {title}
+          </motion.h3>
+        )}
+        
+        {description && (
+          <motion.p 
+            className="text-white/90 text-sm mb-3 line-clamp-2 hidden sm:block"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
+          >
+            {description}
+          </motion.p>
+        )}
+        
+        <motion.div
+          className="mt-2 hidden sm:block"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.3, delay: 0.25 }}
+        >
+          <button className="bg-white text-[#5B8C3E] text-sm font-medium px-4 py-2 rounded-md transition-all hover:bg-[#f0f7ed]">
+            View Details
+          </button>
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// Lightbox Modal Component
+const LightboxModal = ({ isOpen, image, title, onClose, nextImage, prevImage, totalImages, currentIndex }) => {
+  // Handle keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!isOpen) return;
+      
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose, nextImage, prevImage]);
+  
+  // If modal is closed, don't render anything
+  if (!isOpen) return null;
+  
+  return (
+    <motion.div 
+      className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 md:p-10"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div 
+        className="absolute top-4 right-4 z-10"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+      >
+        <button
+          onClick={onClose}
+          className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white"
+          aria-label="Close lightbox"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </motion.div>
+      
+      <div className="relative w-full max-w-4xl max-h-[80vh]">
+        <motion.img 
+          src={image} 
+          alt={title || "Gallery image"}
+          className="w-full h-auto object-contain max-h-[80vh] rounded-lg"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.9 }}
+          transition={{ duration: 0.3 }}
+        />
+        
+        {/* Navigation arrows */}
+        <div className="absolute inset-y-0 left-0 flex items-center">
+          <button
+            onClick={prevImage}
+            className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white -ml-6"
+            aria-label="Previous image"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+        </div>
+        
+        <div className="absolute inset-y-0 right-0 flex items-center">
+          <button
+            onClick={nextImage}
+            className="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white -mr-6"
+            aria-label="Next image"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+        
+        <motion.div 
+          className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent text-white"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <h3 className="text-xl font-semibold">{title}</h3>
+          <div className="mt-2 text-sm">
+            <span>{currentIndex + 1} of {totalImages}</span>
+          </div>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+};
+
 // Feature Card Component
 const FeatureCard = ({ icon, title, description, index, inView, benefits }) => {
   const delay = index * 0.2;
@@ -455,13 +646,82 @@ const Home = () => {
     },
   ];
 
-  // Categories data
-  const categories = [
-    { image: fruitImage, title: 'Farm Fresh Fruits', description: 'Ut sollicitudin quam vel purus tempus, vel eleifend felis varius.' },
-    { image: vegetableImage, title: 'Fresh Vegetables', description: 'Aliquam porta justo nibh, id laoreet sapien sodales vitae justo.' },
-    { image: legumeImage, title: 'Organic Legume', description: 'Phasellus sed urna mattis, viverra libero sed, aliquam est.' },
+  // Updated gallery images data with natural farming focus
+  const galleryImages = [
+    { 
+      id: 1, 
+      image: fruitImage, 
+      title: 'Organic Seasonal Fruits', 
+      category: 'Fruits',
+      description: 'Freshly harvested seasonal fruits grown without pesticides or chemicals.',
+      size: 'large'
+    },
+    { 
+      id: 2, 
+      image: vegetableImage, 
+      title: 'Farm-Fresh Vegetables', 
+      category: 'Vegetables',
+      description: 'Locally grown vegetables harvested at peak ripeness for maximum nutrition.',
+      size: 'medium'
+    },
+    { 
+      id: 3, 
+      image: legumeImage, 
+      title: 'Dried Pulses & Legumes', 
+      category: 'Pulses',
+      description: 'Naturally dried legumes preserved using traditional sun-drying methods.',
+      size: 'square'
+    },
+    { 
+      id: 4, 
+      image: productImage1, 
+      title: 'Raw Forest Honey', 
+      category: 'Honey',
+      description: 'Pure, unfiltered honey collected from wild forest flowers.',
+      size: 'square'
+    },
+    { 
+      id: 5, 
+      image: productImage2, 
+      title: 'Herbal Teas & Infusions', 
+      category: 'Teas',
+      description: 'Hand-picked herbs and tea leaves for natural healing and wellness.',
+      size: 'medium'
+    },
+    { 
+      id: 6, 
+      image: productImage3, 
+      title: 'Natural Skincare', 
+      category: 'Beauty',
+      description: 'Plant-based skincare products made with organic ingredients.',
+      size: 'wide'
+    },
+    { 
+      id: 7, 
+      image: productImage4, 
+      title: 'Organic Dairy', 
+      category: 'Dairy',
+      description: 'Ethically sourced dairy products from grass-fed cows.',
+      size: 'medium'
+    },
+    { 
+      id: 8, 
+      image: dealImage, 
+      title: 'Traditional Grains', 
+      category: 'Grains',
+      description: 'Ancient and heritage grains grown using sustainable farming practices.',
+      size: 'medium'
+    },
+    { 
+      id: 9, 
+      image: fruitImage, 
+      title: 'Farm Experience', 
+      category: 'Visits',
+      description: 'Visit our farms and experience natural farming up close.',
+      size: 'wide'
+    },
   ];
-
+  
   // Testimonials data
   const testimonials = [
     { 
@@ -477,6 +737,12 @@ const Home = () => {
       rating: 5
     },
   ];
+  
+  // Create gallery ref
+  const galleryRef = useRef(null);
+  
+  // Use inView for gallery section
+  const galleryInView = useInView(galleryRef, { once: false, threshold: 0.1 });
 
   // Brands data
   const brands = [
@@ -486,8 +752,55 @@ const Home = () => {
     { id: 4, logo: brandLogo4, name: 'Brand 4' },
   ];
 
+  // State for lightbox
+  const [lightbox, setLightbox] = useState({
+    isOpen: false,
+    currentImage: null,
+    currentIndex: 0
+  });
+  
+  // Functions to handle lightbox
+  const openLightbox = (image, index) => {
+    setLightbox({
+      isOpen: true,
+      currentImage: image,
+      currentIndex: index
+    });
+  };
+  
+  const closeLightbox = () => {
+    setLightbox({
+      isOpen: false,
+      currentImage: null,
+      currentIndex: 0
+    });
+  };
+  
+  const goToNextImage = () => {
+    const nextIndex = (lightbox.currentIndex + 1) % galleryImages.length;
+    setLightbox({
+      ...lightbox,
+      currentImage: galleryImages[nextIndex].image,
+      currentIndex: nextIndex
+    });
+  };
+  
+  const goToPrevImage = () => {
+    const prevIndex = lightbox.currentIndex === 0 ? 
+      galleryImages.length - 1 : 
+      lightbox.currentIndex - 1;
+    setLightbox({
+      ...lightbox,
+      currentImage: galleryImages[prevIndex].image,
+      currentIndex: prevIndex
+    });
+  };
+  
+  // Active filter category
+  const [activeFilter, setActiveFilter] = useState('All');
+
   return (
-    <div className="bg-[#f8f6f3] min-h-screen overflow-x-hidden">
+    <div className="bg-[#f8f6f3] min-h-screen overflow-hidden">
       {/* Custom progress bar - improved */}
       <motion.div 
         className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#5B8C3E] to-[#85b565] origin-left z-50"
@@ -497,8 +810,8 @@ const Home = () => {
         transition={{ delay: 0.5 }}
       />
       
-      {/* Tesla-style full-screen scroll sections */}
-      <div className="relative snap-y snap-mandatory h-screen overflow-y-auto overflow-x-hidden scroll-smooth bg-[#f8f6f3]">
+      {/* Main content container with scroll behavior */}
+      <div className="snap-y snap-mandatory h-screen overflow-y-auto scroll-smooth">
         {/* Hero Section - Stripe-inspired Design with further enhancements */}
         <section 
           ref={heroRef} 
@@ -780,14 +1093,14 @@ const Home = () => {
           <div className="absolute -right-24 bottom-1/4 w-64 h-64 rounded-full bg-[#5B8C3E] opacity-5" aria-hidden="true" />
           
           <div className="container mx-auto px-6 relative z-10">
-                          <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                transition={{ duration: 0.8 }}
-                className="text-center mb-20"
-              >
-                <span className="text-[#5B8C3E] font-medium text-sm uppercase tracking-wider block mb-2">Why Choose Us</span>
-                <h2 className="text-4xl md:text-5xl font-bold text-[#1F2937] mb-4">The Organic Advantage</h2>
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={featuresInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-20"
+            >
+              <span className="text-[#5B8C3E] font-medium text-sm uppercase tracking-wider block mb-2">Why Choose Us</span>
+              <h2 className="text-4xl md:text-5xl font-bold text-[#1F2937] mb-4">The Organic Advantage</h2>
               <div className="w-24 h-1 bg-[#5B8C3E] mx-auto my-6 rounded-full"></div>
               <p className="text-[#6B7280] max-w-2xl mx-auto text-lg">
                 We're committed to providing the highest quality organic products while maintaining sustainable practices
@@ -795,7 +1108,7 @@ const Home = () => {
               </p>
             </motion.div>
             
-                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {features.map((feature, index) => (
                 <FeatureCard
                   key={index}
@@ -856,32 +1169,159 @@ const Home = () => {
           </div>
         </section>
         
-        {/* Categories Showcase */}
-        <section ref={categoriesRef} className="min-h-screen w-full bg-[#f8f6f3] py-20 snap-start flex items-center">
+        {/* Redesigned Product Gallery Section */}
+        <section ref={galleryRef} className="w-full bg-[#f8f6f3] py-24 snap-start relative overflow-hidden">
+          {/* Natural decoration elements */}
+          <div className="absolute top-0 right-0 w-64 h-64 opacity-10 pointer-events-none">
+            <img src={leafImage} alt="" aria-hidden="true" />
+          </div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 opacity-10 pointer-events-none transform rotate-180">
+            <img src={leaf1Image} alt="" aria-hidden="true" />
+          </div>
+          
           <div className="container mx-auto px-4">
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
-              animate={categoriesInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              animate={galleryInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.8 }}
               className="text-center mb-16"
             >
-              <h2 className="text-4xl font-bold text-[#1F2937] mb-4">Shop By Category</h2>
+              <span className="text-[#5B8C3E] font-medium text-sm uppercase tracking-wider block mb-2">Our Products</span>
+              <h2 className="text-4xl md:text-5xl font-bold text-[#1F2937] mb-4">From Farm to Your Table</h2>
               <div className="w-24 h-1 bg-[#5B8C3E] mx-auto my-6 rounded-full"></div>
+              <p className="text-[#6B7280] max-w-2xl mx-auto text-lg">
+                Explore our collection of naturally grown farm products, harvested with care and delivered fresh to support your healthy lifestyle.
+              </p>
             </motion.div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {categories.map((category, index) => (
-                <CategoryCard
-                  key={index}
-                  image={category.image}
-                  title={category.title}
-                  description={category.description}
-                  index={index}
-                  inView={categoriesInView}
-                />
+            {/* Gallery filter tabs - redesigned with icons */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={galleryInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex flex-wrap justify-center gap-3 mb-16"
+            >
+              {[
+                {name: "All", icon: "🌿"}, 
+                {name: "Fruits", icon: "🍎"}, 
+                {name: "Vegetables", icon: "🥕"}, 
+                {name: "Dairy", icon: "🥛"}, 
+                {name: "Honey", icon: "🍯"}, 
+                {name: "Grains", icon: "🌾"}
+              ].map((category) => (
+                <motion.button
+                  key={category.name}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setActiveFilter(category.name)}
+                  className={`px-5 py-2.5 rounded-full font-medium transition-all flex items-center gap-2 ${
+                    activeFilter === category.name 
+                      ? "bg-[#5B8C3E] text-white shadow-md" 
+                      : "bg-white text-[#1F2937] hover:bg-[#f0f7ed] hover:text-[#5B8C3E] border border-[#e2e8e0]"
+                  }`}
+                >
+                  <span className="text-base">{category.icon}</span>
+                  <span>{category.name}</span>
+                </motion.button>
               ))}
-            </div>
+            </motion.div>
+            
+            {/* Gallery grid - redesigned with natural spacing */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={galleryInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-7"
+            >
+              {galleryImages
+                .filter(item => activeFilter === 'All' || item.category === activeFilter)
+                .map((item, index) => (
+                  <motion.div 
+                    key={item.id}
+                    layout
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <GalleryImage
+                      image={item.image}
+                      title={item.title}
+                      category={item.category}
+                      description={item.description}
+                      size={item.size}
+                      index={index}
+                      inView={galleryInView}
+                      onClick={() => openLightbox(item.image, index)}
+                    />
+                  </motion.div>
+                ))
+              }
+            </motion.div>
+            
+            {/* Curated collections */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={galleryInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="mt-16"
+            >
+              <h3 className="text-2xl font-semibold text-[#1F2937] mb-8 text-center">Our Curated Collections</h3>
+              <div className="flex flex-wrap gap-4 justify-center">
+                {[
+                  { name: "Seasonal Box", icon: "🌱" },
+                  { name: "Immunity Boost", icon: "💪" },
+                  { name: "Kitchen Essentials", icon: "🍳" },
+                  { name: "Wellness Package", icon: "✨" }
+                ].map((collection, index) => (
+                  <motion.div
+                    key={collection.name}
+                    whileHover={{ scale: 1.03, y: -3 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="bg-white p-4 px-6 rounded-lg shadow-sm flex items-center gap-3 border border-[#e2e8e0] cursor-pointer"
+                  >
+                    <span className="text-2xl">{collection.icon}</span>
+                    <span className="font-medium text-[#1F2937]">{collection.name}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+            
+            {/* View all products button */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={galleryInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.6, delay: 1 }}
+              className="flex justify-center mt-16"
+            >
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-[#5B8C3E] text-white px-10 py-4 rounded-lg font-medium text-lg flex items-center gap-2 hover:bg-[#4a7033] transition-colors shadow-md"
+              >
+                <span>Browse Our Full Catalog</span>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </motion.button>
+            </motion.div>
           </div>
+          
+          {/* Lightbox Modal */}
+          <AnimatePresence>
+            {lightbox.isOpen && (
+              <LightboxModal
+                isOpen={lightbox.isOpen}
+                image={lightbox.currentImage}
+                title={galleryImages[lightbox.currentIndex].title}
+                onClose={closeLightbox}
+                nextImage={goToNextImage}
+                prevImage={goToPrevImage}
+                totalImages={galleryImages.length}
+                currentIndex={lightbox.currentIndex}
+              />
+            )}
+          </AnimatePresence>
         </section>
         
         {/* Promotional Banner */}
