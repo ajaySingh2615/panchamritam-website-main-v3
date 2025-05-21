@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import './DealOfTheDay.css'; // We'll create this for minimal custom styles
 
 // Placeholder for a product image - replace with an actual image
-import productImagePlaceholder from '../../assets/images/hero-section/categories-product/oils.webp'; // Example, replace
+import productImagePlaceholder from '../../assets/images/hero-section/deal-of-the-day/broccoli.webp'; // Example, replace
 
 // Countdown Timer Component (Simplified Placeholder)
 const CountdownTimer = ({ targetDate }) => {
