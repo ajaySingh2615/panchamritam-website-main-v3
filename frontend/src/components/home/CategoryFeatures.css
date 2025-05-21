@@ -1,123 +1,123 @@
 /* Category Features Section Styles */
 
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 1.5rem;
-}
-
-/* Grid responsiveness */
-@media (min-width: 640px) {
-  .categories-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .categories-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (min-width: 1280px) {
-  .categories-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-/* Category Card Styles */
-.category-card {
-  position: relative;
-  border-radius: 0.75rem;
-  overflow: hidden;
-  padding: 1.5rem;
-  height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: all 0.3s ease-in-out;
-  will-change: transform;
-  cursor: pointer;
-}
-
-/* Hover effect for card scaling */
-.category-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  z-index: 10;
-}
-
-.category-content {
+/* Main container for all category elements */
+.categories-container {
   display: flex;
   flex-direction: column;
-  z-index: 10;
-  position: relative;
-  width: 50%;
+  gap: 3rem;
 }
 
-.category-label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #5B8C3E;
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+/* Category Circles Grid */
+.categories-circle-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
 }
 
-.category-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #4A4A4A;
-  margin-bottom: 1.5rem;
-  font-family: 'Playfair Display', serif;
-  line-height: 1.2;
-}
-
-.shop-now-btn {
-  display: inline-flex;
+/* Circle Category Item */
+.category-circle {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  background-color: #333333;
-  color: white;
-  font-size: 0.875rem;
-  font-weight: 600;
-  padding: 0.625rem 1.25rem;
-  border-radius: 0.25rem;
-  transition: all 0.3s ease;
-  letter-spacing: 0.05em;
-  width: fit-content;
+  text-align: center;
+  width: 180px;
 }
 
-.shop-now-btn:hover {
-  background-color: #5B8C3E;
-  transform: translateY(-2px);
+.category-image-wrapper {
+  margin-bottom: 1.5rem;
+  position: relative;
 }
 
-.category-image-container {
-  position: absolute;
-  right: -40px;
-  bottom: -20px;
-  width: 60%;
-  height: 100%;
+.category-circle-bg {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.4s ease-in-out;
-  transform: translateX(10%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
-.category-card:hover .category-image-container {
-  transform: translateX(0);
-}
-
-.category-image {
-  width: 100%;
-  height: auto;
+.category-circle-image {
+  width: 60%;
+  height: 60%;
   object-fit: contain;
-  object-position: center;
-  transition: all 0.4s ease-in-out;
-  transform: scale(0.9);
 }
 
-.category-card:hover .category-image {
-  transform: scale(1);
+.category-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.category-circle-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #5B8C3E;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.category-circle-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.category-circle-btn {
+  display: inline-flex;
+  align-items: center;
+  color: #5B8C3E;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* Only keep hover effect on the button */
+.category-circle-btn:hover {
+  color: #4A7A2D;
+  transform: translateX(5px);
+}
+
+.category-circle-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.category-circle-btn:hover svg {
+  transform: translateX(5px);
+}
+
+/* Responsive Styles */
+@media (max-width: 1280px) {
+  .categories-circle-grid {
+    justify-content: center;
+  }
+  
+  .category-circle {
+    width: calc(33.333% - 2rem);
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  .category-circle {
+    width: calc(50% - 2rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .categories-circle-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .category-circle {
+    width: 100%;
+    max-width: 180px;
+  }
 } 

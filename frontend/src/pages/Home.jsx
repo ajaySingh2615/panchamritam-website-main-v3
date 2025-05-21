@@ -283,7 +283,7 @@ const Home = () => {
           </div>
                     </div>
                 </div>
-              </motion.div>
+                </motion.div>
         </section>
         
       {/* Best Selling Products Section */}
@@ -294,11 +294,11 @@ const Home = () => {
       {/* Categories Feature Section */}
       <section className="py-16 bg-[#f8f6f3]">
         <CategoryFeatures />
-      </section>
-
+        </section>
+        
       {/* Placeholder for other sections - we'll implement these later */}
       <section className="py-12">
-        <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold mb-4">Best Selling Products</h2>
           <p>We'll implement this section next</p>
           </div>
