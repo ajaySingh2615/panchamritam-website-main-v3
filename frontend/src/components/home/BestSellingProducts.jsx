@@ -11,7 +11,7 @@ const ProductCard = ({ product, index, inView }) => {
   
   return (
     <motion.div 
-      className="product-card-home bg-[#f8f6f3] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+      className="product-card-home bg-[#f8f6f3] rounded-lg overflow-hidden transition-all duration-300"
       initial={{ opacity: 0, x: isEven ? -50 : 50 }}
       animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: isEven ? -50 : 50 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -134,7 +134,7 @@ const BestSellingProducts = () => {
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
         >
-          Best Selling Products
+          Best <span className="text-[#7BAD50]">Selling</span> Products
         </motion.h2>
         
         <motion.div 

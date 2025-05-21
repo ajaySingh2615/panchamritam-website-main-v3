@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import './Home.css';
 import BestSellingProducts from '../components/home/BestSellingProducts';
+import CategoryFeatures from '../components/home/CategoryFeatures';
 
 // Import hero images
 import heroImage from '../assets/images/hero-section/organic-products-hero.png';
@@ -92,7 +93,7 @@ const Home = () => {
       </div>
         <div className="absolute -bottom-10 right-1/4 w-32 h-32 parallax-element float opacity-70" data-speed="0.15">
           <img src={leaves} alt="" className="w-full h-full object-contain" />
-        </div>
+      </div>
       
         {/* Main Hero Content */}
         <div className="container mx-auto px-4 md:px-6 flex flex-col lg:flex-row items-center justify-between gap-12 py-12 z-10">
@@ -288,6 +289,11 @@ const Home = () => {
       {/* Best Selling Products Section */}
       <section className="py-16 bg-white">
         <BestSellingProducts />
+      </section>
+
+      {/* Categories Feature Section */}
+      <section className="py-16 bg-[#f8f6f3]">
+        <CategoryFeatures />
       </section>
 
       {/* Placeholder for other sections - we'll implement these later */}
