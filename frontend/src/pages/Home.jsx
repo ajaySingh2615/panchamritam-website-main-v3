@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import './Home.css';
 
 // Import hero images
@@ -13,6 +13,16 @@ import leaves from '../assets/images/hero-section/leaves-free-img.png';
 const Home = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const heroRef = useRef(null);
+  // Word animation state
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const rotatingWords = [
+    "Harvest", 
+    "Bounty", 
+    "Essence", 
+    "Goodness", 
+    "Treasures", 
+    "Abundance"
+  ];
   
   useEffect(() => {
     setIsLoaded(true);
@@ -31,8 +41,18 @@ const Home = () => {
       }
     };
     
+    // Word rotation interval
+    const wordInterval = setInterval(() => {
+      setCurrentWordIndex((prevIndex) => 
+        prevIndex === rotatingWords.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 3000);
+    
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearInterval(wordInterval);
+    };
   }, []);
 
   return (
@@ -89,45 +109,33 @@ const Home = () => {
                 animate={isLoaded ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.5 }}
               >
-                Organic Products
+                From Farm to Table
               </motion.span>
               
               <motion.h1 
-                className="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#3B5323] via-[#5B8C3E] to-[#7BAD50] leading-tight"
+                className="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isLoaded ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
-                <motion.span 
-                  className="inline-block"
-                  animate={{ 
-                    opacity: [0, 1],
-                    y: [20, 0],
-                  }}
-                  transition={{ duration: 0.7, delay: 0.3 }}
-                >
-                  Best 
-                </motion.span>{" "}
-                <motion.span 
-                  className="text-gradient inline-block"
-                  animate={{ 
-                    opacity: [0, 1],
-                    y: [20, 0],
-                  }}
-                  transition={{ duration: 0.7, delay: 0.45 }}
-                >
-                  Quality 
-                </motion.span>{" "}
-                <motion.span 
-                  className="inline-block"
-                  animate={{ 
-                    opacity: [0, 1],
-                    y: [20, 0],
-                  }}
-                  transition={{ duration: 0.7, delay: 0.6 }}
-                >
-                  Products
-                </motion.span>
+                <span className="text-gray-900">Nature's Pure</span>{" "}
+                <span className="relative inline-block w-auto">
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={rotatingWords[currentWordIndex]}
+                      className="absolute text-transparent bg-clip-text bg-gradient-to-r from-[#3B5323] via-[#5B8C3E] to-[#7BAD50]"
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -20, opacity: 0 }}
+                      transition={{ duration: 0.5, ease: "easeInOut" }}
+                    >
+                      {rotatingWords[currentWordIndex]}
+                    </motion.span>
+                  </AnimatePresence>
+                  <span className="opacity-0">
+                    {rotatingWords[0]} {/* Placeholder to maintain spacing */}
+                  </span>
+                </span>
               </motion.h1>
               
               <motion.h2
@@ -136,7 +144,7 @@ const Home = () => {
                 animate={isLoaded ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.5 }}
               >
-                <span className="text-gradient">Join The Organic Movement!</span>
+                <span className="text-gradient">Pure, Fresh & Authentic</span>
               </motion.h2>
               
               <motion.p 
@@ -145,8 +153,8 @@ const Home = () => {
                 animate={isLoaded ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.6 }}
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, 
-                luctus nec ullamcorper mattis, pulvinar dapibus leo.
+                Traditional farming methods that preserve natural flavors and nutrients. 
+                We believe in sustainable practices that respect both people and planet.
               </motion.p>
               
               <motion.div
@@ -164,13 +172,12 @@ const Home = () => {
                     <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
                 </Link>
-                <motion.div 
-                  className="animated-line text-[#5B8C3E] font-medium cursor-pointer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
+                <Link 
+                  to="/about" 
+                  className="text-[#5B8C3E] hover:text-[#3B5323] font-medium transition duration-300"
                 >
                   Learn More
-                </motion.div>
+                </Link>
               </motion.div>
             </div>
           </motion.div>
@@ -248,8 +255,8 @@ const Home = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-800 group-hover:text-[#5B8C3E] transition-colors duration-300">Certified Organic</h3>
-                  <p className="text-xs text-gray-500">100% Guarantee</p>
+                  <h3 className="font-semibold text-gray-800 group-hover:text-[#5B8C3E] transition-colors duration-300">100% Natural</h3>
+                  <p className="text-xs text-gray-500">Farm Verified</p>
                 </div>
               </motion.div>
               
