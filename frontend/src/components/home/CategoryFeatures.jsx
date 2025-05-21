@@ -15,19 +15,26 @@ import logoLeaf from '../../assets/images/hero-section/logo-leaf-new.png';
 
 // Category Circle Component
 const CategoryCircle = ({ category, index, inView }) => {
+  // Determine direction based on index (even from right, odd from left)
+  const isEven = index % 2 === 0;
+  
   // Animation variants
   const variants = {
     hidden: { 
       opacity: 0,
-      scale: 0.7
+      x: isEven ? 50 : -50,
+      y: 20
     },
     visible: (i) => ({ 
       opacity: 1,
-      scale: 1,
+      x: 0,
+      y: 0,
       transition: {
         delay: i * 0.1,
-        duration: 0.5,
-        ease: "easeOut"
+        duration: 0.6,
+        type: "spring",
+        stiffness: 50,
+        damping: 12
       }
     })
   };
@@ -163,20 +170,25 @@ const CategoryFeatures = () => {
         
         <motion.div 
           className="flex justify-center"
-          initial={{ opacity: 0, rotate: -10 }}
-          animate={inView ? { opacity: 1, rotate: 0 } : { opacity: 0, rotate: -10 }}
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           <img 
             src={logoLeaf} 
             alt="Decorative leaf" 
-            className="h-12 object-contain" 
+            className="h-12 object-contain category-heading-leaf" 
           />
         </motion.div>
       </div>
       
       {/* Category Circles in a single row */}
-      <div className="categories-container">
+      <motion.div 
+        className="categories-container"
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="categories-circle-grid">
           {categories.map((category, index) => (
             <CategoryCircle 
@@ -187,7 +199,7 @@ const CategoryFeatures = () => {
             />
           ))}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

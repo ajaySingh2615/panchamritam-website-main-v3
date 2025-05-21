@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   gap: 3rem;
+  overflow: hidden; /* Ensure animations don't cause horizontal scrolling */
 }
 
 /* Category Circles Grid */
@@ -13,6 +14,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
+  perspective: 1000px; /* Add perspective for 3D effects */
 }
 
 /* Circle Category Item */
@@ -22,11 +24,14 @@
   align-items: center;
   text-align: center;
   width: 180px;
+  transition: transform 0.4s ease-out;
+  will-change: transform, opacity; /* Optimize for animations */
 }
 
 .category-image-wrapper {
   margin-bottom: 1.5rem;
   position: relative;
+  transition: transform 0.3s ease-out;
 }
 
 .category-circle-bg {
@@ -38,18 +43,29 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.category-circle:hover .category-image-wrapper {
+  transform: translateY(-5px);
+}
+
+.category-circle:hover .category-circle-bg {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.08);
 }
 
 .category-circle-image {
   width: 60%;
   height: 60%;
   object-fit: contain;
+  transition: transform 0.4s ease;
 }
 
 .category-info {
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: transform 0.3s ease;
 }
 
 .category-circle-label {
@@ -59,6 +75,7 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
 }
 
 .category-circle-title {
@@ -67,6 +84,7 @@
   color: #333333;
   margin-bottom: 1rem;
   font-family: 'Playfair Display', serif;
+  transition: color 0.3s ease;
 }
 
 .category-circle-btn {
@@ -76,9 +94,10 @@
   font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.05em;
+  transition: all 0.3s ease;
 }
 
-/* Only keep hover effect on the button */
+/* Animation for the button */
 .category-circle-btn:hover {
   color: #4A7A2D;
   transform: translateX(5px);
@@ -90,6 +109,23 @@
 
 .category-circle-btn:hover svg {
   transform: translateX(5px);
+}
+
+/* Custom animation for section heading */
+@keyframes leafFloat {
+  0% {
+    transform: rotate(-5deg) translateY(0);
+  }
+  50% {
+    transform: rotate(5deg) translateY(-10px);
+  }
+  100% {
+    transform: rotate(-5deg) translateY(0);
+  }
+}
+
+.category-heading-leaf {
+  animation: leafFloat 6s ease-in-out infinite;
 }
 
 /* Responsive Styles */
