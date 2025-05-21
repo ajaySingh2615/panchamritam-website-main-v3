@@ -1,0 +1,171 @@
+/* Parallax effects and animations */
+.parallax-element {
+  will-change: transform;
+  transition: transform 0.05s linear;
+}
+
+/* Animated text reveal */
+.clip-text-reveal {
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  animation: textReveal 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+@keyframes textReveal {
+  from {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+/* Floating animation for decorative elements */
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+.float-delay-1 {
+  animation-delay: 1s;
+}
+
+.float-delay-2 {
+  animation-delay: 2s;
+}
+
+/* Stripe-like gradient animations */
+.hero-gradient-bg {
+  background: linear-gradient(
+    125deg,
+    rgba(240, 243, 234, 1) 0%,
+    rgba(243, 246, 239, 0.8) 25%,
+    rgba(247, 250, 243, 1) 50%,
+    rgba(238, 244, 234, 0.8) 75%,
+    rgba(225, 238, 217, 1) 100%
+  );
+  animation: gradientShift 15s ease infinite;
+  background-size: 400% 400%;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Animated glow spots */
+.glow-spot {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.5;
+  background: radial-gradient(circle, rgba(123, 173, 80, 0.7) 0%, rgba(123, 173, 80, 0) 70%);
+  animation: pulse 8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.6;
+  }
+}
+
+/* Text gradient effect */
+.text-gradient {
+  background-image: linear-gradient(90deg, #5B8C3E 0%, #7BAD50 50%, #5B8C3E 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: textGradientShift 5s linear infinite;
+}
+
+@keyframes textGradientShift {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Animated line */
+.animated-line {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.animated-line::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, #5B8C3E, #7BAD50);
+  transform: scaleX(0);
+  transform-origin: bottom left;
+  transition: transform 0.5s ease;
+}
+
+.animated-line:hover::after {
+  transform: scaleX(1);
+}
+
+/* Rotate animation */
+.rotate-slow {
+  animation: rotateSlow 20s linear infinite;
+}
+
+@keyframes rotateSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Stripe-like button hover effect */
+.stripe-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.stripe-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  transition: all 0.75s ease;
+}
+
+.stripe-btn:hover::before {
+  left: 100%;
+} 
