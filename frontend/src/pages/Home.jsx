@@ -5,6 +5,7 @@ import './Home.css';
 import BestSellingProducts from '../components/home/BestSellingProducts';
 import CategoryFeatures from '../components/home/CategoryFeatures';
 import PromoBanner from '../components/home/PromoBanner';
+import DealOfTheDay from '../components/home/DealOfTheDay';
 
 // Import hero images
 import heroImage from '../assets/images/hero-section/organic-products-hero.png';
@@ -300,11 +301,14 @@ const Home = () => {
       {/* Promotional Banner Section */}
       <PromoBanner />
 
+      {/* Deal of the Day Section */}
+      <DealOfTheDay />
+
       {/* Placeholder for other sections - we'll implement these later */}
       <section className="py-12">
           <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold mb-4">Best Selling Products</h2>
-          <p>We'll implement this section next</p>
+          <h2 className="text-2xl font-bold mb-4">Example Placeholder Section</h2>
+          <p>More content will go here.</p>
           </div>
         </section>
     </div>
