@@ -207,42 +207,7 @@ const Home = () => {
                 />
               </motion.div>
 
-              {/* Floating badges */}
-              <motion.div
-                className="absolute top-[15%] -right-5 bg-white rounded-lg shadow-lg p-3 flex items-center gap-2"
-                initial={{ opacity: 0, y: 20, x: 20 }}
-                animate={{ opacity: 1, y: 0, x: 0 }}
-                transition={{ 
-                  delay: 1,
-                  duration: 0.5,
-                  type: "spring"
-                }}
-              >
-                <div className="bg-green-50 p-2 rounded-full">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#5B8C3E]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <span className="font-medium text-sm text-gray-800">100% Organic</span>
-              </motion.div>
-              
-              <motion.div
-                className="absolute bottom-[20%] -left-2 bg-white rounded-lg shadow-lg p-3 flex items-center gap-2"
-                initial={{ opacity: 0, y: -20, x: -20 }}
-                animate={{ opacity: 1, y: 0, x: 0 }}
-                transition={{ 
-                  delay: 1.2,
-                  duration: 0.5,
-                  type: "spring"
-                }}
-              >
-                <div className="bg-green-50 p-2 rounded-full">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#5B8C3E]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <span className="font-medium text-sm text-gray-800">Best Price</span>
-              </motion.div>
+              {/* Floating badges removed */}
             </div>
           </motion.div>
         </div>
