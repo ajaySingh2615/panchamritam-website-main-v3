@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import './Home.css';
 import BestSellingProducts from '../components/home/BestSellingProducts';
 import CategoryFeatures from '../components/home/CategoryFeatures';
+import PromoBanner from '../components/home/PromoBanner';
 
 // Import hero images
 import heroImage from '../assets/images/hero-section/organic-products-hero.png';
@@ -296,6 +297,9 @@ const Home = () => {
         <CategoryFeatures />
         </section>
         
+      {/* Promotional Banner Section */}
+      <PromoBanner />
+
       {/* Placeholder for other sections - we'll implement these later */}
       <section className="py-12">
           <div className="container mx-auto px-4">
