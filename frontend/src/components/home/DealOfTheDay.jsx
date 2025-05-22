@@ -124,7 +124,7 @@ const DealOfTheDay = () => {
           {/* Left Column: Text Content & Timer */}
           <motion.div className="text-center md:text-left" variants={itemVariants}>
             <motion.h3 
-              className="text-lg font-semibold text-green-600 uppercase tracking-wider mb-2"
+              className="inline-block text-lg font-semibold text-white uppercase tracking-wider mb-2 px-4 py-1 rounded bg-red-600"
               variants={itemVariants}
             >
               Deal of the Day
