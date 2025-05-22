@@ -1,0 +1,76 @@
+.scroll-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 20px 0;
+}
+
+.scroll-wrapper {
+  display: flex;
+  animation-duration: 30s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  white-space: nowrap;
+}
+
+.scroll-right {
+  animation-name: scroll-right;
+}
+
+.scroll-left {
+  animation-name: scroll-left;
+}
+
+.scroll-item {
+  flex: 0 0 auto;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.scroll-item:hover {
+  opacity: 1;
+}
+
+@keyframes scroll-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes scroll-left {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Add pause on hover */
+.scroll-container:hover .scroll-wrapper {
+  animation-play-state: paused;
+}
+
+/* Add gradient fade effect on edges */
+.scroll-container::before,
+.scroll-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  z-index: 2;
+}
+
+.scroll-container::before {
+  left: 0;
+  background: linear-gradient(to right, white, transparent);
+}
+
+.scroll-container::after {
+  right: 0;
+  background: linear-gradient(to left, white, transparent);
+} 
