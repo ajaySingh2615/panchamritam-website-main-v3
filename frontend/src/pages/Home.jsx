@@ -88,7 +88,7 @@ const Home = () => {
     // Feature rotation interval - single interval for all cards to flip together
     const featureInterval = setInterval(() => {
       setFeatureIndex((prev) => (prev + 1) % featureData[0].length);
-    }, 5000); // 5 seconds between flips
+    }, 3000); // 3 seconds between flips - faster animation
     
     window.addEventListener('scroll', handleScroll);
     
@@ -183,28 +183,28 @@ const Home = () => {
     }
   };
   
-  // Animation variants for feature cards
+  // Animation variants for feature cards - faster transitions
   const featureCardVariants = {
     initial: { 
       opacity: 0,
-      y: 15,
-      rotateX: -15
+      y: 10,
+      rotateX: -10
     },
     animate: { 
       opacity: 1,
       y: 0,
       rotateX: 0,
       transition: { 
-        duration: 0.5,
+        duration: 0.3, // Faster animation
         ease: "easeOut"
       }
     },
     exit: { 
       opacity: 0,
-      y: -15,
-      rotateX: 15,
+      y: -10,
+      rotateX: 10,
       transition: { 
-        duration: 0.3,
+        duration: 0.2, // Faster exit animation
         ease: "easeIn"
       }
     }
@@ -401,7 +401,7 @@ const Home = () => {
                     </AnimatePresence>
                   </div>
                   
-                  <div>
+                  <div className="flex-1 min-w-0"> {/* Added min-width to prevent text overflow */}
                     <AnimatePresence mode="wait">
                       <motion.div
                         key={`content-${cardIndex}-${featureIndex}`}
@@ -409,12 +409,12 @@ const Home = () => {
                         initial="initial"
                         animate="animate"
                         exit="exit"
-                        className="h-16" // Fixed height to prevent layout shifts
+                        className="h-[4.5rem]" /* Increased fixed height for content */
                       >
-                        <h3 className="font-semibold text-white text-base sm:text-lg">
+                        <h3 className="font-semibold text-white text-base sm:text-lg truncate"> {/* Added truncate */}
                           {featureData[cardIndex][featureIndex].title}
                         </h3>
-                        <p className="text-gray-400 text-sm sm:text-base">
+                        <p className="text-gray-400 text-sm sm:text-base line-clamp-2 overflow-hidden"> {/* Text overflow handling */}
                           {featureData[cardIndex][featureIndex].subtitle}
                         </p>
                       </motion.div>
