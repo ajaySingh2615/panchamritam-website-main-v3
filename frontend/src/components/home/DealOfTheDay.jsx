@@ -68,7 +68,6 @@ const DealOfTheDay = () => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true);
-          // observer.unobserve(entry.target); // Optional: stop observing once in view
         }
       },
       { threshold: 0.2 } // Trigger when 20% of the section is visible
@@ -96,14 +95,17 @@ const DealOfTheDay = () => {
     },
   };
 
-  const itemVariantsLeft = {
-    hidden: { opacity: 0, x: -50 },
-    visible: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 50 } },
-  };
-
-  const itemVariantsRight = {
-    hidden: { opacity: 0, x: 50 },
-    visible: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 50 } },
+  const itemVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { 
+        type: 'spring', 
+        stiffness: 50,
+        damping: 15
+      } 
+    },
   };
 
   return (
@@ -120,38 +122,41 @@ const DealOfTheDay = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Left Column: Text Content & Timer */}
-          <motion.div className="text-center md:text-left" variants={itemVariantsLeft}>
+          <motion.div className="text-center md:text-left" variants={itemVariants}>
             <motion.h3 
               className="text-lg font-semibold text-green-600 uppercase tracking-wider mb-2"
-              variants={itemVariantsLeft}
+              variants={itemVariants}
             >
               Deal of the Day
             </motion.h3>
             <motion.h2 
               className="text-3xl sm:text-4xl md:text-5xl font-playfair font-bold text-gray-800 mb-4 leading-tight"
-              variants={itemVariantsLeft}
+              variants={itemVariants}
             >
               15% Off On All <span className="text-green-600">Vegetables!</span>
             </motion.h2>
             <motion.p 
               className="text-gray-600 text-base md:text-lg mb-6"
-              variants={itemVariantsLeft}
+              variants={itemVariants}
             >
               Fresh, crisp, and naturally grown vegetables now at an unbeatable price. 
               Hurry, offer valid for a limited time only!
             </motion.p>
             
-            <motion.div variants={itemVariantsLeft}>
+            <motion.div variants={itemVariants}>
               <CountdownTimer targetDate={targetDate.toISOString()} />
             </motion.div>
 
           </motion.div>
 
           {/* Right Column: Product Showcase */}
-          <motion.div className="relative flex justify-center" variants={itemVariantsRight}>
+          <motion.div 
+            className="relative flex justify-center" 
+            variants={itemVariants}
+          >
             <motion.div 
               className="bg-white rounded-xl shadow-xl p-6 md:p-8 w-full max-w-md transform transition-all duration-500 hover:scale-105 hover:shadow-2xl"
-              variants={itemVariantsRight}
+              variants={itemVariants}
             >
               <div className="aspect-square overflow-hidden rounded-lg mb-4">
                 <img 
