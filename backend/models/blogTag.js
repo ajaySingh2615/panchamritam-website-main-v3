@@ -107,6 +107,9 @@ class BlogTag {
   // Get popular tags
   static async getPopular(limit = 10) {
     try {
+      // Ensure limit is a valid number
+      const validLimit = Math.max(1, parseInt(limit) || 10);
+      
       const [rows] = await pool.execute(`
         SELECT bt.*, COUNT(bpt.post_id) as post_count
         FROM blog_tags bt
@@ -115,8 +118,8 @@ class BlogTag {
         GROUP BY bt.tag_id
         HAVING post_count > 0
         ORDER BY post_count DESC, bt.name ASC
-        LIMIT ?
-      `, [limit]);
+        LIMIT ${validLimit}
+      `);
       
       return rows;
     } catch (error) {

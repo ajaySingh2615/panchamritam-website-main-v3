@@ -326,6 +326,9 @@ class Blog {
   // Get related posts
   static async getRelatedPosts(blogId, limit = 5) {
     try {
+      // Ensure limit is a valid number
+      const validLimit = Math.max(1, parseInt(limit) || 5);
+      
       const [rows] = await pool.execute(`
         SELECT DISTINCT b.blog_id, b.title, b.slug, b.excerpt, b.featured_image, b.published_at
         FROM blogs b
@@ -334,8 +337,8 @@ class Blog {
         WHERE bpt2.post_id = ? AND b.blog_id != ? AND b.status = 'published'
         AND (b.published_at IS NULL OR b.published_at <= NOW())
         ORDER BY b.published_at DESC
-        LIMIT ?
-      `, [blogId, blogId, limit]);
+        LIMIT ${validLimit}
+      `, [blogId, blogId]);
       
       return rows;
     } catch (error) {
