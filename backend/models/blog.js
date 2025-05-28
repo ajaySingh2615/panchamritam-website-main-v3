@@ -142,6 +142,9 @@ class Blog {
       // Calculate reading time if not provided
       const finalReadingTime = reading_time || this.calculateReadingTime(content);
 
+      // Helper function to convert empty strings to null
+      const emptyToNull = (value) => (value === '' || value === undefined) ? null : value;
+
       const [result] = await connection.execute(`
         INSERT INTO blogs (
           title, slug, content, excerpt, featured_image, gallery_images,
@@ -150,11 +153,26 @@ class Blog {
           is_featured, allow_comments, category_id, author_id
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `, [
-        title, finalSlug, content, excerpt, featured_image, 
+        title, 
+        finalSlug, 
+        content, 
+        emptyToNull(excerpt), 
+        emptyToNull(featured_image), 
         gallery_images ? JSON.stringify(gallery_images) : null,
-        status || 'draft', published_at, scheduled_at, meta_title, meta_description,
-        meta_keywords, og_title, og_description, og_image, finalReadingTime,
-        is_featured || false, allow_comments !== false, category_id, author_id
+        status || 'draft', 
+        emptyToNull(published_at), 
+        emptyToNull(scheduled_at), 
+        emptyToNull(meta_title), 
+        emptyToNull(meta_description),
+        emptyToNull(meta_keywords), 
+        emptyToNull(og_title), 
+        emptyToNull(og_description), 
+        emptyToNull(og_image), 
+        finalReadingTime,
+        is_featured || false, 
+        allow_comments !== false, 
+        emptyToNull(category_id), 
+        author_id
       ]);
 
       const blogId = result.insertId;
@@ -190,6 +208,9 @@ class Blog {
       // Calculate reading time if content changed
       const finalReadingTime = reading_time || this.calculateReadingTime(content);
 
+      // Helper function to convert empty strings to null
+      const emptyToNull = (value) => (value === '' || value === undefined) ? null : value;
+
       await connection.execute(`
         UPDATE blogs SET
           title = ?, slug = ?, content = ?, excerpt = ?, featured_image = ?,
@@ -199,11 +220,26 @@ class Blog {
           allow_comments = ?, category_id = ?, updated_at = NOW()
         WHERE blog_id = ?
       `, [
-        title, slug, content, excerpt, featured_image,
+        title, 
+        slug, 
+        content, 
+        emptyToNull(excerpt), 
+        emptyToNull(featured_image),
         gallery_images ? JSON.stringify(gallery_images) : null,
-        status, published_at, scheduled_at, meta_title, meta_description,
-        meta_keywords, og_title, og_description, og_image, finalReadingTime,
-        is_featured, allow_comments, category_id, id
+        status, 
+        emptyToNull(published_at), 
+        emptyToNull(scheduled_at), 
+        emptyToNull(meta_title), 
+        emptyToNull(meta_description),
+        emptyToNull(meta_keywords), 
+        emptyToNull(og_title), 
+        emptyToNull(og_description), 
+        emptyToNull(og_image), 
+        finalReadingTime,
+        is_featured, 
+        allow_comments, 
+        emptyToNull(category_id), 
+        id
       ]);
 
       // Update tags
