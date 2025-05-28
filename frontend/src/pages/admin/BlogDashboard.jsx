@@ -12,8 +12,10 @@ import {
   TrendingUp,
   FileText,
   Users,
-  BarChart3
+  BarChart3,
+  X
 } from 'lucide-react';
+import { API_URL } from '../../config/api';
 
 const BlogDashboard = () => {
   const [blogs, setBlogs] = useState([]);
@@ -22,6 +24,22 @@ const BlogDashboard = () => {
   const [statistics, setStatistics] = useState({});
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('posts');
+  
+  // Modal states
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [showTagModal, setShowTagModal] = useState(false);
+  const [categoryForm, setCategoryForm] = useState({
+    name: '',
+    description: '',
+    parent_id: '',
+    meta_title: '',
+    meta_description: ''
+  });
+  const [tagForm, setTagForm] = useState({
+    name: '',
+    description: '',
+    color: '#10B981'
+  });
 
   useEffect(() => {
     fetchData();
@@ -45,7 +63,7 @@ const BlogDashboard = () => {
 
   const fetchBlogs = async () => {
     try {
-      const response = await fetch('/api/blogs?status=all&limit=10', {
+      const response = await fetch(`${API_URL}/blogs?status=all&limit=10`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -61,7 +79,7 @@ const BlogDashboard = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('/api/blogs/categories', {
+      const response = await fetch(`${API_URL}/blogs/categories`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -77,7 +95,7 @@ const BlogDashboard = () => {
 
   const fetchTags = async () => {
     try {
-      const response = await fetch('/api/blogs/tags', {
+      const response = await fetch(`${API_URL}/blogs/tags`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -93,7 +111,7 @@ const BlogDashboard = () => {
 
   const fetchStatistics = async () => {
     try {
-      const response = await fetch('/api/blogs/admin/statistics', {
+      const response = await fetch(`${API_URL}/blogs/admin/statistics`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -113,7 +131,7 @@ const BlogDashboard = () => {
     }
 
     try {
-      const response = await fetch(`/api/blogs/${id}`, {
+      const response = await fetch(`${API_URL}/blogs/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -138,7 +156,7 @@ const BlogDashboard = () => {
     }
 
     try {
-      const response = await fetch(`/api/blogs/categories/${id}`, {
+      const response = await fetch(`${API_URL}/blogs/categories/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -164,7 +182,7 @@ const BlogDashboard = () => {
     }
 
     try {
-      const response = await fetch(`/api/blogs/tags/${id}`, {
+      const response = await fetch(`${API_URL}/blogs/tags/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -181,6 +199,94 @@ const BlogDashboard = () => {
       console.error('Error deleting tag:', error);
       alert('Error deleting tag');
     }
+  };
+
+  const handleCreateCategory = async (e) => {
+    e.preventDefault();
+    
+    try {
+      // Prepare the data, converting empty parent_id to null
+      const categoryData = {
+        ...categoryForm,
+        parent_id: categoryForm.parent_id === '' ? null : categoryForm.parent_id
+      };
+
+      const response = await fetch(`${API_URL}/blogs/categories`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(categoryData)
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        setCategories([...categories, data.data.category]);
+        setCategoryForm({
+          name: '',
+          description: '',
+          parent_id: '',
+          meta_title: '',
+          meta_description: ''
+        });
+        setShowCategoryModal(false);
+        alert('Category created successfully');
+      } else {
+        alert(data.message || 'Failed to create category');
+      }
+    } catch (error) {
+      console.error('Error creating category:', error);
+      alert('Error creating category');
+    }
+  };
+
+  const handleCreateTag = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const response = await fetch(`${API_URL}/blogs/tags`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(tagForm)
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        setTags([...tags, data.data.tag]);
+        setTagForm({
+          name: '',
+          description: '',
+          color: '#10B981'
+        });
+        setShowTagModal(false);
+        alert('Tag created successfully');
+      } else {
+        alert(data.message || 'Failed to create tag');
+      }
+    } catch (error) {
+      console.error('Error creating tag:', error);
+      alert('Error creating tag');
+    }
+  };
+
+  const handleCategoryFormChange = (e) => {
+    setCategoryForm({
+      ...categoryForm,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleTagFormChange = (e) => {
+    setTagForm({
+      ...tagForm,
+      [e.target.name]: e.target.value
+    });
   };
 
   const formatDate = (dateString) => {
@@ -221,19 +327,19 @@ const BlogDashboard = () => {
         <h1 className="text-2xl font-bold text-gray-900">Blog Management</h1>
         <Link
           to="/admin/blog/create"
-          className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+          className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700"
         >
-          <PlusCircle className="h-5 w-5 mr-2" />
-          New Post
+          <PlusCircle className="h-4 w-4 mr-2" />
+          Create New Post
         </Link>
       </div>
 
-      {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      {/* Statistics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <FileText className="h-6 w-6 text-blue-600" />
+            <div className="p-2 bg-green-100 rounded-lg">
+              <FileText className="h-6 w-6 text-green-600" />
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Total Posts</p>
@@ -244,8 +350,8 @@ const BlogDashboard = () => {
 
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
-            <div className="p-2 bg-green-100 rounded-lg">
-              <TrendingUp className="h-6 w-6 text-green-600" />
+            <div className="p-2 bg-blue-100 rounded-lg">
+              <TrendingUp className="h-6 w-6 text-blue-600" />
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Published</p>
@@ -303,7 +409,7 @@ const BlogDashboard = () => {
         </nav>
       </div>
 
-      {/* Content based on active tab */}
+      {/* Posts Tab */}
       {activeTab === 'posts' && (
         <div className="bg-white shadow rounded-lg">
           <div className="px-6 py-4 border-b border-gray-200">
@@ -399,11 +505,15 @@ const BlogDashboard = () => {
         </div>
       )}
 
+      {/* Categories Tab */}
       {activeTab === 'categories' && (
         <div className="bg-white shadow rounded-lg">
           <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
             <h3 className="text-lg font-medium text-gray-900">Categories</h3>
-            <button className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
+            <button 
+              onClick={() => setShowCategoryModal(true)}
+              className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700"
+            >
               <PlusCircle className="h-4 w-4 mr-2" />
               Add Category
             </button>
@@ -466,11 +576,15 @@ const BlogDashboard = () => {
         </div>
       )}
 
+      {/* Tags Tab */}
       {activeTab === 'tags' && (
         <div className="bg-white shadow rounded-lg">
           <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
             <h3 className="text-lg font-medium text-gray-900">Tags</h3>
-            <button className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
+            <button 
+              onClick={() => setShowTagModal(true)}
+              className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700"
+            >
               <PlusCircle className="h-4 w-4 mr-2" />
               Add Tag
             </button>
@@ -508,6 +622,204 @@ const BlogDashboard = () => {
                 )}
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Category Modal */}
+      {showCategoryModal && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-medium text-gray-900">Add New Category</h3>
+              <button
+                onClick={() => setShowCategoryModal(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+            
+            <form onSubmit={handleCreateCategory} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Name *
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={categoryForm.name}
+                  onChange={handleCategoryFormChange}
+                  required
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  placeholder="Category name"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Description
+                </label>
+                <textarea
+                  name="description"
+                  value={categoryForm.description}
+                  onChange={handleCategoryFormChange}
+                  rows="3"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  placeholder="Category description"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Parent Category
+                </label>
+                <select
+                  name="parent_id"
+                  value={categoryForm.parent_id}
+                  onChange={handleCategoryFormChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                >
+                  <option value="">None (Top Level)</option>
+                  {categories.map((category) => (
+                    <option key={category.category_id} value={category.category_id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Meta Title
+                </label>
+                <input
+                  type="text"
+                  name="meta_title"
+                  value={categoryForm.meta_title}
+                  onChange={handleCategoryFormChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  placeholder="SEO meta title"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Meta Description
+                </label>
+                <textarea
+                  name="meta_description"
+                  value={categoryForm.meta_description}
+                  onChange={handleCategoryFormChange}
+                  rows="2"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  placeholder="SEO meta description"
+                />
+              </div>
+              
+              <div className="flex justify-end space-x-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setShowCategoryModal(false)}
+                  className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700"
+                >
+                  Create Category
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Tag Modal */}
+      {showTagModal && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+          <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-medium text-gray-900">Add New Tag</h3>
+              <button
+                onClick={() => setShowTagModal(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+            
+            <form onSubmit={handleCreateTag} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Name *
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={tagForm.name}
+                  onChange={handleTagFormChange}
+                  required
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  placeholder="Tag name"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Description
+                </label>
+                <textarea
+                  name="description"
+                  value={tagForm.description}
+                  onChange={handleTagFormChange}
+                  rows="3"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  placeholder="Tag description"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Color
+                </label>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="color"
+                    name="color"
+                    value={tagForm.color}
+                    onChange={handleTagFormChange}
+                    className="w-12 h-10 border border-gray-300 rounded cursor-pointer"
+                  />
+                  <input
+                    type="text"
+                    name="color"
+                    value={tagForm.color}
+                    onChange={handleTagFormChange}
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    placeholder="#10B981"
+                  />
+                </div>
+              </div>
+              
+              <div className="flex justify-end space-x-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setShowTagModal(false)}
+                  className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700"
+                >
+                  Create Tag
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

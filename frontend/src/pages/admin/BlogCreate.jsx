@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Save, Eye, Calendar, Tag, Image, FileText } from 'lucide-react';
+import TinyMCEEditor from '../../components/TinyMCEEditor';
 
 const BlogCreate = () => {
   const navigate = useNavigate();
@@ -266,14 +267,11 @@ const BlogCreate = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Content *
                   </label>
-                  <textarea
+                  <TinyMCEEditor
                     name="content"
                     value={formData.content}
-                    onChange={handleInputChange}
+                    onChange={(value) => setFormData(prev => ({ ...prev, content: value }))}
                     required
-                    rows={15}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                    placeholder="Write your blog content here..."
                   />
                 </div>
 

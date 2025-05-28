@@ -68,10 +68,13 @@ class BlogCategory {
       // Generate slug
       const slug = this.generateSlug(name);
       
+      // Ensure parent_id is null if empty string or undefined
+      const validParentId = parent_id === '' || parent_id === undefined ? null : parent_id;
+      
       const [result] = await pool.execute(`
         INSERT INTO blog_categories (name, slug, description, parent_id, meta_title, meta_description)
         VALUES (?, ?, ?, ?, ?, ?)
-      `, [name, slug, description, parent_id, meta_title, meta_description]);
+      `, [name, slug, description, validParentId, meta_title, meta_description]);
       
       return await this.findById(result.insertId);
     } catch (error) {
@@ -84,12 +87,15 @@ class BlogCategory {
     try {
       const { name, slug, description, parent_id, meta_title, meta_description } = categoryData;
       
+      // Ensure parent_id is null if empty string or undefined
+      const validParentId = parent_id === '' || parent_id === undefined ? null : parent_id;
+      
       await pool.execute(`
         UPDATE blog_categories SET
           name = ?, slug = ?, description = ?, parent_id = ?,
           meta_title = ?, meta_description = ?, updated_at = NOW()
         WHERE category_id = ?
-      `, [name, slug, description, parent_id, meta_title, meta_description, id]);
+      `, [name, slug, description, validParentId, meta_title, meta_description, id]);
       
       return await this.findById(id);
     } catch (error) {

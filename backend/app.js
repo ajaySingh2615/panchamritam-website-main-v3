@@ -29,6 +29,7 @@ const blogRoutes = require('./routes/blogRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const taxRoutes = require('./routes/taxRoutes');
+const uploadRoutes = require('./routes/uploadRoutes');
 
 // Initialize app
 const app = express();
@@ -71,6 +72,7 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/tax', taxRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Email listener endpoints commented out as we're no longer using them
 /*

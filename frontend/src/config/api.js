@@ -6,9 +6,11 @@
  */
 
 // Get API URL from environment or use default
+const API_URL_FROM_ENV = import.meta.env.VITE_API_URL;
 const API_PORT = import.meta.env.VITE_API_PORT || 5000;
+
 // Development environment (local)
-const DEV_API_URL = `http://localhost:${API_PORT}/api`;
+const DEV_API_URL = API_URL_FROM_ENV || `http://localhost:${API_PORT}/api`;
 
 // Production environment
 const PROD_API_URL = '/api'; // Use relative path in production
@@ -35,6 +37,11 @@ switch (ENV) {
 
 // Debug the base URL being used
 console.log('API Base URL:', BASE_API_URL);
+console.log('Environment variables:', {
+  VITE_API_URL: import.meta.env.VITE_API_URL,
+  VITE_API_PORT: import.meta.env.VITE_API_PORT,
+  MODE: import.meta.env.MODE
+});
 
 // Export API URL configurations
 export const API_URL = BASE_API_URL;

@@ -17,7 +17,7 @@ const ContactMessages = () => {
             </svg>
             <h2 className="mt-4 text-xl font-semibold text-gray-800">Contact Form System Updated</h2>
             <p className="mt-2 text-gray-600">
-              The contact form system has been simplified. Messages are now sent directly to your admin email ({process.env.ADMIN_EMAIL || 'configured admin email'}).
+              The contact form system has been simplified. Messages are now sent directly to your admin email ({import.meta.env.VITE_ADMIN_EMAIL || 'configured admin email'}).
             </p>
             <div className="mt-6 bg-green-50 border-l-4 border-green-500 p-4 rounded">
               <div className="flex">

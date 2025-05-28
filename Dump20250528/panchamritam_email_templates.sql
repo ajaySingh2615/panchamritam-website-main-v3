@@ -16,34 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `hsn_codes`
+-- Table structure for table `email_templates`
 --
 
-DROP TABLE IF EXISTS `hsn_codes`;
+DROP TABLE IF EXISTS `email_templates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `hsn_codes` (
-  `hsn_id` int NOT NULL AUTO_INCREMENT,
-  `code` varchar(20) NOT NULL,
-  `description` text,
-  `default_gst_rate_id` int DEFAULT NULL,
+CREATE TABLE `email_templates` (
+  `template_id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `subject` varchar(200) NOT NULL,
+  `body` text NOT NULL,
+  `category` varchar(50) DEFAULT NULL,
+  `variables` json DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`hsn_id`),
-  UNIQUE KEY `code` (`code`),
-  KEY `default_gst_rate_id` (`default_gst_rate_id`),
-  CONSTRAINT `hsn_codes_ibfk_1` FOREIGN KEY (`default_gst_rate_id`) REFERENCES `gst_rates` (`rate_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`template_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `hsn_codes`
+-- Dumping data for table `email_templates`
 --
 
-LOCK TABLES `hsn_codes` WRITE;
-/*!40000 ALTER TABLE `hsn_codes` DISABLE KEYS */;
-INSERT INTO `hsn_codes` VALUES (1,'12',NULL,1,'2025-05-07 12:46:59','2025-05-07 12:46:59'),(2,'1',NULL,1,'2025-05-07 12:51:20','2025-05-07 12:51:20'),(3,'123',NULL,1,'2025-05-07 18:00:56','2025-05-07 18:00:56'),(4,'11',NULL,NULL,'2025-05-07 18:01:24','2025-05-07 18:01:24'),(5,'44',NULL,1,'2025-05-07 18:05:47','2025-05-07 18:05:47'),(6,'222',NULL,1,'2025-05-08 05:27:27','2025-05-08 05:27:27'),(7,'440',NULL,1,'2025-05-08 05:33:33','2025-05-08 05:33:33'),(8,'101',NULL,2,'2025-05-08 05:59:27','2025-05-08 05:59:27'),(9,'36',NULL,2,'2025-05-08 06:02:45','2025-05-08 06:02:45');
-/*!40000 ALTER TABLE `hsn_codes` ENABLE KEYS */;
+LOCK TABLES `email_templates` WRITE;
+/*!40000 ALTER TABLE `email_templates` DISABLE KEYS */;
+/*!40000 ALTER TABLE `email_templates` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -55,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-15 17:14:10
+-- Dump completed on 2025-05-28 16:24:09

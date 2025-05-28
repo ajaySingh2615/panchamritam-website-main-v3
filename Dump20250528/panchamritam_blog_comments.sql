@@ -16,38 +16,40 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `reviews`
+-- Table structure for table `blog_comments`
 --
 
-DROP TABLE IF EXISTS `reviews`;
+DROP TABLE IF EXISTS `blog_comments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `reviews` (
-  `review_id` int NOT NULL AUTO_INCREMENT,
-  `product_id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `rating` decimal(2,1) NOT NULL,
-  `title` varchar(100) DEFAULT NULL,
-  `content` text,
+CREATE TABLE `blog_comments` (
+  `comment_id` int NOT NULL AUTO_INCREMENT,
+  `blog_id` int NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `author_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `author_email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('pending','approved','spam','trash') COLLATE utf8mb4_unicode_ci DEFAULT 'pending',
+  `parent_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`review_id`),
-  UNIQUE KEY `unique_user_product_review` (`user_id`,`product_id`),
-  KEY `idx_reviews_product` (`product_id`),
-  KEY `idx_reviews_user` (`user_id`),
-  CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE,
-  CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`comment_id`),
+  KEY `idx_blog_id` (`blog_id`),
+  KEY `idx_status` (`status`),
+  KEY `idx_parent_id` (`parent_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `blog_comments_ibfk_1` FOREIGN KEY (`blog_id`) REFERENCES `blogs` (`blog_id`) ON DELETE CASCADE,
+  CONSTRAINT `blog_comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE SET NULL,
+  CONSTRAINT `blog_comments_ibfk_3` FOREIGN KEY (`parent_id`) REFERENCES `blog_comments` (`comment_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `reviews`
+-- Dumping data for table `blog_comments`
 --
 
-LOCK TABLES `reviews` WRITE;
-/*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
-INSERT INTO `reviews` VALUES (1,5,11,4.0,'good','test1','2025-05-02 10:16:59','2025-05-02 10:16:59'),(2,5,13,4.0,'best','test2-modal','2025-05-02 10:20:49','2025-05-02 10:20:49'),(3,5,14,3.0,'better','test3','2025-05-02 10:24:04','2025-05-02 10:24:04'),(4,4,13,5.0,'g','f','2025-05-02 10:29:50','2025-05-02 10:29:50');
-/*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
+LOCK TABLES `blog_comments` WRITE;
+/*!40000 ALTER TABLE `blog_comments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `blog_comments` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -59,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-06 15:15:36
+-- Dump completed on 2025-05-28 16:24:10

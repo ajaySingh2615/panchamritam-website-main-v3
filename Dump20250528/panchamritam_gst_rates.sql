@@ -16,31 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `contact_messages`
+-- Table structure for table `gst_rates`
 --
 
-DROP TABLE IF EXISTS `contact_messages`;
+DROP TABLE IF EXISTS `gst_rates`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `contact_messages` (
-  `message_id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `subject` varchar(150) DEFAULT NULL,
-  `message` text,
-  `submitted_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`message_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `gst_rates` (
+  `rate_id` int NOT NULL AUTO_INCREMENT,
+  `rate_name` varchar(50) NOT NULL,
+  `percentage` decimal(5,2) NOT NULL,
+  `description` text,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`rate_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `contact_messages`
+-- Dumping data for table `gst_rates`
 --
 
-LOCK TABLES `contact_messages` WRITE;
-/*!40000 ALTER TABLE `contact_messages` DISABLE KEYS */;
-INSERT INTO `contact_messages` VALUES (1,'John Doe','john.doe@example.com','Product Inquiry','I would like to know more about your products. Please contact me.','2025-04-23 07:07:20');
-/*!40000 ALTER TABLE `contact_messages` ENABLE KEYS */;
+LOCK TABLES `gst_rates` WRITE;
+/*!40000 ALTER TABLE `gst_rates` DISABLE KEYS */;
+INSERT INTO `gst_rates` VALUES (1,'Unbranded, Unpackaged Food Grains',5.00,NULL,'2025-05-07 12:37:22','2025-05-07 12:37:22'),(2,'Branded & Packaged Food Grains',7.00,NULL,'2025-05-08 05:59:01','2025-05-08 05:59:01');
+/*!40000 ALTER TABLE `gst_rates` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-06 15:15:36
+-- Dump completed on 2025-05-28 16:24:09

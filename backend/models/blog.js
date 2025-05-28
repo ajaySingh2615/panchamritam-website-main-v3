@@ -15,6 +15,10 @@ class Blog {
         author_id = null
       } = options;
 
+      // Ensure limit and offset are valid numbers
+      const validLimit = Math.max(1, parseInt(limit) || 10);
+      const validOffset = Math.max(0, parseInt(offset) || 0);
+
       let query = `
         SELECT b.*, u.name as author_name, bc.name as category_name, bc.slug as category_slug
         FROM blogs b
@@ -26,7 +30,7 @@ class Blog {
       const params = [];
 
       // Add filters
-      if (status) {
+      if (status && status !== 'all') {
         query += ` AND b.status = ?`;
         params.push(status);
       }
@@ -57,8 +61,8 @@ class Blog {
         query += ` AND (b.published_at IS NULL OR b.published_at <= NOW())`;
       }
 
-      query += ` ORDER BY b.created_at DESC LIMIT ? OFFSET ?`;
-      params.push(parseInt(limit), parseInt(offset));
+      // Use string interpolation for LIMIT and OFFSET as they can't be parameterized
+      query += ` ORDER BY b.created_at DESC LIMIT ${validLimit} OFFSET ${validOffset}`;
 
       const [rows] = await pool.execute(query, params);
       
@@ -353,7 +357,7 @@ class Blog {
       let query = 'SELECT COUNT(*) as count FROM blogs WHERE 1=1';
       const params = [];
 
-      if (filters.status) {
+      if (filters.status && filters.status !== 'all') {
         query += ' AND status = ?';
         params.push(filters.status);
       }
