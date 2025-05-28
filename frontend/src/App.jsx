@@ -41,6 +41,8 @@ import ProductDetail from './pages/admin/ProductDetail';
 import ProductEdit from './pages/admin/ProductEdit';
 import TaxManagement from './pages/admin/TaxManagement';
 import ContactMessages from './pages/admin/ContactMessages';
+import BlogDashboard from './pages/admin/BlogDashboard';
+import BlogCreate from './pages/admin/BlogCreate';
 
 import './App.css';
 
@@ -99,6 +101,10 @@ const App = () => {
               <Route path="products/:productId/edit" element={<ProductEdit />} />
               <Route path="tax-management" element={<TaxManagement />} />
               <Route path="contact-messages" element={<ContactMessages />} />
+              
+              {/* Blog Management Routes */}
+              <Route path="blog" element={<BlogDashboard />} />
+              <Route path="blog/create" element={<BlogCreate />} />
             </Route>
             
             {/* Public Routes with Main Layout */}
@@ -109,8 +115,13 @@ const App = () => {
             <Route path="/login" element={<MainLayout><Login /></MainLayout>} />
             <Route path="/register" element={<MainLayout><Register /></MainLayout>} />
             <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
+            
+            {/* Blog Routes */}
             <Route path="/blog" element={<MainLayout><Blog /></MainLayout>} />
-            <Route path="/blog/:blogId" element={<MainLayout><BlogDetail /></MainLayout>} />
+            <Route path="/blog/category/:slug" element={<MainLayout><Blog /></MainLayout>} />
+            <Route path="/blog/tag/:slug" element={<MainLayout><Blog /></MainLayout>} />
+            <Route path="/blog/:slug" element={<MainLayout><BlogDetail /></MainLayout>} />
+            
             <Route path="/services" element={<MainLayout><Services /></MainLayout>} />
             <Route path="/services/:serviceId" element={<MainLayout><ServiceDetail /></MainLayout>} />
             <Route path="/about" element={<MainLayout><About /></MainLayout>} />

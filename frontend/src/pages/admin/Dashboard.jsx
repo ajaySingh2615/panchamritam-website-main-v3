@@ -125,6 +125,17 @@ const Dashboard = () => {
           color="bg-blue-100"
         />
         <QuickAccessCard 
+          title="Blog Management" 
+          description="Create, edit, and manage blog posts with analytics"
+          icon={
+            <svg className="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+            </svg>
+          } 
+          linkTo="/admin/blog"
+          color="bg-indigo-100"
+        />
+        <QuickAccessCard 
           title="Contact Messages" 
           description="View and manage customer contact form submissions"
           icon={
@@ -146,6 +157,71 @@ const Dashboard = () => {
           linkTo="/admin/users"
           color="bg-green-100"
         />
+      </div>
+
+      {/* Blog Quick Actions */}
+      <div className="bg-white shadow rounded-lg overflow-hidden mb-8">
+        <div className="px-6 py-4 border-b">
+          <h2 className="text-lg font-semibold text-gray-800 flex items-center">
+            <svg className="w-6 h-6 text-indigo-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+            </svg>
+            Blog Management
+          </h2>
+        </div>
+        <div className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Link 
+              to="/admin/blog/create" 
+              className="bg-gradient-to-r from-green-400 to-green-600 text-white p-4 rounded-lg hover:from-green-500 hover:to-green-700 transition-all duration-200 shadow-md hover:shadow-lg"
+            >
+              <div className="flex items-center mb-2">
+                <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                <span className="font-semibold">Create Blog</span>
+              </div>
+              <p className="text-sm opacity-90">Write and publish new blog posts</p>
+            </Link>
+
+            <Link 
+              to="/admin/blog" 
+              className="bg-gradient-to-r from-blue-400 to-blue-600 text-white p-4 rounded-lg hover:from-blue-500 hover:to-blue-700 transition-all duration-200 shadow-md hover:shadow-lg"
+            >
+              <div className="flex items-center mb-2">
+                <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
+                <span className="font-semibold">Manage Blogs</span>
+              </div>
+              <p className="text-sm opacity-90">Edit, update, and delete blog posts</p>
+            </Link>
+
+            <div className="bg-gradient-to-r from-purple-400 to-purple-600 text-white p-4 rounded-lg shadow-md">
+              <div className="flex items-center mb-2">
+                <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 00-2-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4" />
+                </svg>
+                <span className="font-semibold">Blog Statistics</span>
+              </div>
+              <p className="text-sm opacity-90">View blog analytics and performance</p>
+            </div>
+
+            <Link 
+              to="/blog" 
+              className="bg-gradient-to-r from-orange-400 to-orange-600 text-white p-4 rounded-lg hover:from-orange-500 hover:to-orange-700 transition-all duration-200 shadow-md hover:shadow-lg"
+            >
+              <div className="flex items-center mb-2">
+                <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <span className="font-semibold">View Public Blog</span>
+              </div>
+              <p className="text-sm opacity-90">See how visitors view your blog</p>
+            </Link>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
