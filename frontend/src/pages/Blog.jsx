@@ -232,26 +232,26 @@ const Blog = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Column - Content */}
-            <div className="text-left order-2 lg:order-1">
-              {/* Breadcrumb */}
+            <div className="text-left order-1 lg:order-1">
+          {/* Breadcrumb */}
               <nav className="flex items-center mb-6 sm:mb-8">
                 <ol className="inline-flex items-center space-x-2 bg-white/60 backdrop-blur-sm rounded-full px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm shadow-sm border border-white/40">
-                  <li className="inline-flex items-center">
-                    <Link
-                      to="/"
+              <li className="inline-flex items-center">
+                <Link
+                  to="/"
                       className="text-gray-600 hover:text-[#5B8C3E] font-medium transition-colors duration-200"
-                    >
-                      Home
-                    </Link>
-                  </li>
-                  <li>
-                    <div className="flex items-center">
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <div className="flex items-center">
                       <ChevronRight className="h-3 w-3 text-gray-400 mx-1" />
                       <span className="font-medium text-[#5B8C3E]">Blog</span>
-                    </div>
-                  </li>
-                </ol>
-              </nav>
+                </div>
+              </li>
+            </ol>
+          </nav>
 
               {/* Main Heading */}
               <div className="space-y-4 sm:space-y-6">
@@ -262,8 +262,8 @@ const Blog = () => {
                       Health
                     </span>
                     <span className="block">Naturally</span>
-                  </h1>
-                  
+            </h1>
+            
                   <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] rounded-full"></div>
                 </div>
                 
@@ -294,7 +294,7 @@ const Blog = () => {
             </div>
 
             {/* Right Column - Visual Elements */}
-            <div className="relative order-1 lg:order-2 mb-8 lg:mb-0">
+            <div className="relative order-2 lg:order-2 mb-8 lg:mb-0">
               {/* Main Card */}
               <div className="relative bg-white rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-2xl p-6 sm:p-8 transform rotate-1 sm:rotate-3 hover:rotate-0 transition-transform duration-500">
                 {/* Card Header */}
@@ -368,7 +368,7 @@ const Blog = () => {
         {/* Advanced Search and Filter Section */}
         <div id="search-section" className="bg-white/90 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-2xl border border-white/20 p-4 sm:p-6 lg:p-8 mb-8 sm:mb-12 relative overflow-hidden">
           {/* Background Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#5B8C3E]/5 to-[#7BAD50]/5"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#5B8C3E]/8 to-[#7BAD50]/6"></div>
           
           <div className="relative">
             <div className="flex flex-col gap-4 sm:gap-6">
@@ -464,7 +464,7 @@ const Blog = () => {
                 </div>
               </div>
             </div>
-
+            
             {/* Active Filters Display */}
             {(searchQuery || selectedCategory) && (
               <div className="mt-4 sm:mt-6 flex flex-wrap gap-2 sm:gap-3">
@@ -523,7 +523,7 @@ const Blog = () => {
               </span>
             )}
           </div>
-        </div>
+          </div>
 
         {/* Blog Grid - Responsive */}
         <div className="mb-12 sm:mb-16">
@@ -607,12 +607,12 @@ const Blog = () => {
                   <div className="p-4 sm:p-6">
                     {/* Category & Date */}
                     <div className="flex items-center justify-between mb-3 gap-2">
-                      {blog.category_name && (
+                    {blog.category_name && (
                         <button
                           onClick={() => handleCategoryFilter(blog.category_id.toString())}
                           className="text-xs font-medium text-[#5B8C3E] bg-[#5B8C3E]/10 px-2 py-1 rounded-md hover:bg-[#5B8C3E] hover:text-white transition-colors duration-200 truncate"
                         >
-                          {blog.category_name}
+                        {blog.category_name}
                         </button>
                       )}
                       <span className="text-xs text-gray-500 flex-shrink-0">
