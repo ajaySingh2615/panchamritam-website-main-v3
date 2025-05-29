@@ -215,60 +215,149 @@ const Blog = () => {
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#f8f6f3' }}>
       {/* Hero Section */}
-      <section className="relative py-20 lg:py-32 overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-10 left-10 w-20 h-20 bg-[#5B8C3E] rounded-full"></div>
-          <div className="absolute top-32 right-20 w-16 h-16 bg-[#7BAD50] rounded-full"></div>
-          <div className="absolute bottom-20 left-1/4 w-12 h-12 bg-[#5B8C3E] rounded-full"></div>
+      <section className="relative py-16 lg:py-24 overflow-hidden">
+        {/* Decorative Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Geometric Shapes */}
+          <div className="absolute top-20 left-10 w-32 h-32 bg-[#5B8C3E]/5 rounded-full blur-xl"></div>
+          <div className="absolute top-40 right-20 w-24 h-24 bg-[#7BAD50]/10 rounded-full blur-lg"></div>
+          <div className="absolute bottom-32 left-1/4 w-40 h-40 bg-[#5B8C3E]/5 rounded-full blur-2xl"></div>
+          
+          {/* Floating Elements */}
+          <div className="absolute top-32 right-1/4 w-2 h-2 bg-[#5B8C3E] rounded-full animate-pulse"></div>
+          <div className="absolute top-48 left-1/3 w-1 h-1 bg-[#7BAD50] rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute bottom-40 right-1/3 w-1.5 h-1.5 bg-[#5B8C3E] rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
         </div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
-          {/* Breadcrumb */}
-          <nav className="flex justify-center mb-8">
-            <ol className="inline-flex items-center space-x-1 md:space-x-3 bg-white/80 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg">
-              <li className="inline-flex items-center">
-                <Link
-                  to="/"
-                  className="text-[#5B8C3E] hover:text-[#3B5323] text-sm font-medium transition-colors duration-200"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <div className="flex items-center">
-                  <span className="mx-2 text-gray-400">/</span>
-                  <span className="text-sm font-medium text-gray-700">Blog</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column - Content */}
+            <div className="text-left">
+              {/* Breadcrumb */}
+              <nav className="flex items-center mb-8">
+                <ol className="inline-flex items-center space-x-2 bg-white/60 backdrop-blur-sm rounded-full px-4 py-2 text-sm shadow-sm border border-white/40">
+                  <li className="inline-flex items-center">
+                    <Link
+                      to="/"
+                      className="text-gray-600 hover:text-[#5B8C3E] font-medium transition-colors duration-200"
+                    >
+                      Home
+                    </Link>
+                  </li>
+                  <li>
+                    <div className="flex items-center">
+                      <ChevronRight className="h-3 w-3 text-gray-400 mx-1" />
+                      <span className="font-medium text-[#5B8C3E]">Blog</span>
+                    </div>
+                  </li>
+                </ol>
+              </nav>
+
+              {/* Main Heading */}
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                    Discover
+                    <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] animate-pulse">
+                      Wellness
+                    </span>
+                    <span className="block">Wisdom</span>
+                  </h1>
+                  
+                  <div className="w-20 h-1 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] rounded-full"></div>
                 </div>
-              </li>
-            </ol>
-          </nav>
-
-          {/* Hero Content */}
-          <div className="max-w-5xl mx-auto">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-playfair font-bold text-gray-900 mb-8 leading-tight">
-              Ayurvedic <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5B8C3E] via-[#7BAD50] to-[#5B8C3E]">Wisdom</span>
-              <br />& Wellness
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed font-light">
-              Discover ancient wisdom for modern living. Explore our curated collection of articles on 
-              Ayurvedic practices, healthy recipes, and natural wellness tips.
-            </p>
-
-            {/* Stats */}
-            <div className="flex flex-wrap justify-center gap-8 mb-12">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-[#5B8C3E] mb-1">{pagination.totalBlogs || blogs.length}</div>
-                <div className="text-sm text-gray-600 uppercase tracking-wide">Articles</div>
+                
+                <p className="text-xl text-gray-600 max-w-2xl leading-relaxed font-light">
+                  Explore our curated collection of articles on Ayurvedic practices, 
+                  healthy recipes, and natural wellness tips for modern living.
+                </p>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-[#5B8C3E] mb-1">{categories.length}</div>
-                <div className="text-sm text-gray-600 uppercase tracking-wide">Categories</div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <button 
+                  onClick={() => document.getElementById('search-section').scrollIntoView({ behavior: 'smooth' })}
+                  className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white font-semibold rounded-full hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+                >
+                  <Search className="h-5 w-5 mr-3" />
+                  Start Exploring
+                </button>
+                
+                <Link
+                  to="#featured"
+                  className="inline-flex items-center px-8 py-4 bg-white/80 backdrop-blur-sm text-gray-700 font-semibold rounded-full border border-gray-200 hover:bg-white hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300"
+                >
+                  <Filter className="h-5 w-5 mr-3" />
+                  Browse Categories
+                </Link>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-[#5B8C3E] mb-1">1000+</div>
-                <div className="text-sm text-gray-600 uppercase tracking-wide">Readers</div>
+            </div>
+
+            {/* Right Column - Visual Elements */}
+            <div className="relative">
+              {/* Main Card */}
+              <div className="relative bg-white rounded-3xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                {/* Card Header */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] rounded-xl flex items-center justify-center">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-900">Latest Articles</h3>
+                      <p className="text-sm text-gray-500">Fresh insights daily</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-[#5B8C3E]">{pagination.totalBlogs || blogs.length}</div>
+                    <div className="text-xs text-gray-500 uppercase tracking-wide">Articles</div>
+                  </div>
+                </div>
+
+                {/* Stats Grid */}
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="bg-gradient-to-br from-[#5B8C3E]/10 to-[#7BAD50]/10 rounded-2xl p-4 text-center">
+                    <div className="text-xl font-bold text-[#5B8C3E] mb-1">{categories.length}</div>
+                    <div className="text-xs text-gray-600 uppercase tracking-wide">Categories</div>
+                  </div>
+                  <div className="bg-gradient-to-br from-[#7BAD50]/10 to-[#5B8C3E]/10 rounded-2xl p-4 text-center">
+                    <div className="text-xl font-bold text-[#5B8C3E] mb-1">1000+</div>
+                    <div className="text-xs text-gray-600 uppercase tracking-wide">Readers</div>
+                  </div>
+                </div>
+
+                {/* Featured Categories */}
+                <div className="space-y-3">
+                  <h4 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">Popular Topics</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {categories.slice(0, 4).map((category) => (
+                      <button
+                        key={category.category_id}
+                        onClick={() => handleCategoryFilter(category.category_id.toString())}
+                        className="text-xs px-3 py-1.5 bg-gray-100 hover:bg-[#5B8C3E] hover:text-white text-gray-700 rounded-full transition-all duration-200 transform hover:scale-105"
+                      >
+                        {category.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating Mini Cards */}
+              <div className="absolute -top-4 -right-4 bg-white rounded-2xl shadow-xl p-4 transform -rotate-12 hover:rotate-0 transition-transform duration-300">
+                <div className="flex items-center space-x-2">
+                  <Eye className="h-4 w-4 text-[#7BAD50]" />
+                  <span className="text-sm font-semibold text-gray-700">2.5k+ Views</span>
+                </div>
+              </div>
+
+              <div className="absolute -bottom-6 -left-6 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] rounded-2xl shadow-xl p-4 text-white transform rotate-12 hover:rotate-0 transition-transform duration-300">
+                <div className="flex items-center space-x-2">
+                  <Calendar className="h-4 w-4" />
+                  <span className="text-sm font-semibold">Updated Daily</span>
+                </div>
               </div>
             </div>
           </div>
@@ -277,7 +366,7 @@ const Blog = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         {/* Advanced Search and Filter Section */}
-        <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-8 mb-12 relative overflow-hidden">
+        <div id="search-section" className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 p-8 mb-12 relative overflow-hidden">
           {/* Background Gradient */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#5B8C3E]/5 to-[#7BAD50]/5"></div>
           
