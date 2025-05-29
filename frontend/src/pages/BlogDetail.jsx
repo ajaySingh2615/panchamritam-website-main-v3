@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Calendar, User, ArrowLeft, Clock, Share2, Tag } from 'lucide-react';
+import '../styles/blogAnimations.css';
 
 const BlogDetail = () => {
   const { slug } = useParams();
@@ -8,6 +9,11 @@ const BlogDetail = () => {
   const [relatedPosts, setRelatedPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [scrollY, setScrollY] = useState(0);
+  const [imageLoading, setImageLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
+
+  const heroRef = useRef(null);
 
   useEffect(() => {
     fetchBlogDetail();
@@ -21,6 +27,38 @@ const BlogDetail = () => {
     }
     return () => {
       document.title = 'Panchamritam - Ayurvedic Foods';
+    };
+  }, [blog]);
+
+  useEffect(() => {
+    // Scroll animations setup
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in');
+          entry.target.classList.remove('opacity-0', 'translate-y-8');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all elements with scroll-animate class
+    setTimeout(() => {
+      const animateElements = document.querySelectorAll('.scroll-animate');
+      animateElements.forEach((el) => observer.observe(el));
+    }, 100);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
     };
   }, [blog]);
 
@@ -88,6 +126,28 @@ const BlogDetail = () => {
     }
   };
 
+  const handleImageLoad = () => {
+    setImageLoading(false);
+    setImageError(false);
+  };
+
+  const handleImageError = () => {
+    setImageLoading(false);
+    setImageError(true);
+  };
+
+  const getImageContainerClass = (imageUrl) => {
+    // Base class
+    let className = 'smart-image-container';
+    
+    // Add loading class if image is still loading
+    if (imageLoading) {
+      className += ' loading';
+    }
+    
+    return className;
+  };
+
   const renderContent = (content) => {
     return { __html: content.replace(/\n/g, '<br>') };
   };
@@ -95,7 +155,7 @@ const BlogDetail = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center pt-20" style={{ backgroundColor: '#f8f6f3' }}>
-        <div className="text-gray-600">Loading...</div>
+        <div className="text-gray-600 animate-pulse">Loading...</div>
       </div>
     );
   }
@@ -103,7 +163,7 @@ const BlogDetail = () => {
   if (error || !blog) {
     return (
       <div className="min-h-screen flex items-center justify-center pt-20" style={{ backgroundColor: '#f8f6f3' }}>
-        <div className="text-center">
+        <div className="text-center animate-fade-in">
           <h1 className="text-xl text-gray-900 mb-4">Article Not Found</h1>
           <Link to="/blog" className="text-green-600 hover:text-green-700">
             ← Back to Blog
@@ -115,26 +175,26 @@ const BlogDetail = () => {
 
   return (
     <div className="min-h-screen pt-20" style={{ backgroundColor: '#f8f6f3' }}>
-      <div className="max-w-2xl mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-4 py-8">
         
-        {/* Back Link */}
+        {/* Back Link with animation */}
         <Link
           to="/blog"
-          className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-8 transition-colors"
+          className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 mb-8 transition-all duration-200 hover:translate-x-1 scroll-animate opacity-0 translate-y-8"
         >
-          <ArrowLeft className="h-4 w-4 mr-1" />
+          <ArrowLeft className="h-4 w-4 mr-1 transition-transform group-hover:-translate-x-1" />
           Back to Blog
         </Link>
 
-        {/* Article */}
-        <article className="bg-white rounded-lg shadow-sm p-6 md:p-8 mb-8">
+        {/* Article with staggered animations */}
+        <article className="bg-white rounded-lg shadow-sm p-8 md:p-12 mb-8 scroll-animate opacity-0 translate-y-8 transition-all duration-400">
           
           {/* Category Badge */}
           {blog.category_name && (
-            <div className="mb-4">
+            <div className="mb-4 scroll-animate opacity-0 translate-y-8" style={{ transitionDelay: '0.05s' }}>
               <Link
                 to={`/blog/category/${blog.category_slug}`}
-                className="inline-flex items-center bg-green-100 text-green-700 text-xs font-medium px-2 py-1 rounded-full hover:bg-green-200 transition-colors"
+                className="inline-flex items-center bg-green-100 text-green-700 text-xs font-medium px-2 py-1 rounded-full hover:bg-green-200 transition-all duration-200 hover:scale-105"
               >
                 <Tag className="h-3 w-3 mr-1" />
                 {blog.category_name}
@@ -142,20 +202,20 @@ const BlogDetail = () => {
             </div>
           )}
 
-          {/* Title with engaging styling */}
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
+          {/* Title with animation */}
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight scroll-animate opacity-0 translate-y-8 transition-all duration-400" style={{ transitionDelay: '0.1s' }}>
             {blog.title}
           </h1>
 
-          {/* Excerpt - Make it engaging */}
+          {/* Excerpt with animation */}
           {blog.excerpt && (
-            <div className="text-lg text-gray-700 mb-6 p-4 bg-green-50 border-l-4 border-green-400 italic leading-relaxed">
+            <div className="text-lg text-gray-700 mb-6 p-4 bg-green-50 border-l-4 border-green-400 italic leading-relaxed scroll-animate opacity-0 translate-y-8 transition-all duration-400" style={{ transitionDelay: '0.15s' }}>
               "{blog.excerpt}"
             </div>
           )}
 
-          {/* Enhanced Meta with engagement elements */}
-          <div className="flex items-center justify-between text-sm text-gray-500 mb-8 pb-6 border-b border-gray-100">
+          {/* Meta with animation */}
+          <div className="flex items-center justify-between text-sm text-gray-500 mb-8 pb-6 border-b border-gray-100 scroll-animate opacity-0 translate-y-8 transition-all duration-400" style={{ transitionDelay: '0.2s' }}>
             <div className="flex items-center space-x-4">
               <div className="flex items-center">
                 <User className="h-4 w-4 mr-1" />
@@ -174,35 +234,57 @@ const BlogDetail = () => {
             </div>
             <button
               onClick={handleShare}
-              className="flex items-center text-green-600 hover:text-green-700 transition-colors"
+              className="flex items-center text-green-600 hover:text-green-700 transition-all duration-200 hover:scale-105"
             >
               <Share2 className="h-4 w-4 mr-1" />
               Share
             </button>
           </div>
 
-          {/* Featured Image with caption */}
+          {/* Featured Image with parallax effect */}
           {blog.featured_image && (
-            <div className="mb-8">
-              <img
-                src={blog.featured_image}
-                alt={blog.title}
-                className="w-full h-64 md:h-80 object-cover rounded-lg shadow-sm"
-              />
-              <p className="text-sm text-gray-500 text-center mt-2 italic">
+            <div className="mb-8 scroll-animate opacity-0 translate-y-8 transition-all duration-400" style={{ transitionDelay: '0.25s' }}>
+              <div 
+                className="relative mx-auto"
+                style={{
+                  transform: `translateY(${scrollY * 0.1}px)`,
+                  transition: 'transform 0.1s ease-out'
+                }}
+              >
+                <div 
+                  ref={heroRef}
+                  className={getImageContainerClass(blog.featured_image)}
+                >
+                  {!imageError ? (
+                    <img
+                      src={blog.featured_image}
+                      alt={blog.title}
+                      className="transition-transform duration-500 hover:scale-105"
+                      onLoad={handleImageLoad}
+                      onError={handleImageError}
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center justify-center text-gray-400 p-8">
+                      <div className="text-4xl mb-2">🖼️</div>
+                      <p className="text-sm">Image not available</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <p className="text-sm text-gray-500 text-center mt-4 italic scroll-animate opacity-0 translate-y-4" style={{ transitionDelay: '0.3s' }}>
                 Discover the wisdom of Ayurvedic nutrition and natural wellness
               </p>
             </div>
           )}
 
-          {/* Engaging content wrapper */}
-          <div className="prose prose-gray max-w-none text-gray-800 leading-relaxed">
+          {/* Content with animation */}
+          <div className="prose prose-gray max-w-none text-gray-800 leading-relaxed scroll-animate opacity-0 translate-y-8 transition-all duration-400" style={{ transitionDelay: '0.35s' }}>
             <div 
               dangerouslySetInnerHTML={renderContent(blog.content)}
             />
             
-            {/* Engagement call-to-action */}
-            <div className="mt-8 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+            {/* Engagement CTA with animation */}
+            <div className="mt-8 p-4 bg-amber-50 border border-amber-200 rounded-lg scroll-animate opacity-0 translate-y-8 transition-all duration-400 hover:shadow-md" style={{ transitionDelay: '0.4s' }}>
               <p className="text-amber-800 text-sm mb-2">
                 <strong>💡 Did you find this helpful?</strong>
               </p>
@@ -215,46 +297,47 @@ const BlogDetail = () => {
 
         </article>
 
-        {/* Category-Based Related Posts Section */}
+        {/* Category-Based Related Posts with staggered animation */}
         {relatedPosts.length > 0 && (
-          <div className="bg-white rounded-lg shadow-sm p-6 md:p-8 mb-8">
-            <div className="flex items-center mb-4">
-              <h3 className="text-xl font-semibold text-gray-900">More in {blog.category_name}</h3>
-              <div className="ml-2 text-green-600">
-                <Tag className="h-5 w-5" />
+          <div className="bg-white rounded-lg shadow-sm p-8 md:p-12 mb-8 scroll-animate opacity-0 translate-y-8 transition-all duration-400">
+            <div className="flex items-center mb-6 scroll-animate opacity-0 translate-y-8" style={{ transitionDelay: '0.05s' }}>
+              <h3 className="text-2xl font-semibold text-gray-900">More in {blog.category_name}</h3>
+              <div className="ml-3 text-green-600">
+                <Tag className="h-6 w-6" />
               </div>
             </div>
-            <p className="text-gray-600 text-sm mb-6">
+            <p className="text-gray-600 mb-8 scroll-animate opacity-0 translate-y-8" style={{ transitionDelay: '0.1s' }}>
               Explore more articles in the <span className="font-medium text-green-700">{blog.category_name}</span> category
             </p>
-            <div className="space-y-4">
+            <div className="grid md:grid-cols-2 gap-6">
               {relatedPosts.slice(0, 4).map((post, index) => (
                 <Link
                   key={post.blog_id}
                   to={`/blog/${post.slug}`}
-                  className="block group p-4 border border-gray-100 rounded-lg hover:border-green-200 hover:bg-green-50 transition-all duration-200"
+                  className="block group p-6 border border-gray-100 rounded-lg hover:border-green-200 hover:bg-green-50 transition-all duration-200 hover:shadow-md hover:-translate-y-1 scroll-animate opacity-0 translate-y-8"
+                  style={{ transitionDelay: `${0.15 + index * 0.05}s` }}
                 >
                   <div className="flex items-start space-x-4">
                     {post.featured_image && (
                       <img
                         src={post.featured_image}
                         alt={post.title}
-                        className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
+                        className="w-20 h-20 object-cover rounded-lg flex-shrink-0 transition-transform duration-200 group-hover:scale-105"
                       />
                     )}
                     <div className="flex-1 min-w-0">
-                      <h4 className="text-gray-900 group-hover:text-green-700 font-medium text-sm leading-tight mb-1">
+                      <h4 className="text-gray-900 group-hover:text-green-700 font-medium leading-tight mb-2 transition-colors duration-200">
                         {post.title}
                       </h4>
                       {post.excerpt && (
-                        <p className="text-gray-600 text-xs leading-relaxed mb-2 line-clamp-2">
+                        <p className="text-gray-600 text-sm leading-relaxed mb-3 line-clamp-3">
                           {post.excerpt}
                         </p>
                       )}
-                      <div className="flex items-center text-xs text-gray-500">
-                        <Calendar className="h-3 w-3 mr-1" />
+                      <div className="flex items-center text-sm text-gray-500">
+                        <Calendar className="h-4 w-4 mr-1" />
                         {formatDate(post.published_at || post.created_at)}
-                        <span className="ml-3 text-green-600 group-hover:text-green-700">
+                        <span className="ml-3 text-green-600 group-hover:text-green-700 transition-all duration-200 group-hover:translate-x-1">
                           Read more →
                         </span>
                       </div>
@@ -264,67 +347,68 @@ const BlogDetail = () => {
               ))}
             </div>
             
-            {/* View category link */}
-            <div className="mt-6 text-center">
+            {/* View category link with animation */}
+            <div className="mt-8 text-center scroll-animate opacity-0 translate-y-8" style={{ transitionDelay: '0.35s' }}>
               <Link
                 to={`/blog/category/${blog.category_slug}`}
-                className="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-sm"
+                className="inline-flex items-center text-green-600 hover:text-green-700 font-medium transition-all duration-200 hover:scale-105"
               >
-                <Tag className="h-4 w-4 mr-1" />
+                <Tag className="h-5 w-5 mr-2" />
                 View All {blog.category_name} Articles
               </Link>
             </div>
           </div>
         )}
 
-        {/* Show message if no related posts in category */}
+        {/* Empty state with animation */}
         {relatedPosts.length === 0 && blog.category_name && (
-          <div className="bg-white rounded-lg shadow-sm p-6 md:p-8 mb-8 text-center">
-            <div className="text-gray-400 mb-3">
-              <Tag className="h-8 w-8 mx-auto" />
+          <div className="bg-white rounded-lg shadow-sm p-8 md:p-12 mb-8 text-center scroll-animate opacity-0 translate-y-8 transition-all duration-400">
+            <div className="text-gray-400 mb-4 scroll-animate opacity-0 scale-75" style={{ transitionDelay: '0.05s' }}>
+              <Tag className="h-12 w-12 mx-auto" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="text-xl font-semibold text-gray-900 mb-3 scroll-animate opacity-0 translate-y-4" style={{ transitionDelay: '0.1s' }}>
               More {blog.category_name} Articles Coming Soon
             </h3>
-            <p className="text-gray-600 text-sm mb-4">
+            <p className="text-gray-600 mb-6 max-w-md mx-auto scroll-animate opacity-0 translate-y-4" style={{ transitionDelay: '0.15s' }}>
               This is the first article in the {blog.category_name} category. 
               Check back soon for more related content!
             </p>
             <Link
               to="/blog"
-              className="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-sm"
+              className="inline-flex items-center text-green-600 hover:text-green-700 font-medium transition-all duration-200 hover:scale-105 scroll-animate opacity-0 translate-y-4"
+              style={{ transitionDelay: '0.2s' }}
             >
               Explore All Articles
-              <ArrowLeft className="h-4 w-4 ml-1 rotate-180" />
+              <ArrowLeft className="h-5 w-5 ml-2 rotate-180" />
             </Link>
           </div>
         )}
 
-        {/* Author Engagement Section */}
-        <div className="bg-white rounded-lg shadow-sm p-6 md:p-8">
-          <div className="text-center">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-green-700 text-xl font-bold">
+        {/* Author section with animation */}
+        <div className="bg-white rounded-lg shadow-sm p-8 md:p-12 scroll-animate opacity-0 translate-y-8 transition-all duration-400">
+          <div className="text-center max-w-2xl mx-auto">
+            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 scroll-animate opacity-0 scale-75 transition-all duration-300" style={{ transitionDelay: '0.05s' }}>
+              <span className="text-green-700 text-2xl font-bold">
                 {blog.author_name.charAt(0).toUpperCase()}
               </span>
             </div>
-            <h4 className="text-lg font-semibold text-gray-900 mb-2">
+            <h4 className="text-xl font-semibold text-gray-900 mb-3 scroll-animate opacity-0 translate-y-4" style={{ transitionDelay: '0.1s' }}>
               Written by {blog.author_name}
             </h4>
-            <p className="text-gray-600 text-sm mb-4">
+            <p className="text-gray-600 mb-6 scroll-animate opacity-0 translate-y-4" style={{ transitionDelay: '0.15s' }}>
               Passionate about sharing ancient Ayurvedic wisdom for modern wellness. 
               Join thousands of readers on a journey to natural health and vitality.
             </p>
-            <div className="flex justify-center space-x-4 text-sm">
+            <div className="flex justify-center space-x-6 scroll-animate opacity-0 translate-y-4" style={{ transitionDelay: '0.2s' }}>
               <button
                 onClick={handleShare}
-                className="text-green-600 hover:text-green-700 transition-colors"
+                className="text-green-600 hover:text-green-700 transition-all duration-200 hover:scale-105 font-medium"
               >
                 Share this story
               </button>
               <Link
                 to="/blog"
-                className="text-gray-500 hover:text-gray-700 transition-colors"
+                className="text-gray-500 hover:text-gray-700 transition-all duration-200 hover:scale-105 font-medium"
               >
                 More articles
               </Link>
