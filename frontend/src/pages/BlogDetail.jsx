@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Calendar, User, ArrowLeft, Clock, Share2 } from 'lucide-react';
+import { Calendar, User, ArrowLeft, Clock, Share2, Tag } from 'lucide-react';
 
 const BlogDetail = () => {
   const { slug } = useParams();
@@ -16,6 +16,8 @@ const BlogDetail = () => {
   useEffect(() => {
     if (blog) {
       document.title = blog.meta_title || blog.title;
+      // Fetch related posts after blog is loaded
+      fetchRelatedPosts();
     }
     return () => {
       document.title = 'Panchamritam - Ayurvedic Foods';
@@ -39,6 +41,23 @@ const BlogDetail = () => {
       console.error('Error fetching blog detail:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchRelatedPosts = async () => {
+    try {
+      // Only fetch posts from the same category
+      if (blog.category_slug) {
+        const response = await fetch(`/api/blogs?category=${blog.category_slug}&limit=6&exclude=${blog.blog_id}`);
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+          setRelatedPosts(data.data.blogs || []);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching related posts:', error);
+      setRelatedPosts([]);
     }
   };
 
@@ -113,9 +132,13 @@ const BlogDetail = () => {
           {/* Category Badge */}
           {blog.category_name && (
             <div className="mb-4">
-              <span className="inline-block bg-green-100 text-green-700 text-xs font-medium px-2 py-1 rounded-full">
+              <Link
+                to={`/blog/category/${blog.category_slug}`}
+                className="inline-flex items-center bg-green-100 text-green-700 text-xs font-medium px-2 py-1 rounded-full hover:bg-green-200 transition-colors"
+              >
+                <Tag className="h-3 w-3 mr-1" />
                 {blog.category_name}
-              </span>
+              </Link>
             </div>
           )}
 
@@ -192,15 +215,17 @@ const BlogDetail = () => {
 
         </article>
 
-        {/* Enhanced Related Posts Section */}
+        {/* Category-Based Related Posts Section */}
         {relatedPosts.length > 0 && (
           <div className="bg-white rounded-lg shadow-sm p-6 md:p-8 mb-8">
-            <div className="flex items-center mb-6">
-              <h3 className="text-xl font-semibold text-gray-900">Continue Your Journey</h3>
-              <div className="ml-2 text-green-600">📚</div>
+            <div className="flex items-center mb-4">
+              <h3 className="text-xl font-semibold text-gray-900">More in {blog.category_name}</h3>
+              <div className="ml-2 text-green-600">
+                <Tag className="h-5 w-5" />
+              </div>
             </div>
             <p className="text-gray-600 text-sm mb-6">
-              Explore more insights on Ayurvedic nutrition and natural wellness
+              Explore more articles in the <span className="font-medium text-green-700">{blog.category_name}</span> category
             </p>
             <div className="space-y-4">
               {relatedPosts.slice(0, 4).map((post, index) => (
@@ -228,7 +253,7 @@ const BlogDetail = () => {
                       )}
                       <div className="flex items-center text-xs text-gray-500">
                         <Calendar className="h-3 w-3 mr-1" />
-                        {formatDate(post.published_at)}
+                        {formatDate(post.published_at || post.created_at)}
                         <span className="ml-3 text-green-600 group-hover:text-green-700">
                           Read more →
                         </span>
@@ -239,16 +264,39 @@ const BlogDetail = () => {
               ))}
             </div>
             
-            {/* View all link */}
+            {/* View category link */}
             <div className="mt-6 text-center">
               <Link
-                to="/blog"
+                to={`/blog/category/${blog.category_slug}`}
                 className="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-sm"
               >
-                Explore All Articles
-                <ArrowLeft className="h-4 w-4 ml-1 rotate-180" />
+                <Tag className="h-4 w-4 mr-1" />
+                View All {blog.category_name} Articles
               </Link>
             </div>
+          </div>
+        )}
+
+        {/* Show message if no related posts in category */}
+        {relatedPosts.length === 0 && blog.category_name && (
+          <div className="bg-white rounded-lg shadow-sm p-6 md:p-8 mb-8 text-center">
+            <div className="text-gray-400 mb-3">
+              <Tag className="h-8 w-8 mx-auto" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              More {blog.category_name} Articles Coming Soon
+            </h3>
+            <p className="text-gray-600 text-sm mb-4">
+              This is the first article in the {blog.category_name} category. 
+              Check back soon for more related content!
+            </p>
+            <Link
+              to="/blog"
+              className="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-sm"
+            >
+              Explore All Articles
+              <ArrowLeft className="h-4 w-4 ml-1 rotate-180" />
+            </Link>
           </div>
         )}
 
