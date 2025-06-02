@@ -6,6 +6,7 @@ const Product = require('../models/product');
 const Address = require('../models/address');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
+const { pool } = require('../config/db');
 // const { sendResetPasswordEmail } = require('../utils/emailService');
 
 // Get dashboard statistics
@@ -19,8 +20,20 @@ exports.getDashboardStats = async (req, res) => {
     // Calculate total revenue
     const totalRevenue = await Order.sumCompletedAmount() || 0;
     
-    // Get recent orders (last 5)
-    const recentOrders = await Order.findRecent(5);
+    // Get recent orders with user names (last 5)
+    const [recentOrders] = await pool.execute(
+      `SELECT 
+        o.order_id,
+        o.total_price,
+        o.status,
+        o.order_date,
+        o.payment_method,
+        u.name as user_name
+       FROM orders o
+       LEFT JOIN users u ON o.user_id = u.user_id
+       ORDER BY o.order_date DESC 
+       LIMIT 5`
+    );
     
     // Get new users (last 5)
     const newUsers = await User.findRecent(5);

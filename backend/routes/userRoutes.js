@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { protect, restrictTo } = require('../middlewares/authMiddleware');
+const userController = require('../controllers/userController');
+
+// Get user dashboard stats
+router.get('/dashboard-stats', protect, userController.getDashboardStats);
 
 // Protected route example - user dashboard
 router.get('/dashboard', protect, (req, res) => {
