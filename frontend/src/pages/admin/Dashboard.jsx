@@ -73,7 +73,12 @@ const Dashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-['Poppins'] text-sm font-medium text-gray-600 uppercase tracking-wide">Revenue</p>
-                <p className="font-['Playfair_Display'] text-2xl lg:text-3xl font-bold text-[#5B8C3E] mt-2">₹{stats.totalRevenue?.toFixed(0)}</p>
+                <p className="font-['Poppins'] text-2xl lg:text-3xl font-bold text-[#5B8C3E] mt-2">
+                  ₹{parseFloat(stats.totalRevenue || 0).toLocaleString('en-IN', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                  })}
+                </p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-[#5B8C3E] to-[#7BAD50] rounded-xl flex items-center justify-center">
                 <i className="fas fa-rupee-sign text-white text-xl"></i>
@@ -87,7 +92,7 @@ const Dashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-['Poppins'] text-sm font-medium text-gray-600 uppercase tracking-wide">Orders</p>
-                <p className="font-['Playfair_Display'] text-2xl lg:text-3xl font-bold text-[#7BAD50] mt-2">{stats.totalOrders}</p>
+                <p className="font-['Poppins'] text-2xl lg:text-3xl font-bold text-[#7BAD50] mt-2">{stats.totalOrders}</p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-[#7BAD50] to-[#AECB95] rounded-xl flex items-center justify-center">
                 <i className="fas fa-shopping-bag text-white text-xl"></i>
@@ -101,7 +106,7 @@ const Dashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-['Poppins'] text-sm font-medium text-gray-600 uppercase tracking-wide">Products</p>
-                <p className="font-['Playfair_Display'] text-2xl lg:text-3xl font-bold text-[#AECB95] mt-2">{stats.totalProducts}</p>
+                <p className="font-['Poppins'] text-2xl lg:text-3xl font-bold text-[#AECB95] mt-2">{stats.totalProducts}</p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-[#AECB95] to-[#5B8C3E] rounded-xl flex items-center justify-center">
                 <i className="fas fa-box text-white text-xl"></i>
@@ -115,7 +120,7 @@ const Dashboard = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-['Poppins'] text-sm font-medium text-gray-600 uppercase tracking-wide">Users</p>
-                <p className="font-['Playfair_Display'] text-2xl lg:text-3xl font-bold text-[#5B8C3E] mt-2">{stats.totalUsers}</p>
+                <p className="font-['Poppins'] text-2xl lg:text-3xl font-bold text-[#5B8C3E] mt-2">{stats.totalUsers}</p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-[#5B8C3E] to-[#7BAD50] rounded-xl flex items-center justify-center">
                 <i className="fas fa-users text-white text-xl"></i>
@@ -236,20 +241,20 @@ const Dashboard = () => {
           {stats.recentOrders?.length > 0 ? (
             <div className="space-y-4">
               {stats.recentOrders.slice(0, 5).map((order) => (
-                <div key={order.order_id} className="flex items-center justify-between p-4 bg-white/50 rounded-xl border border-white/60 hover:bg-white/70 transition-all duration-200">
+                <div key={order.order_id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 bg-white/50 rounded-xl border border-white/60 hover:bg-white/70 transition-all duration-200 space-y-3 sm:space-y-0">
                   <div className="flex items-center space-x-4">
-                    <div className="w-10 h-10 bg-gradient-to-br from-[#5B8C3E] to-[#7BAD50] rounded-lg flex items-center justify-center">
+                    <div className="w-10 h-10 bg-gradient-to-br from-[#5B8C3E] to-[#7BAD50] rounded-lg flex items-center justify-center flex-shrink-0">
                       <span className="font-['Poppins'] text-white text-sm font-bold">#{order.order_id}</span>
                     </div>
-                    <div>
-                      <p className="font-['Poppins'] font-semibold text-[#1F2937]">Order #{order.order_id}</p>
+                    <div className="min-w-0 flex-1">
+                      <p className="font-['Poppins'] font-semibold text-[#1F2937] truncate">Order #{order.order_id}</p>
                       <p className="font-['Poppins'] text-sm text-gray-600">
                         {order.user_name || 'Customer'} • {new Date(order.order_date).toLocaleDateString()}
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-4">
-                    <span className={`font-['Poppins'] px-3 py-1 rounded-full text-xs font-medium ${
+                  <div className="flex items-center justify-between sm:justify-end sm:space-x-4 space-x-2">
+                    <span className={`font-['Poppins'] px-3 py-1 rounded-full text-xs font-medium flex-shrink-0 ${
                       order.status === 'delivered' ? 'bg-green-100 text-green-800' :
                       order.status === 'shipped' ? 'bg-blue-100 text-blue-800' :
                       order.status === 'processing' ? 'bg-yellow-100 text-yellow-800' :
@@ -257,7 +262,15 @@ const Dashboard = () => {
                     }`}>
                       {order.status}
                     </span>
-                    <p className="font-['Playfair_Display'] font-bold text-[#5B8C3E]">₹{order.total_price}</p>
+                    <div className="text-right flex-shrink-0">
+                      <p className="font-['Poppins'] text-lg font-bold text-[#5B8C3E]">
+                        ₹{parseFloat(order.total_price).toLocaleString('en-IN', {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2
+                        })}
+                      </p>
+                      <p className="font-['Poppins'] text-xs text-gray-500">Total</p>
+                    </div>
                   </div>
                 </div>
               ))}

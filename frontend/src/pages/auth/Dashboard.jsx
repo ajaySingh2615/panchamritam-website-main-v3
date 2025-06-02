@@ -51,27 +51,27 @@ function Dashboard() {
   const cartCount = getCartCount();
 
   return (
-    <div className="min-h-screen bg-[#f8f6f3] pt-20 py-8 px-4">
+    <div className="min-h-screen bg-[#f8f6f3] pt-20 py-4 sm:py-8 px-4">
       <div className="max-w-7xl mx-auto">
         
         {/* Welcome Header */}
-        <div className="text-center mb-12">
-          <h1 className="font-['Playfair_Display'] text-4xl md:text-5xl font-bold text-[#1F2937] mb-4">
+        <div className="text-center mb-8 sm:mb-12">
+          <h1 className="font-['Playfair_Display'] text-3xl sm:text-4xl md:text-5xl font-bold text-[#1F2937] mb-4">
             Welcome back, {user?.name?.split(' ')[0]} 🌿
           </h1>
-          <p className="font-['Poppins'] text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="font-['Poppins'] text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4 sm:px-0">
             Manage your orders, track your garden journey, and discover new organic treasures
           </p>
         </div>
 
         {/* Stats Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
           {/* Total Orders */}
           <div className="bg-white/70 backdrop-blur-md border border-white/40 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-['Poppins'] text-sm font-medium text-gray-600 uppercase tracking-wide">Total Orders</p>
-                <p className="font-['Playfair_Display'] text-3xl font-bold text-[#5B8C3E] mt-2">{dashboardData.totalOrders}</p>
+                <p className="font-['Poppins'] text-3xl font-bold text-[#5B8C3E] mt-2">{dashboardData.totalOrders}</p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-[#5B8C3E] to-[#7BAD50] rounded-xl flex items-center justify-center">
                 <i className="fas fa-shopping-bag text-white text-xl"></i>
@@ -85,7 +85,7 @@ function Dashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-['Poppins'] text-sm font-medium text-gray-600 uppercase tracking-wide">Wishlist</p>
-                <p className="font-['Playfair_Display'] text-3xl font-bold text-[#7BAD50] mt-2">{dashboardData.wishlistItems}</p>
+                <p className="font-['Poppins'] text-3xl font-bold text-[#7BAD50] mt-2">{dashboardData.wishlistItems}</p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-[#7BAD50] to-[#AECB95] rounded-xl flex items-center justify-center">
                 <i className="fas fa-heart text-white text-xl"></i>
@@ -99,7 +99,7 @@ function Dashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-['Poppins'] text-sm font-medium text-gray-600 uppercase tracking-wide">Cart Items</p>
-                <p className="font-['Playfair_Display'] text-3xl font-bold text-[#AECB95] mt-2">{cartCount}</p>
+                <p className="font-['Poppins'] text-3xl font-bold text-[#AECB95] mt-2">{cartCount}</p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-[#AECB95] to-[#5B8C3E] rounded-xl flex items-center justify-center">
                 <i className="fas fa-shopping-cart text-white text-xl"></i>
@@ -109,16 +109,16 @@ function Dashboard() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           
           {/* Recent Orders */}
-          <div className="lg:col-span-2">
-            <div className="bg-white/70 backdrop-blur-md border border-white/40 rounded-2xl p-6 shadow-lg">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="font-['Playfair_Display'] text-2xl font-bold text-[#1F2937]">Recent Orders</h2>
+          <div className="lg:col-span-2 order-2 lg:order-1">
+            <div className="bg-white/70 backdrop-blur-md border border-white/40 rounded-2xl p-4 sm:p-6 shadow-lg">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-2 sm:space-y-0">
+                <h2 className="font-['Playfair_Display'] text-xl sm:text-2xl font-bold text-[#1F2937]">Recent Orders</h2>
                 <Link 
                   to="/orders" 
-                  className="font-['Poppins'] text-sm font-medium text-[#5B8C3E] hover:text-[#7BAD50] transition-colors duration-200"
+                  className="font-['Poppins'] text-sm font-medium text-[#5B8C3E] hover:text-[#7BAD50] transition-colors duration-200 self-start sm:self-auto"
                 >
                   View All →
                 </Link>
@@ -135,18 +135,18 @@ function Dashboard() {
               ) : dashboardData.recentOrders?.length > 0 ? (
                 <div className="space-y-4">
                   {dashboardData.recentOrders.slice(0, 3).map((order) => (
-                    <div key={order.order_id} className="flex items-center justify-between p-4 bg-white/50 rounded-xl border border-white/60 hover:bg-white/70 transition-all duration-200">
+                    <div key={order.order_id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 bg-white/50 rounded-xl border border-white/60 hover:bg-white/70 transition-all duration-200 space-y-3 sm:space-y-0">
                       <div className="flex items-center space-x-4">
-                        <div className="w-10 h-10 bg-gradient-to-br from-[#5B8C3E] to-[#7BAD50] rounded-lg flex items-center justify-center">
+                        <div className="w-10 h-10 bg-gradient-to-br from-[#5B8C3E] to-[#7BAD50] rounded-lg flex items-center justify-center flex-shrink-0">
                           <span className="font-['Poppins'] text-white text-sm font-bold">#{order.order_id}</span>
                         </div>
-                        <div>
-                          <p className="font-['Poppins'] font-semibold text-[#1F2937]">Order #{order.order_id}</p>
+                        <div className="min-w-0 flex-1">
+                          <p className="font-['Poppins'] font-semibold text-[#1F2937] truncate">Order #{order.order_id}</p>
                           <p className="font-['Poppins'] text-sm text-gray-600">{new Date(order.order_date).toLocaleDateString()}</p>
                         </div>
                       </div>
-                      <div className="flex items-center space-x-4">
-                        <span className={`font-['Poppins'] px-3 py-1 rounded-full text-xs font-medium ${
+                      <div className="flex items-center justify-between sm:justify-end sm:space-x-4 space-x-2">
+                        <span className={`font-['Poppins'] px-3 py-1 rounded-full text-xs font-medium flex-shrink-0 ${
                           order.status === 'delivered' ? 'bg-green-100 text-green-800' :
                           order.status === 'shipped' ? 'bg-blue-100 text-blue-800' :
                           order.status === 'processing' ? 'bg-yellow-100 text-yellow-800' :
@@ -154,7 +154,15 @@ function Dashboard() {
                         }`}>
                           {order.status}
                         </span>
-                        <p className="font-['Playfair_Display'] font-bold text-[#5B8C3E]">₹{order.total_price}</p>
+                        <div className="text-right flex-shrink-0">
+                          <p className="font-['Poppins'] text-lg font-bold text-[#5B8C3E]">
+                            ₹{parseFloat(order.total_price).toLocaleString('en-IN', {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2
+                            })}
+                          </p>
+                          <p className="font-['Poppins'] text-xs text-gray-500">Total</p>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -177,9 +185,9 @@ function Dashboard() {
           </div>
 
           {/* Quick Actions */}
-          <div className="space-y-6">
-            <div className="bg-white/70 backdrop-blur-md border border-white/40 rounded-2xl p-6 shadow-lg">
-              <h2 className="font-['Playfair_Display'] text-xl font-bold text-[#1F2937] mb-6">Quick Actions</h2>
+          <div className="space-y-4 sm:space-y-6 order-1 lg:order-2">
+            <div className="bg-white/70 backdrop-blur-md border border-white/40 rounded-2xl p-4 sm:p-6 shadow-lg">
+              <h2 className="font-['Playfair_Display'] text-lg sm:text-xl font-bold text-[#1F2937] mb-4 sm:mb-6">Quick Actions</h2>
               <div className="space-y-3">
                 <Link 
                   to="/shop" 
@@ -216,8 +224,8 @@ function Dashboard() {
             </div>
 
             {/* Account Status */}
-            <div className="bg-white/70 backdrop-blur-md border border-white/40 rounded-2xl p-6 shadow-lg">
-              <h3 className="font-['Playfair_Display'] text-lg font-bold text-[#1F2937] mb-4">Account Status</h3>
+            <div className="bg-white/70 backdrop-blur-md border border-white/40 rounded-2xl p-4 sm:p-6 shadow-lg">
+              <h3 className="font-['Playfair_Display'] text-base sm:text-lg font-bold text-[#1F2937] mb-4">Account Status</h3>
               <div className="flex items-center space-x-3">
                 <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                 <span className="font-['Poppins'] text-sm text-gray-600">{dashboardData.accountStatus}</span>
