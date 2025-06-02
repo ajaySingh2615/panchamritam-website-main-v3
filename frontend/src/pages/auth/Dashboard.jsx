@@ -42,7 +42,7 @@ function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#f8f6f3] pt-20 flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f6f3] pt-20 sm:pt-24 lg:pt-28 flex items-center justify-center">
         <div className="w-8 h-8 border-3 border-[#5B8C3E]/20 border-t-[#5B8C3E] rounded-full animate-spin"></div>
       </div>
     );
@@ -51,7 +51,7 @@ function Dashboard() {
   const cartCount = getCartCount();
 
   return (
-    <div className="min-h-screen bg-[#f8f6f3] pt-20 py-4 sm:py-8 px-4">
+    <div className="min-h-screen bg-[#f8f6f3] pt-20 sm:pt-24 lg:pt-28 py-4 sm:py-8 px-4">
       <div className="max-w-7xl mx-auto">
         
         {/* Welcome Header */}
@@ -112,7 +112,7 @@ function Dashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
           
           {/* Recent Orders */}
-          <div className="lg:col-span-2 order-2 lg:order-1">
+          <div className="lg:col-span-2">
             <div className="bg-white/70 backdrop-blur-md border border-white/40 rounded-2xl p-4 sm:p-6 shadow-lg">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-2 sm:space-y-0">
                 <h2 className="font-['Playfair_Display'] text-xl sm:text-2xl font-bold text-[#1F2937]">Recent Orders</h2>
@@ -185,7 +185,7 @@ function Dashboard() {
           </div>
 
           {/* Quick Actions */}
-          <div className="space-y-4 sm:space-y-6 order-1 lg:order-2">
+          <div className="space-y-4 sm:space-y-6">
             <div className="bg-white/70 backdrop-blur-md border border-white/40 rounded-2xl p-4 sm:p-6 shadow-lg">
               <h2 className="font-['Playfair_Display'] text-lg sm:text-xl font-bold text-[#1F2937] mb-4 sm:mb-6">Quick Actions</h2>
               <div className="space-y-3">

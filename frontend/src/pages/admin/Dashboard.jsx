@@ -33,7 +33,7 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#f8f6f3] pt-20 flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f6f3] pt-20 sm:pt-24 lg:pt-28 flex items-center justify-center">
         <div className="w-8 h-8 border-3 border-[#5B8C3E]/20 border-t-[#5B8C3E] rounded-full animate-spin"></div>
       </div>
     );
@@ -41,7 +41,7 @@ const Dashboard = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#f8f6f3] pt-20 flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8f6f3] pt-20 sm:pt-24 lg:pt-28 flex items-center justify-center">
         <div className="bg-red-50 border border-red-200 rounded-2xl p-6 max-w-md">
           <div className="flex items-center space-x-3">
             <i className="fas fa-exclamation-circle text-red-500 text-xl"></i>
@@ -53,7 +53,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8f6f3] pt-20 py-8 px-4">
+    <div className="min-h-screen bg-[#f8f6f3] pt-20 sm:pt-24 lg:pt-28 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         
         {/* Header */}
