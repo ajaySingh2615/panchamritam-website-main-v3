@@ -44,9 +44,7 @@ const Dashboard = () => {
       <div className="min-h-screen bg-[#f8f6f3] pt-20 flex items-center justify-center">
         <div className="bg-red-50 border border-red-200 rounded-2xl p-6 max-w-md">
           <div className="flex items-center space-x-3">
-            <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+            <i className="fas fa-exclamation-circle text-red-500 text-xl"></i>
             <p className="font-['Poppins'] text-red-700 font-medium">Error loading dashboard: {error}</p>
           </div>
         </div>
@@ -78,9 +76,7 @@ const Dashboard = () => {
                 <p className="font-['Playfair_Display'] text-2xl lg:text-3xl font-bold text-[#5B8C3E] mt-2">₹{stats.totalRevenue?.toFixed(0)}</p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-[#5B8C3E] to-[#7BAD50] rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                </svg>
+                <i className="fas fa-rupee-sign text-white text-xl"></i>
               </div>
             </div>
             <div className="mt-4 h-1 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] rounded-full"></div>
@@ -94,9 +90,7 @@ const Dashboard = () => {
                 <p className="font-['Playfair_Display'] text-2xl lg:text-3xl font-bold text-[#7BAD50] mt-2">{stats.totalOrders}</p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-[#7BAD50] to-[#AECB95] rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                </svg>
+                <i className="fas fa-shopping-bag text-white text-xl"></i>
               </div>
             </div>
             <div className="mt-4 h-1 bg-gradient-to-r from-[#7BAD50] to-[#AECB95] rounded-full"></div>
@@ -110,9 +104,7 @@ const Dashboard = () => {
                 <p className="font-['Playfair_Display'] text-2xl lg:text-3xl font-bold text-[#AECB95] mt-2">{stats.totalProducts}</p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-[#AECB95] to-[#5B8C3E] rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                </svg>
+                <i className="fas fa-box text-white text-xl"></i>
               </div>
             </div>
             <div className="mt-4 h-1 bg-gradient-to-r from-[#AECB95] to-[#5B8C3E] rounded-full"></div>
@@ -126,9 +118,7 @@ const Dashboard = () => {
                 <p className="font-['Playfair_Display'] text-2xl lg:text-3xl font-bold text-[#5B8C3E] mt-2">{stats.totalUsers}</p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-[#5B8C3E] to-[#7BAD50] rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                </svg>
+                <i className="fas fa-users text-white text-xl"></i>
               </div>
             </div>
             <div className="mt-4 h-1 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] rounded-full"></div>
@@ -145,9 +135,7 @@ const Dashboard = () => {
             >
               <div className="flex items-center space-x-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-[#5B8C3E] to-[#7BAD50] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
+                  <i className="fas fa-plus text-white text-xl"></i>
                 </div>
                 <div>
                   <h3 className="font-['Playfair_Display'] text-lg font-bold text-[#1F2937] group-hover:text-[#5B8C3E] transition-colors duration-200">Add Product</h3>
@@ -162,9 +150,7 @@ const Dashboard = () => {
             >
               <div className="flex items-center space-x-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-[#7BAD50] to-[#AECB95] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                  </svg>
+                  <i className="fas fa-clipboard-list text-white text-xl"></i>
                 </div>
                 <div>
                   <h3 className="font-['Playfair_Display'] text-lg font-bold text-[#1F2937] group-hover:text-[#7BAD50] transition-colors duration-200">Manage Orders</h3>
@@ -179,9 +165,7 @@ const Dashboard = () => {
             >
               <div className="flex items-center space-x-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-[#AECB95] to-[#5B8C3E] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                  </svg>
+                  <i className="fas fa-users text-white text-xl"></i>
                 </div>
                 <div>
                   <h3 className="font-['Playfair_Display'] text-lg font-bold text-[#1F2937] group-hover:text-[#AECB95] transition-colors duration-200">View Users</h3>
@@ -196,9 +180,7 @@ const Dashboard = () => {
             >
               <div className="flex items-center space-x-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-[#5B8C3E] to-[#AECB95] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                  </svg>
+                  <i className="fas fa-calculator text-white text-xl"></i>
                 </div>
                 <div>
                   <h3 className="font-['Playfair_Display'] text-lg font-bold text-[#1F2937] group-hover:text-[#5B8C3E] transition-colors duration-200">Tax Settings</h3>
@@ -213,9 +195,7 @@ const Dashboard = () => {
             >
               <div className="flex items-center space-x-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-[#7BAD50] to-[#5B8C3E] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                  </svg>
+                  <i className="fas fa-edit text-white text-xl"></i>
                 </div>
                 <div>
                   <h3 className="font-['Playfair_Display'] text-lg font-bold text-[#1F2937] group-hover:text-[#7BAD50] transition-colors duration-200">Blog Posts</h3>
@@ -230,9 +210,7 @@ const Dashboard = () => {
             >
               <div className="flex items-center space-x-4">
                 <div className="w-12 h-12 bg-gradient-to-br from-[#AECB95] to-[#7BAD50] rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
+                  <i className="fas fa-comments text-white text-xl"></i>
                 </div>
                 <div>
                   <h3 className="font-['Playfair_Display'] text-lg font-bold text-[#1F2937] group-hover:text-[#AECB95] transition-colors duration-200">Messages</h3>
@@ -287,9 +265,7 @@ const Dashboard = () => {
           ) : (
             <div className="text-center py-12">
               <div className="w-16 h-16 bg-gradient-to-br from-[#5B8C3E] to-[#7BAD50] rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                </svg>
+                <i className="fas fa-clipboard-list text-white text-2xl"></i>
               </div>
               <p className="font-['Poppins'] text-gray-600">No recent orders</p>
             </div>

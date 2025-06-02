@@ -74,9 +74,7 @@ function Dashboard() {
                 <p className="font-['Playfair_Display'] text-3xl font-bold text-[#5B8C3E] mt-2">{dashboardData.totalOrders}</p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-[#5B8C3E] to-[#7BAD50] rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                </svg>
+                <i className="fas fa-shopping-bag text-white text-xl"></i>
               </div>
             </div>
             <div className="mt-4 h-1 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] rounded-full"></div>
@@ -90,9 +88,7 @@ function Dashboard() {
                 <p className="font-['Playfair_Display'] text-3xl font-bold text-[#7BAD50] mt-2">{dashboardData.wishlistItems}</p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-[#7BAD50] to-[#AECB95] rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
+                <i className="fas fa-heart text-white text-xl"></i>
               </div>
             </div>
             <div className="mt-4 h-1 bg-gradient-to-r from-[#7BAD50] to-[#AECB95] rounded-full"></div>
@@ -106,9 +102,7 @@ function Dashboard() {
                 <p className="font-['Playfair_Display'] text-3xl font-bold text-[#AECB95] mt-2">{cartCount}</p>
               </div>
               <div className="w-12 h-12 bg-gradient-to-br from-[#AECB95] to-[#5B8C3E] rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v5a2 2 0 01-2 2H9a2 2 0 01-2-2v-5m6 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
-                </svg>
+                <i className="fas fa-shopping-cart text-white text-xl"></i>
               </div>
             </div>
             <div className="mt-4 h-1 bg-gradient-to-r from-[#AECB95] to-[#5B8C3E] rounded-full"></div>
@@ -168,9 +162,7 @@ function Dashboard() {
               ) : (
                 <div className="text-center py-12">
                   <div className="w-16 h-16 bg-gradient-to-br from-[#5B8C3E] to-[#7BAD50] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                    </svg>
+                    <i className="fas fa-shopping-bag text-white text-2xl"></i>
                   </div>
                   <p className="font-['Poppins'] text-gray-600 mb-4">No orders yet</p>
                   <Link 
@@ -194,9 +186,7 @@ function Dashboard() {
                   className="flex items-center justify-between p-4 bg-gradient-to-r from-[#5B8C3E] to-[#7BAD50] text-white rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 group"
                 >
                   <span className="font-['Poppins'] font-medium">Browse Products</span>
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
+                  <i className="fas fa-arrow-right group-hover:translate-x-1 transition-transform duration-200"></i>
                 </Link>
                 
                 <Link 
@@ -204,9 +194,7 @@ function Dashboard() {
                   className="flex items-center justify-between p-4 bg-white/80 border border-[#5B8C3E]/20 text-[#5B8C3E] rounded-xl hover:bg-[#5B8C3E] hover:text-white transition-all duration-300 hover:-translate-y-0.5 group"
                 >
                   <span className="font-['Poppins'] font-medium">Track Orders</span>
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
+                  <i className="fas fa-arrow-right group-hover:translate-x-1 transition-transform duration-200"></i>
                 </Link>
                 
                 <Link 
@@ -214,9 +202,7 @@ function Dashboard() {
                   className="flex items-center justify-between p-4 bg-white/80 border border-[#7BAD50]/20 text-[#7BAD50] rounded-xl hover:bg-[#7BAD50] hover:text-white transition-all duration-300 hover:-translate-y-0.5 group"
                 >
                   <span className="font-['Poppins'] font-medium">View Cart</span>
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
+                  <i className="fas fa-arrow-right group-hover:translate-x-1 transition-transform duration-200"></i>
                 </Link>
                 
                 <button 
@@ -224,9 +210,7 @@ function Dashboard() {
                   className="w-full flex items-center justify-between p-4 bg-white/80 border border-red-200 text-red-600 rounded-xl hover:bg-red-50 transition-all duration-300 hover:-translate-y-0.5 group"
                 >
                   <span className="font-['Poppins'] font-medium">Sign Out</span>
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                  </svg>
+                  <i className="fas fa-sign-out-alt group-hover:translate-x-1 transition-transform duration-200"></i>
                 </button>
               </div>
             </div>
