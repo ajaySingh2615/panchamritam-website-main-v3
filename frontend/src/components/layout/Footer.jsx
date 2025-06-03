@@ -131,29 +131,53 @@ const Footer = () => {
                 Quick Links
               </h4>
               <ul className="space-y-4">
-                <li><Link to="/" className="text-green-100 hover:text-white transition-colors duration-200 flex items-center space-x-3">
-                  <i className="fas fa-home w-4 text-green-300"></i>
-                  <span>Home</span>
+                <li><Link to="/" className="group text-green-100 hover:text-white transition-all duration-300 flex items-center space-x-3 relative">
+                  <i className="fas fa-home w-4 text-green-300 group-hover:text-white group-hover:scale-110 transition-all duration-300"></i>
+                  <span className="relative">
+                    Home
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
+                  </span>
+                  <i className="fas fa-arrow-right text-xs opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"></i>
                 </Link></li>
-                <li><Link to="/shop" className="text-green-100 hover:text-white transition-colors duration-200 flex items-center space-x-3">
-                  <i className="fas fa-store w-4 text-green-300"></i>
-                  <span>Shop</span>
+                <li><Link to="/shop" className="group text-green-100 hover:text-white transition-all duration-300 flex items-center space-x-3 relative">
+                  <i className="fas fa-store w-4 text-green-300 group-hover:text-white group-hover:scale-110 transition-all duration-300"></i>
+                  <span className="relative">
+                    Shop
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
+                  </span>
+                  <i className="fas fa-arrow-right text-xs opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"></i>
                 </Link></li>
-                <li><Link to="/about" className="text-green-100 hover:text-white transition-colors duration-200 flex items-center space-x-3">
-                  <i className="fas fa-leaf w-4 text-green-300"></i>
-                  <span>About</span>
+                <li><Link to="/about" className="group text-green-100 hover:text-white transition-all duration-300 flex items-center space-x-3 relative">
+                  <i className="fas fa-leaf w-4 text-green-300 group-hover:text-white group-hover:scale-110 transition-all duration-300"></i>
+                  <span className="relative">
+                    About
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
+                  </span>
+                  <i className="fas fa-arrow-right text-xs opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"></i>
                 </Link></li>
-                <li><Link to="/blog" className="text-green-100 hover:text-white transition-colors duration-200 flex items-center space-x-3">
-                  <i className="fas fa-blog w-4 text-green-300"></i>
-                  <span>Blog</span>
+                <li><Link to="/blog" className="group text-green-100 hover:text-white transition-all duration-300 flex items-center space-x-3 relative">
+                  <i className="fas fa-blog w-4 text-green-300 group-hover:text-white group-hover:scale-110 transition-all duration-300"></i>
+                  <span className="relative">
+                    Blog
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
+                  </span>
+                  <i className="fas fa-arrow-right text-xs opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"></i>
                 </Link></li>
-                <li><Link to="/contact" className="text-green-100 hover:text-white transition-colors duration-200 flex items-center space-x-3">
-                  <i className="fas fa-envelope w-4 text-green-300"></i>
-                  <span>Contact</span>
+                <li><Link to="/contact" className="group text-green-100 hover:text-white transition-all duration-300 flex items-center space-x-3 relative">
+                  <i className="fas fa-envelope w-4 text-green-300 group-hover:text-white group-hover:scale-110 transition-all duration-300"></i>
+                  <span className="relative">
+                    Contact
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
+                  </span>
+                  <i className="fas fa-arrow-right text-xs opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"></i>
                 </Link></li>
-                <li><Link to="/faq" className="text-green-100 hover:text-white transition-colors duration-200 flex items-center space-x-3">
-                  <i className="fas fa-question-circle w-4 text-green-300"></i>
-                  <span>FAQ</span>
+                <li><Link to="/faq" className="group text-green-100 hover:text-white transition-all duration-300 flex items-center space-x-3 relative">
+                  <i className="fas fa-question-circle w-4 text-green-300 group-hover:text-white group-hover:scale-110 transition-all duration-300"></i>
+                  <span className="relative">
+                    FAQ
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
+                  </span>
+                  <i className="fas fa-arrow-right text-xs opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"></i>
                 </Link></li>
               </ul>
             </div>
@@ -165,33 +189,45 @@ const Footer = () => {
                 Categories
               </h4>
               <ul className="space-y-4">
-                <li><Link to="/categories/vegetables" className="text-green-100 hover:text-white transition-colors duration-200 flex items-center justify-between">
+                <li><Link to="/categories/vegetables" className="group text-green-100 hover:text-white transition-all duration-300 flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <i className="fas fa-carrot w-4 text-green-300"></i>
-                    <span>Organic Vegetables</span>
+                    <i className="fas fa-carrot w-4 text-green-300 group-hover:text-white group-hover:scale-110 transition-all duration-300"></i>
+                    <span className="relative">
+                      Organic Vegetables
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
+                    </span>
                   </div>
-                  <span className="bg-green-500/20 text-green-300 text-xs px-2 py-1 rounded-full">Fresh</span>
+                  <span className="bg-green-500/20 text-green-300 text-xs px-2 py-1 rounded-full group-hover:bg-green-400/30 group-hover:text-white group-hover:scale-105 transition-all duration-300">Fresh</span>
                 </Link></li>
-                <li><Link to="/categories/fruits" className="text-green-100 hover:text-white transition-colors duration-200 flex items-center justify-between">
+                <li><Link to="/categories/fruits" className="group text-green-100 hover:text-white transition-all duration-300 flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <i className="fas fa-apple-alt w-4 text-green-300"></i>
-                    <span>Natural Fruits</span>
+                    <i className="fas fa-apple-alt w-4 text-green-300 group-hover:text-white group-hover:scale-110 transition-all duration-300"></i>
+                    <span className="relative">
+                      Natural Fruits
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
+                    </span>
                   </div>
-                  <span className="bg-blue-500/20 text-blue-300 text-xs px-2 py-1 rounded-full">Seasonal</span>
+                  <span className="bg-blue-500/20 text-blue-300 text-xs px-2 py-1 rounded-full group-hover:bg-blue-400/30 group-hover:text-white group-hover:scale-105 transition-all duration-300">Seasonal</span>
                 </Link></li>
-                <li><Link to="/categories/wellness" className="text-green-100 hover:text-white transition-colors duration-200 flex items-center justify-between">
+                <li><Link to="/categories/wellness" className="group text-green-100 hover:text-white transition-all duration-300 flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <i className="fas fa-spa w-4 text-green-300"></i>
-                    <span>Wellness Products</span>
+                    <i className="fas fa-spa w-4 text-green-300 group-hover:text-white group-hover:scale-110 transition-all duration-300"></i>
+                    <span className="relative">
+                      Wellness Products
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
+                    </span>
                   </div>
-                  <span className="bg-purple-500/20 text-purple-300 text-xs px-2 py-1 rounded-full">Popular</span>
+                  <span className="bg-purple-500/20 text-purple-300 text-xs px-2 py-1 rounded-full group-hover:bg-purple-400/30 group-hover:text-white group-hover:scale-105 transition-all duration-300">Popular</span>
                 </Link></li>
-                <li><Link to="/categories/teas" className="text-green-100 hover:text-white transition-colors duration-200 flex items-center justify-between">
+                <li><Link to="/categories/teas" className="group text-green-100 hover:text-white transition-all duration-300 flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <i className="fas fa-mug-hot w-4 text-green-300"></i>
-                    <span>Herbal Teas</span>
+                    <i className="fas fa-mug-hot w-4 text-green-300 group-hover:text-white group-hover:scale-110 transition-all duration-300"></i>
+                    <span className="relative">
+                      Herbal Teas
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
+                    </span>
                   </div>
-                  <span className="bg-orange-500/20 text-orange-300 text-xs px-2 py-1 rounded-full">New</span>
+                  <span className="bg-orange-500/20 text-orange-300 text-xs px-2 py-1 rounded-full group-hover:bg-orange-400/30 group-hover:text-white group-hover:scale-105 transition-all duration-300">New</span>
                 </Link></li>
               </ul>
             </div>
@@ -206,37 +242,43 @@ const Footer = () => {
             
             <div className="space-y-4">
               {/* Phone */}
-              <div className="flex items-center space-x-3">
-                <i className="fas fa-phone text-green-300 w-5"></i>
+              <div className="group flex items-center space-x-3 hover:bg-white/5 p-2 rounded-lg transition-all duration-300">
+                <i className="fas fa-phone text-green-300 w-5 group-hover:scale-110 group-hover:text-white transition-all duration-300"></i>
                 <div>
-                  <a href="tel:+1234567890" className="text-white hover:text-green-300 transition-colors duration-200 font-medium">
+                  <a href="tel:+1234567890" className="text-white hover:text-green-300 transition-colors duration-200 font-medium relative group">
                     +1 (234) 567-890
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-300 group-hover:w-full transition-all duration-300"></span>
                   </a>
                   <p className="text-green-100 text-sm">24/7 Customer Support</p>
                 </div>
               </div>
               
               {/* Email */}
-              <div className="flex items-center space-x-3">
-                <i className="fas fa-envelope text-green-300 w-5"></i>
+              <div className="group flex items-center space-x-3 hover:bg-white/5 p-2 rounded-lg transition-all duration-300">
+                <i className="fas fa-envelope text-green-300 w-5 group-hover:scale-110 group-hover:text-white transition-all duration-300"></i>
                 <div>
-                  <a href="mailto:hello@panchamritam.com" className="text-white hover:text-green-300 transition-colors duration-200 font-medium">
+                  <a href="mailto:hello@panchamritam.com" className="text-white hover:text-green-300 transition-colors duration-200 font-medium relative group">
                     hello@panchamritam.com
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-300 group-hover:w-full transition-all duration-300"></span>
                   </a>
                   <p className="text-green-100 text-sm">We reply within 24hrs</p>
                 </div>
               </div>
               
               {/* Address */}
-              <div className="flex items-start space-x-3">
-                <i className="fas fa-map-marker-alt text-green-300 w-5 mt-1"></i>
+              <div className="group flex items-start space-x-3 hover:bg-white/5 p-2 rounded-lg transition-all duration-300">
+                <i className="fas fa-map-marker-alt text-green-300 w-5 mt-1 group-hover:scale-110 group-hover:text-white transition-all duration-300"></i>
                 <div>
                   <p className="text-white font-medium">
                     123 Organic Street, Natural City
                   </p>
                   <p className="text-green-100 text-sm">Earth 12345</p>
-                  <a href="#" className="text-green-300 hover:text-white text-sm transition-colors duration-200 inline-flex items-center mt-1">
-                    Get Directions <i className="fas fa-external-link-alt ml-1 text-xs"></i>
+                  <a href="#" className="text-green-300 hover:text-white text-sm transition-colors duration-200 inline-flex items-center mt-1 group">
+                    <span className="relative">
+                      Get Directions
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white group-hover:w-full transition-all duration-300"></span>
+                    </span>
+                    <i className="fas fa-external-link-alt ml-1 text-xs group-hover:translate-x-1 transition-transform duration-300"></i>
                   </a>
                 </div>
               </div>
