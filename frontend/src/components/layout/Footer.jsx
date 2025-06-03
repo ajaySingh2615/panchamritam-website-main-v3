@@ -77,49 +77,47 @@ const Footer = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
           
           {/* Brand Section */}
-          <div className="space-y-6">
+          <div className="space-y-8">
             <div>
-              <h3 className="text-2xl font-bold mb-4 flex items-center">
-                Panchamritam
-                <span className="ml-2 text-2xl">🌿</span>
+              <h3 className="text-3xl font-bold mb-6 text-white">
+                Panchamritam 🌿
               </h3>
-              <p className="text-green-100 leading-relaxed text-sm">
+              <p className="text-gray-200 leading-relaxed text-base max-w-sm">
                 Authentic organic products sourced directly from nature. Bringing you the purest ingredients with sustainable practices and traditional wisdom.
               </p>
             </div>
             
             {/* Social Links */}
             <div>
-              <h4 className="text-sm font-semibold mb-4 text-green-200">Follow Us</h4>
-              <div className="flex space-x-3">
-                <a href="#" className="w-10 h-10 bg-white/10 hover:bg-blue-600 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
-                  <i className="fab fa-facebook-f text-sm"></i>
+              <p className="text-gray-300 text-sm mb-4 uppercase tracking-wide font-medium">Connect With Us</p>
+              <div className="flex space-x-4">
+                <a href="#" className="text-gray-300 hover:text-white transition-colors duration-200">
+                  <i className="fab fa-facebook-f text-xl"></i>
                 </a>
-                <a href="#" className="w-10 h-10 bg-white/10 hover:bg-pink-600 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
-                  <i className="fab fa-instagram text-sm"></i>
+                <a href="#" className="text-gray-300 hover:text-white transition-colors duration-200">
+                  <i className="fab fa-instagram text-xl"></i>
                 </a>
-                <a href="#" className="w-10 h-10 bg-white/10 hover:bg-blue-400 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
-                  <i className="fab fa-twitter text-sm"></i>
+                <a href="#" className="text-gray-300 hover:text-white transition-colors duration-200">
+                  <i className="fab fa-twitter text-xl"></i>
                 </a>
-                <a href="#" className="w-10 h-10 bg-white/10 hover:bg-red-600 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
-                  <i className="fab fa-youtube text-sm"></i>
+                <a href="#" className="text-gray-300 hover:text-white transition-colors duration-200">
+                  <i className="fab fa-youtube text-xl"></i>
                 </a>
               </div>
             </div>
 
             {/* Certifications */}
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                  <i className="fas fa-check text-white text-xs"></i>
+            <div>
+              <p className="text-gray-300 text-sm mb-4 uppercase tracking-wide font-medium">Quality Assured</p>
+              <div className="space-y-2">
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                  <span className="text-gray-200 text-sm">USDA Organic Certified</span>
                 </div>
-                <span className="text-sm text-green-100">USDA Organic Certified</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                  <i className="fas fa-check text-white text-xs"></i>
+                <div className="flex items-center space-x-3">
+                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                  <span className="text-gray-200 text-sm">ISO 22000 Certified</span>
                 </div>
-                <span className="text-sm text-green-100">ISO 22000 Certified</span>
               </div>
             </div>
           </div>
