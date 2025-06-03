@@ -25,53 +25,6 @@ const Footer = () => {
 
   return (
     <footer className="bg-gradient-to-br from-green-700 via-green-800 to-green-900 text-white">
-      {/* Trust Badges Section */}
-      <div className="border-b border-green-600/30">
-        <div className="max-w-7xl mx-auto px-6 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="flex items-center justify-center space-x-3 p-4 bg-white/5 rounded-lg border border-white/10 backdrop-blur-sm">
-              <div className="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
-                <i className="fas fa-leaf text-green-300 text-lg"></i>
-              </div>
-              <div>
-                <p className="font-semibold text-sm">100% Organic</p>
-                <p className="text-xs text-green-200">Certified Pure</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center justify-center space-x-3 p-4 bg-white/5 rounded-lg border border-white/10 backdrop-blur-sm">
-              <div className="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center">
-                <i className="fas fa-shipping-fast text-blue-300 text-lg"></i>
-              </div>
-              <div>
-                <p className="font-semibold text-sm">Free Delivery</p>
-                <p className="text-xs text-green-200">Orders $50+</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center justify-center space-x-3 p-4 bg-white/5 rounded-lg border border-white/10 backdrop-blur-sm">
-              <div className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center">
-                <i className="fas fa-shield-alt text-purple-300 text-lg"></i>
-              </div>
-              <div>
-                <p className="font-semibold text-sm">Certified Safe</p>
-                <p className="text-xs text-green-200">Quality Assured</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center justify-center space-x-3 p-4 bg-white/5 rounded-lg border border-white/10 backdrop-blur-sm">
-              <div className="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center">
-                <i className="fas fa-headset text-orange-300 text-lg"></i>
-              </div>
-              <div>
-                <p className="font-semibold text-sm">24/7 Support</p>
-                <p className="text-xs text-green-200">Always Here</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
