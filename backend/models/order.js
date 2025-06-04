@@ -19,6 +19,20 @@ class Order {
          LIMIT ${limit} OFFSET ${offset}`
       );
       
+      // Get items for each order
+      for (let order of orders) {
+        const [items] = await pool.execute(
+          `SELECT oi.*, p.name as product_name, p.image_url, c.name as category_name
+           FROM order_items oi
+           JOIN products p ON oi.product_id = p.product_id
+           LEFT JOIN categories c ON p.category_id = c.category_id
+           WHERE oi.order_id = ?`,
+          [order.order_id]
+        );
+        
+        order.items = items;
+      }
+      
       return orders;
     } catch (error) {
       throw error;

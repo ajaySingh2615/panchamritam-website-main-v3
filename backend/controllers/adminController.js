@@ -512,6 +512,70 @@ exports.getAllRoles = async (req, res) => {
   }
 };
 
+// Get order statistics
+exports.getOrderStatistics = async (req, res) => {
+  try {
+    const { range = 'week' } = req.query;
+    
+    let dateCondition = '';
+    const now = new Date();
+    
+    switch (range) {
+      case 'today':
+        dateCondition = "DATE(order_date) = CURDATE()";
+        break;
+      case 'week':
+        dateCondition = "order_date >= DATE_SUB(NOW(), INTERVAL 1 WEEK)";
+        break;
+      case 'month':
+        dateCondition = "order_date >= DATE_SUB(NOW(), INTERVAL 1 MONTH)";
+        break;
+      case 'quarter':
+        dateCondition = "order_date >= DATE_SUB(NOW(), INTERVAL 3 MONTH)";
+        break;
+      default:
+        dateCondition = "1=1"; // All time
+    }
+    
+    // Get total orders
+    const [totalOrdersResult] = await pool.execute(
+      `SELECT COUNT(*) as count FROM orders WHERE ${dateCondition}`
+    );
+    const totalOrders = totalOrdersResult[0].count;
+    
+    // Get pending orders
+    const [pendingOrdersResult] = await pool.execute(
+      `SELECT COUNT(*) as count FROM orders WHERE status = 'pending' AND ${dateCondition}`
+    );
+    const pendingOrders = pendingOrdersResult[0].count;
+    
+    // Get total revenue
+    const [revenueResult] = await pool.execute(
+      `SELECT COALESCE(SUM(total_price), 0) as total FROM orders WHERE status != 'cancelled' AND ${dateCondition}`
+    );
+    const totalRevenue = revenueResult[0].total;
+    
+    // Calculate average order value
+    const avgOrderValue = totalOrders > 0 ? totalRevenue / totalOrders : 0;
+    
+    res.status(200).json({
+      status: 'success',
+      data: {
+        totalOrders,
+        pendingOrders,
+        totalRevenue,
+        avgOrderValue
+      }
+    });
+  } catch (error) {
+    console.error('Error getting order statistics:', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'Failed to retrieve order statistics'
+    });
+  }
+};
+
 // Email Listener Configuration
 
 /**
