@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { API_ENDPOINTS } from '../config/api';
 import './Orders.css';
 
 const Orders = () => {
@@ -18,7 +19,7 @@ const Orders = () => {
 
       try {
         setLoading(true);
-        const response = await fetch('/api/orders/my-orders', {
+        const response = await fetch(`${API_ENDPOINTS.ORDERS}/my-orders`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -72,6 +73,11 @@ const Orders = () => {
     }
   };
 
+  const formatPrice = (price) => {
+    const numPrice = parseFloat(price);
+    return isNaN(numPrice) ? '0.00' : numPrice.toFixed(2);
+  };
+
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('en-US', options);
@@ -107,13 +113,13 @@ const Orders = () => {
                   <div className="order-items">
                     <h3>Items</h3>
                     <ul className="items-list">
-                      {order.items.map((item) => (
+                      {order.items && order.items.map((item) => (
                         <li key={item.order_item_id} className="order-item">
                           <div className="item-info">
-                            <p className="item-name">{item.product_name}</p>
+                            <p className="item-name">{item.product_name || item.name}</p>
                             <p className="item-quantity">Qty: {item.quantity}</p>
                           </div>
-                          <p className="item-price">${item.price.toFixed(2)}</p>
+                          <p className="item-price">${formatPrice(item.price)}</p>
                         </li>
                       ))}
                     </ul>
@@ -122,15 +128,21 @@ const Orders = () => {
                   <div className="order-summary">
                     <div className="summary-row">
                       <span>Subtotal:</span>
-                      <span>${order.total_price.toFixed(2)}</span>
+                      <span>${formatPrice(order.subtotal || order.total_price)}</span>
                     </div>
+                    {order.total_tax && parseFloat(order.total_tax) > 0 && (
+                      <div className="summary-row">
+                        <span>Tax:</span>
+                        <span>${formatPrice(order.total_tax)}</span>
+                      </div>
+                    )}
                     <div className="summary-row">
                       <span>Shipping:</span>
                       <span>$0.00</span>
                     </div>
                     <div className="summary-row total">
                       <span>Total:</span>
-                      <span>${order.total_price.toFixed(2)}</span>
+                      <span>${formatPrice(order.total_price)}</span>
                     </div>
                   </div>
                 </div>

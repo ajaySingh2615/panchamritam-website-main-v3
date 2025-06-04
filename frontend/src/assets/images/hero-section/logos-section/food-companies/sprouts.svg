@@ -1,0 +1,13 @@
+<svg width="300" height="120" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#7BAD50;stop-opacity:0.1" />
+        <stop offset="100%" style="stop-color:#7BAD50;stop-opacity:0.3" />
+      </linearGradient>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#bgGradient)" rx="8"/>
+    <rect width="100%" height="100%" fill="none" stroke="#7BAD50" stroke-width="2" rx="8" stroke-dasharray="5,5"/>
+    <text x="50%" y="35%" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#5B8C3E">Sprouts</text>
+    <text x="50%" y="55%" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#6B7280">ORGANIC PARTNER</text>
+    <text x="50%" y="75%" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#9CA3AF">Logo Coming Soon</text>
+  </svg>

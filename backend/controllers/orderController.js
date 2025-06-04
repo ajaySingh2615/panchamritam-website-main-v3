@@ -35,7 +35,7 @@ exports.checkout = async (req, res, next) => {
       
       // Get user email to send confirmation
       const [userRows] = await pool.execute(
-        'SELECT email FROM Users WHERE user_id = ?',
+        'SELECT email FROM users WHERE user_id = ?',
         [userId]
       );
       
@@ -223,7 +223,7 @@ exports.createOrderWithTax = async (req, res, next) => {
       
       // Get user email
       const [userRows] = await pool.execute(
-        'SELECT email, name FROM Users WHERE user_id = ?',
+        'SELECT email, name FROM users WHERE user_id = ?',
         [userId]
       );
       

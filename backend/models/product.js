@@ -331,7 +331,7 @@ class Product {
       
       // Check if product is in any orders
       const [orderItems] = await pool.execute(
-        'SELECT COUNT(*) as count FROM Order_Items WHERE product_id = ?',
+        'SELECT COUNT(*) as count FROM order_items WHERE product_id = ?',
         [productId]
       );
       

@@ -12,9 +12,9 @@ class Order {
       const [orders] = await pool.execute(
         `SELECT o.*, u.name as user_name, u.email as user_email,
                 a.address_line, a.city, a.state, a.zip_code, a.country, a.phone_number
-         FROM Orders o
-         JOIN Users u ON o.user_id = u.user_id
-         LEFT JOIN Addresses a ON o.address_id = a.address_id
+         FROM orders o
+         JOIN users u ON o.user_id = u.user_id
+         LEFT JOIN addresses a ON o.address_id = a.address_id
          ORDER BY o.order_date DESC
          LIMIT ${limit} OFFSET ${offset}`
       );
@@ -34,11 +34,11 @@ class Order {
       limit = parseInt(limit, 10);
       
       // Get table structure to verify columns exist
-      const [tableInfo] = await pool.execute('DESCRIBE Orders');
-      console.log('Orders table columns:', tableInfo.map(row => row.Field).join(', '));
+      const [tableInfo] = await pool.execute('DESCRIBE orders');
+      console.log('orders table columns:', tableInfo.map(row => row.Field).join(', '));
       
-      const [userTableInfo] = await pool.execute('DESCRIBE Users');
-      console.log('Users table columns:', userTableInfo.map(row => row.Field).join(', '));
+      const [userTableInfo] = await pool.execute('DESCRIBE users');
+      console.log('users table columns:', userTableInfo.map(row => row.Field).join(', '));
       
       // Check if we have the columns we need
       const hasCreatedAt = tableInfo.some(row => row.Field === 'created_at');
@@ -50,8 +50,8 @@ class Order {
       const query = `
         SELECT o.order_id, o.user_id, o.total_price as total_amount, o.status, 
         ${dateColumn} as order_date, u.name as customer_name
-        FROM Orders o
-        JOIN Users u ON o.user_id = u.user_id
+        FROM orders o
+        JOIN users u ON o.user_id = u.user_id
         ORDER BY ${dateColumn} DESC
         LIMIT ?
       `;
@@ -72,7 +72,7 @@ class Order {
   // Count total orders
   static async count() {
     try {
-      const [rows] = await pool.execute('SELECT COUNT(*) as count FROM Orders');
+      const [rows] = await pool.execute('SELECT COUNT(*) as count FROM orders');
       return rows[0].count;
     } catch (error) {
       throw error;
@@ -83,7 +83,7 @@ class Order {
   static async sumCompletedAmount() {
     try {
       const [rows] = await pool.execute(
-        'SELECT SUM(total_price) as total FROM Orders WHERE status = "completed"'
+        'SELECT SUM(total_price) as total FROM orders WHERE status = "completed"'
       );
       return rows[0].total || 0;
     } catch (error) {
@@ -98,9 +98,9 @@ class Order {
       const [orders] = await pool.execute(
         `SELECT o.*, u.name as user_name, u.email as user_email,
                 a.address_line, a.city, a.state, a.zip_code, a.country, a.phone_number
-         FROM Orders o
-         JOIN Users u ON o.user_id = u.user_id
-         LEFT JOIN Addresses a ON o.address_id = a.address_id
+         FROM orders o
+         JOIN users u ON o.user_id = u.user_id
+         LEFT JOIN addresses a ON o.address_id = a.address_id
          WHERE o.order_id = ?`,
         [orderId]
       );
@@ -114,9 +114,9 @@ class Order {
       // Get order items
       const [items] = await pool.execute(
         `SELECT oi.*, p.name, p.image_url, c.name as category_name
-         FROM Order_Items oi
-         JOIN Products p ON oi.product_id = p.product_id
-         LEFT JOIN Categories c ON p.category_id = c.category_id
+         FROM order_items oi
+         JOIN products p ON oi.product_id = p.product_id
+         LEFT JOIN categories c ON p.category_id = c.category_id
          WHERE oi.order_id = ?`,
         [orderId]
       );
@@ -139,8 +139,8 @@ class Order {
       
       const [orders] = await pool.execute(
         `SELECT o.*, a.address_line, a.city, a.state, a.zip_code, a.country, a.phone_number
-         FROM Orders o
-         LEFT JOIN Addresses a ON o.address_id = a.address_id
+         FROM orders o
+         LEFT JOIN addresses a ON o.address_id = a.address_id
          WHERE o.user_id = ?
          ORDER BY o.order_date DESC
          LIMIT ${limit} OFFSET ${offset}`,
@@ -150,10 +150,10 @@ class Order {
       // Get items for each order
       for (let order of orders) {
         const [items] = await pool.execute(
-          `SELECT oi.*, p.name, p.image_url, c.name as category_name
-           FROM Order_Items oi
-           JOIN Products p ON oi.product_id = p.product_id
-           LEFT JOIN Categories c ON p.category_id = c.category_id
+          `SELECT oi.*, p.name as product_name, p.image_url, c.name as category_name
+           FROM order_items oi
+           JOIN products p ON oi.product_id = p.product_id
+           LEFT JOIN categories c ON p.category_id = c.category_id
            WHERE oi.order_id = ?`,
           [order.order_id]
         );
@@ -187,7 +187,7 @@ class Order {
         
         // Create order
         const [orderResult] = await connection.execute(
-          `INSERT INTO Orders 
+          `INSERT INTO orders 
            (user_id, address_id, total_price, status, payment_method) 
            VALUES (?, ?, ?, ?, ?)`,
           [userId, addressId, totalPrice, 'pending', paymentMethod]
@@ -198,7 +198,7 @@ class Order {
         // Create order items
         for (const item of cart.items) {
           await connection.execute(
-            `INSERT INTO Order_Items 
+            `INSERT INTO order_items 
              (order_id, product_id, quantity, price) 
              VALUES (?, ?, ?, ?)`,
             [orderId, item.product_id, item.quantity, item.price]
@@ -206,7 +206,7 @@ class Order {
           
           // Update product inventory
           await connection.execute(
-            `UPDATE Products 
+            `UPDATE products 
              SET quantity = quantity - ? 
              WHERE product_id = ?`,
             [item.quantity, item.product_id]
@@ -258,7 +258,7 @@ class Order {
       }
       
       const [result] = await pool.execute(
-        'UPDATE Orders SET status = ? WHERE order_id = ?',
+        'UPDATE orders SET status = ? WHERE order_id = ?',
         [status, orderId]
       );
       
@@ -282,8 +282,8 @@ class Order {
     try {
       const [items] = await pool.execute(
         `SELECT oi.*, p.name, p.price, p.image_url
-         FROM Order_Items oi
-         JOIN Products p ON oi.product_id = p.product_id
+         FROM order_items oi
+         JOIN products p ON oi.product_id = p.product_id
          WHERE oi.order_id = ?`,
         [orderId]
       );
@@ -368,7 +368,7 @@ class Order {
       try {
         // Create order with tax information
         const [orderResult] = await connection.execute(
-          `INSERT INTO Orders (
+          `INSERT INTO orders (
             user_id, address_id, subtotal, total_tax, total_price, 
             status, payment_method
           ) VALUES (?, ?, ?, ?, ?, ?, ?)`,
@@ -388,7 +388,7 @@ class Order {
         // Insert order items with tax information
         for (const item of taxCalculation.items) {
           await connection.execute(
-            `INSERT INTO Order_Items (
+            `INSERT INTO order_items (
               order_id, product_id, quantity, price, 
               tax_rate, tax_amount, hsn_code
             ) VALUES (?, ?, ?, ?, ?, ?, ?)`,
@@ -435,8 +435,8 @@ class Order {
       // Get order items with tax details
       const [items] = await pool.execute(
         `SELECT oi.*, p.name, p.sku, p.image_url
-         FROM Order_Items oi
-         JOIN Products p ON oi.product_id = p.product_id
+         FROM order_items oi
+         JOIN products p ON oi.product_id = p.product_id
          WHERE oi.order_id = ?`,
         [orderId]
       );
@@ -464,12 +464,12 @@ class Order {
       
       // Get customer and address details
       const [userRows] = await pool.execute(
-        'SELECT * FROM Users WHERE user_id = ?',
+        'SELECT * FROM users WHERE user_id = ?',
         [order.user_id]
       );
       
       const [addressRows] = await pool.execute(
-        'SELECT * FROM Addresses WHERE address_id = ?',
+        'SELECT * FROM addresses WHERE address_id = ?',
         [order.address_id]
       );
       

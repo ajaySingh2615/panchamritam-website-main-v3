@@ -141,7 +141,7 @@ class Address {
     try {
       // Check if address is used in any orders
       const [orders] = await pool.execute(
-        'SELECT COUNT(*) as count FROM Orders WHERE address_id = ?',
+        'SELECT COUNT(*) as count FROM orders WHERE address_id = ?',
         [addressId]
       );
       
