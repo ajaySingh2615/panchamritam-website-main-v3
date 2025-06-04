@@ -15,10 +15,14 @@ const OrdersList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('all');
+  const [customDateFrom, setCustomDateFrom] = useState('');
+  const [customDateTo, setCustomDateTo] = useState('');
+  const [showCustomDateRange, setShowCustomDateRange] = useState(false);
   const [sortField, setSortField] = useState('order_date');
   const [sortDirection, setSortDirection] = useState('desc');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalResults, setTotalResults] = useState(0);
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [bulkActionLoading, setBulkActionLoading] = useState(false);
   const [statistics, setStatistics] = useState({});
@@ -28,7 +32,7 @@ const OrdersList = () => {
   useEffect(() => {
     fetchOrders();
     fetchStatistics();
-  }, [currentPage, sortField, sortDirection, statusFilter, dateFilter]);
+  }, [currentPage, sortField, sortDirection, statusFilter, dateFilter, customDateFrom, customDateTo]);
 
   const fetchOrders = async () => {
     setLoading(true);
@@ -39,13 +43,21 @@ const OrdersList = () => {
         sort: sortField,
         order: sortDirection,
         status: statusFilter !== 'all' ? statusFilter : undefined,
-        date_range: dateFilter !== 'all' ? dateFilter : undefined,
         search: searchTerm || undefined
       };
 
+      // Add date filtering
+      if (dateFilter !== 'all' && dateFilter !== 'custom') {
+        params.date_range = dateFilter;
+      } else if (dateFilter === 'custom') {
+        if (customDateFrom) params.dateFrom = customDateFrom;
+        if (customDateTo) params.dateTo = customDateTo;
+      }
+
       const data = await getAllOrders(params);
       setOrders(data.data.orders || []);
-      setTotalPages(data.pagination?.totalPages || Math.ceil((data.results || data.data.orders.length) / ordersPerPage));
+      setTotalPages(data.pagination?.totalPages || 1);
+      setTotalResults(data.totalResults || 0);
     } catch (err) {
       console.error('Error fetching orders:', err);
       setError(err.message);
@@ -102,9 +114,16 @@ const OrdersList = () => {
     try {
       const params = {
         status: statusFilter !== 'all' ? statusFilter : undefined,
-        date_range: dateFilter !== 'all' ? dateFilter : undefined,
         search: searchTerm || undefined
       };
+
+      // Add date filtering for export
+      if (dateFilter !== 'all' && dateFilter !== 'custom') {
+        params.date_range = dateFilter;
+      } else if (dateFilter === 'custom') {
+        if (customDateFrom) params.dateFrom = customDateFrom;
+        if (customDateTo) params.dateTo = customDateTo;
+      }
 
       const blob = await exportOrders(params);
       
@@ -153,6 +172,31 @@ const OrdersList = () => {
     } else {
       setSelectedOrders(orders.map(order => order.order_id));
     }
+  };
+
+  const handleDateFilterChange = (value) => {
+    setDateFilter(value);
+    setShowCustomDateRange(value === 'custom');
+    if (value !== 'custom') {
+      setCustomDateFrom('');
+      setCustomDateTo('');
+    }
+    setCurrentPage(1);
+  };
+
+  const handleCustomDateChange = () => {
+    setCurrentPage(1);
+    fetchOrders();
+  };
+
+  const clearFilters = () => {
+    setSearchTerm('');
+    setStatusFilter('all');
+    setDateFilter('all');
+    setCustomDateFrom('');
+    setCustomDateTo('');
+    setShowCustomDateRange(false);
+    setCurrentPage(1);
   };
 
   const getStatusConfig = (status) => {
@@ -310,57 +354,128 @@ const OrdersList = () => {
 
       {/* Filters */}
       <div className="bg-white p-4 lg:p-6 rounded-lg shadow-sm mb-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search orders..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-            />
-            <svg
-              className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+        <div className="space-y-4">
+          {/* First Row - Search and Status */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search orders..."
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+              />
+              <svg
+                className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            
+            <select
+              className="border border-gray-300 rounded-md py-2 px-3 focus:ring-green-500 focus:border-green-500"
+              value={statusFilter}
+              onChange={(e) => {
+                setStatusFilter(e.target.value);
+                setCurrentPage(1);
+              }}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
+              <option value="all">All Statuses</option>
+              <option value="pending">Pending</option>
+              <option value="processing">Processing</option>
+              <option value="shipped">Shipped</option>
+              <option value="delivered">Delivered</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+
+            <select
+              className="border border-gray-300 rounded-md py-2 px-3 focus:ring-green-500 focus:border-green-500"
+              value={dateFilter}
+              onChange={(e) => handleDateFilterChange(e.target.value)}
+            >
+              <option value="all">All Time</option>
+              <option value="today">Today</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+              <option value="quarter">This Quarter</option>
+              <option value="custom">Custom Date Range</option>
+            </select>
           </div>
-          
-          <select
-            className="border border-gray-300 rounded-md py-2 px-3 focus:ring-green-500 focus:border-green-500"
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-          >
-            <option value="all">All Statuses</option>
-            <option value="pending">Pending</option>
-            <option value="processing">Processing</option>
-            <option value="shipped">Shipped</option>
-            <option value="delivered">Delivered</option>
-            <option value="cancelled">Cancelled</option>
-          </select>
 
-          <select
-            className="border border-gray-300 rounded-md py-2 px-3 focus:ring-green-500 focus:border-green-500"
-            value={dateFilter}
-            onChange={(e) => setDateFilter(e.target.value)}
-          >
-            <option value="all">All Time</option>
-            <option value="today">Today</option>
-            <option value="week">This Week</option>
-            <option value="month">This Month</option>
-            <option value="quarter">This Quarter</option>
-          </select>
+          {/* Second Row - Custom Date Range (when selected) */}
+          {showCustomDateRange && (
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 bg-gray-50 rounded-lg">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">From Date</label>
+                <input
+                  type="date"
+                  className="w-full py-2 px-3 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  value={customDateFrom}
+                  onChange={(e) => setCustomDateFrom(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">To Date</label>
+                <input
+                  type="date"
+                  className="w-full py-2 px-3 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  value={customDateTo}
+                  onChange={(e) => setCustomDateTo(e.target.value)}
+                />
+              </div>
+              <div className="flex items-end">
+                <button
+                  onClick={handleCustomDateChange}
+                  className="w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md font-medium transition-colors"
+                >
+                  Apply Date Range
+                </button>
+              </div>
+              <div className="flex items-end">
+                <button
+                  onClick={() => {
+                    setCustomDateFrom('');
+                    setCustomDateTo('');
+                    handleCustomDateChange();
+                  }}
+                  className="w-full px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md font-medium transition-colors"
+                >
+                  Clear Dates
+                </button>
+              </div>
+            </div>
+          )}
 
-          <button
-            onClick={handleSearch}
-            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md font-medium transition-colors"
-          >
-            Search
-          </button>
+          {/* Third Row - Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-2">
+            <button
+              onClick={handleSearch}
+              className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md font-medium transition-colors flex items-center justify-center space-x-2"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <span>Search</span>
+            </button>
+            
+            <button
+              onClick={clearFilters}
+              className="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md font-medium transition-colors flex items-center justify-center space-x-2"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4l16 16m0-16L4 20" />
+              </svg>
+              <span>Clear Filters</span>
+            </button>
+
+            <div className="text-sm text-gray-600 flex items-center">
+              Showing {orders.length} of {totalResults} orders
+            </div>
+          </div>
         </div>
       </div>
 

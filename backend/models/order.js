@@ -3,21 +3,86 @@ const Cart = require('./cart');
 
 class Order {
   // Get all orders (admin only)
-  static async findAll(limit = 20, offset = 0) {
+  static async findAll(limit = 20, offset = 0, filters = {}) {
     try {
       // Ensure limit and offset are integers
       limit = parseInt(limit, 10);
       offset = parseInt(offset, 10);
       
-      const [orders] = await pool.execute(
-        `SELECT o.*, u.name as user_name, u.email as user_email,
-                a.address_line, a.city, a.state, a.zip_code, a.country, a.phone_number
-         FROM orders o
-         JOIN users u ON o.user_id = u.user_id
-         LEFT JOIN addresses a ON o.address_id = a.address_id
-         ORDER BY o.order_date DESC
-         LIMIT ${limit} OFFSET ${offset}`
-      );
+      let whereConditions = [];
+      let queryParams = [];
+      
+      // Search filter - search in order_id, user name, or user email
+      if (filters.search) {
+        whereConditions.push(`(
+          o.order_id LIKE ? OR 
+          u.name LIKE ? OR 
+          u.email LIKE ?
+        )`);
+        const searchTerm = `%${filters.search}%`;
+        queryParams.push(searchTerm, searchTerm, searchTerm);
+      }
+      
+      // Status filter
+      if (filters.status && filters.status !== 'all') {
+        whereConditions.push('o.status = ?');
+        queryParams.push(filters.status);
+      }
+      
+      // Date range filter
+      if (filters.date_range && filters.date_range !== 'all') {
+        switch (filters.date_range) {
+          case 'today':
+            whereConditions.push('DATE(o.order_date) = CURDATE()');
+            break;
+          case 'week':
+            whereConditions.push('o.order_date >= DATE_SUB(NOW(), INTERVAL 1 WEEK)');
+            break;
+          case 'month':
+            whereConditions.push('o.order_date >= DATE_SUB(NOW(), INTERVAL 1 MONTH)');
+            break;
+          case 'quarter':
+            whereConditions.push('o.order_date >= DATE_SUB(NOW(), INTERVAL 3 MONTH)');
+            break;
+        }
+      }
+      
+      // Custom date range filter
+      if (filters.dateFrom) {
+        whereConditions.push('DATE(o.order_date) >= ?');
+        queryParams.push(filters.dateFrom);
+      }
+      
+      if (filters.dateTo) {
+        whereConditions.push('DATE(o.order_date) <= ?');
+        queryParams.push(filters.dateTo);
+      }
+      
+      // Build WHERE clause
+      const whereClause = whereConditions.length > 0 
+        ? `WHERE ${whereConditions.join(' AND ')}` 
+        : '';
+      
+      // Sort options
+      const sortField = filters.sort || 'order_date';
+      const sortOrder = filters.order === 'asc' ? 'ASC' : 'DESC';
+      
+      // Validate sort field to prevent SQL injection
+      const allowedSortFields = ['order_id', 'order_date', 'total_price', 'status'];
+      const validSortField = allowedSortFields.includes(sortField) ? sortField : 'order_date';
+      
+      const query = `
+        SELECT o.*, u.name as user_name, u.email as user_email,
+               a.address_line, a.city, a.state, a.zip_code, a.country, a.phone_number
+        FROM orders o
+        JOIN users u ON o.user_id = u.user_id
+        LEFT JOIN addresses a ON o.address_id = a.address_id
+        ${whereClause}
+        ORDER BY o.${validSortField} ${sortOrder}
+        LIMIT ${limit} OFFSET ${offset}
+      `;
+      
+      const [orders] = await pool.execute(query, queryParams);
       
       // Get items for each order
       for (let order of orders) {
@@ -33,7 +98,23 @@ class Order {
         order.items = items;
       }
       
-      return orders;
+      // Get total count for pagination
+      const countQuery = `
+        SELECT COUNT(*) as total
+        FROM orders o
+        JOIN users u ON o.user_id = u.user_id
+        LEFT JOIN addresses a ON o.address_id = a.address_id
+        ${whereClause}
+      `;
+      
+      const [countResult] = await pool.execute(countQuery, queryParams);
+      const totalCount = countResult[0].total;
+      
+      return {
+        orders,
+        totalCount,
+        totalPages: Math.ceil(totalCount / limit)
+      };
     } catch (error) {
       throw error;
     }

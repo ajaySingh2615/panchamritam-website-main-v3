@@ -75,18 +75,31 @@ exports.getAllOrders = async (req, res, next) => {
     const page = parseInt(req.query.page) || 1;
     const offset = (page - 1) * limit;
     
-    const orders = await Order.findAll(limit, offset);
+    // Extract filter parameters
+    const filters = {
+      search: req.query.search,
+      status: req.query.status,
+      date_range: req.query.date_range,
+      dateFrom: req.query.dateFrom,
+      dateTo: req.query.dateTo,
+      sort: req.query.sort,
+      order: req.query.order
+    };
+    
+    const result = await Order.findAll(limit, offset, filters);
     
     res.status(200).json({
       status: 'success',
-      results: orders.length,
+      results: result.orders.length,
+      totalResults: result.totalCount,
       pagination: {
         page,
         limit,
-        hasMore: orders.length === limit
+        totalPages: result.totalPages,
+        hasMore: page < result.totalPages
       },
       data: {
-        orders
+        orders: result.orders
       }
     });
   } catch (error) {
