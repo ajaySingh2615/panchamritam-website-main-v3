@@ -21,6 +21,7 @@ import Services from './pages/Services';
 import ServiceDetail from './pages/ServiceDetail';
 import About from './pages/About';
 import Orders from './pages/Orders';
+import OrderDetails from './pages/OrderDetails';
 import AddressForm from './pages/AddressForm';
 import NotFound from './pages/NotFound';
 import Unauthorized from './pages/Unauthorized';
@@ -141,6 +142,14 @@ const App = () => {
               element={
                 <PrivateRoute>
                   <MainLayout><Orders /></MainLayout>
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/order-details/:orderId"
+              element={
+                <PrivateRoute>
+                  <MainLayout><OrderDetails /></MainLayout>
                 </PrivateRoute>
               }
             />
