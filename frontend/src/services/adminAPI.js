@@ -431,6 +431,77 @@ export const checkNewReplies = async (timestamp) => {
 };
 */
 
+// Orders Management
+export const getAllOrders = async (params = {}) => {
+  try {
+    const response = await api.get('/orders', { params });
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+export const getOrder = async (orderId) => {
+  try {
+    const response = await api.get(`/orders/${orderId}`);
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+export const updateOrderStatus = async (orderId, status, notes = '') => {
+  try {
+    const response = await api.patch(`/orders/${orderId}/status`, { status, notes });
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+export const getOrderAnalytics = async (params = {}) => {
+  try {
+    const response = await api.get('/admin/orders/analytics', { params });
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+export const exportOrders = async (params = {}) => {
+  try {
+    const response = await api.get('/admin/orders/export', { 
+      params,
+      responseType: 'blob'
+    });
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+export const bulkUpdateOrderStatus = async (orderIds, status, notes = '') => {
+  try {
+    const response = await api.patch('/admin/orders/bulk-update', { 
+      orderIds, 
+      status, 
+      notes 
+    });
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+export const getOrderStatistics = async (dateRange = 'week') => {
+  try {
+    const response = await api.get(`/admin/orders/statistics?range=${dateRange}`);
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
 // Helper function to handle errors
 const handleError = (error) => {
   if (error.response) {

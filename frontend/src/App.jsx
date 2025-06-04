@@ -44,6 +44,8 @@ import TaxManagement from './pages/admin/TaxManagement';
 import ContactMessages from './pages/admin/ContactMessages';
 import BlogDashboard from './pages/admin/BlogDashboard';
 import BlogCreate from './pages/admin/BlogCreate';
+import OrdersList from './pages/admin/OrdersList';
+import AdminOrderDetail from './pages/admin/AdminOrderDetail';
 
 import './App.css';
 
@@ -102,6 +104,10 @@ const App = () => {
               <Route path="products/:productId/edit" element={<ProductEdit />} />
               <Route path="tax-management" element={<TaxManagement />} />
               <Route path="contact-messages" element={<ContactMessages />} />
+              
+              {/* Order Management Routes */}
+              <Route path="orders" element={<OrdersList />} />
+              <Route path="orders/:orderId" element={<AdminOrderDetail />} />
               
               {/* Blog Management Routes */}
               <Route path="blog" element={<BlogDashboard />} />
